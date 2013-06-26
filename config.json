@@ -1,0 +1,18 @@
+{
+  "db":{
+    "type":"mysql",
+    "host":"localhost",
+    "name":"peaktest",
+    "user":"peakadmin",
+    "password":"bluemoon123"
+  },
+  "net":{
+    "host":"localhost",
+    "port":"3033"
+  },
+  "tcp":{
+    "host":"127.0.0.1",
+    "port":"23307",
+    "key":"C3o8Y5x+vkFQ/ygM+vCmwQp/SNyKzToWqCZwKsdw2Lwk781E0DabovAqEbNuqgUnvFwV2ZI+K0/NE/br9PNCQw=="
+  }
+}

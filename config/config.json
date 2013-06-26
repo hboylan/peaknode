@@ -1,0 +1,14 @@
+{
+  "http_port":"3000",
+  "tcp_host":"127.0.0.1",
+  "tcp_port":"8080",
+  "tcp_key":"C3o8Y5x+vkFQ/ygM+vCmwQp/SNyKzToWqCZwKsdw2Lwk781E0DabovAqEbNuqgUnvFwV2ZI+K0/NE/br9PNCQw==",
+  
+  "username":"root",
+  "password":null,
+  "database":"restnode",
+  "db_host":"localhost",
+  "db_type":"mysql",
+  
+  "models":["user"]
+}

@@ -1,21 +1,12 @@
-var express = require('express'),
-  app = express(),
-  db = require('./db.js'),
-  config = require('./config.json');
+var express = require('express')
+  , http    = require('http')
+  , app     = express();
 
-app.get('/', db.Zone.zones);
+require('./config/environment.js')(app, express);
+require('./config/routes.js')(app);
+require('./config/connect.js')(app);
 
-app.get('/config', function(req, res) {
-  res.json(config);
+http.createServer(app).listen(app.get('port'), function(){
+  console.log("Express server listening on port " + app.get('port'));
 });
 
-app.get('/make', function(req, res) {
-  db.Project.create({
-    'title':'First',
-    'description':'desc...'
-  }).on('success', function(){
-    res.json(db.Project.findAll());
-  });
-});
-
-app.listen(config.net.port);

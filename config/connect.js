@@ -13,11 +13,19 @@ var Client = function() {
         this.write(config.tcp_key);
         console.log('TCP Authentication successful');
       });
+      this.connection.on('data', function(d){
+        console.log(d);
+      });
     },
     
     //Send message to the server
-    send: function(s) {
-      this.connection.write(s);
+    send: function(msg) {
+      this.connection.write(msg);
+    },
+    
+    //Query the server expecting a response
+    query: function(msg) {
+      this.send(msg);
     }
   }
 };

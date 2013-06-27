@@ -1,6 +1,7 @@
+var path = require('path')
+  , config = require('./config.json');
+
 module.exports = function(app, express) {
-  var path = require('path')
-    , config = require('./config.json');
 
   app.configure(function() {
     app.set('port', config.http_port);

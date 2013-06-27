@@ -3,6 +3,7 @@ module.exports = function(app) {
   // home
   var home = require('../controllers/home');
   app.get('/', home.index);
+  app.post('/connect', home.connect);
 
   // users
   var users = require('../controllers/users');

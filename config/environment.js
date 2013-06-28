@@ -10,6 +10,7 @@ module.exports = function(app, express) {
     app.use(express.methodOverride());
     app.use(app.router);
     app.use(express.static(path.join(__dirname, 'public')));
+    app.set('view engine', 'ejs');
   });
 
   app.configure('development', function(){

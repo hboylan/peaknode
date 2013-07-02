@@ -1,7 +1,7 @@
 var ejs = require('ejs');
 
 exports.index = function(req, res){
-  res.render('../views/index.ejs', { message:"Hello" });
+  res.render('../views/index.ejs', { message:"Hello", auth:false });
 };
 
 exports.bash = function(req, res){

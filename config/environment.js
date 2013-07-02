@@ -1,5 +1,6 @@
-var path = require('path')
-  , config = require('./config.json');
+var path    = require('path')
+  , config  = require('./config.json')
+  , ejs     = require('ejs');
 
 module.exports = function(app, express) {
 
@@ -9,8 +10,11 @@ module.exports = function(app, express) {
     app.use(express.bodyParser());
     app.use(express.methodOverride());
     app.use(app.router);
-    app.use(express.static(path.join(__dirname, 'public')));
+    app.use(express.static(__dirname, '/public'));
     app.set('view engine', 'ejs');
+    
+    ejs.open = '{%';
+    ejs.close = '%}';
   });
 
   app.configure('development', function(){

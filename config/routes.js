@@ -20,4 +20,11 @@ module.exports = function(app) {
   app.get('/zones/:id', zones.show);
   app.post('/zones', zones.create);
   
+  // audio
+  var audio = require('../controllers/audio');
+  app.get('/audio', audio.zones);
+  app.get('/audio/:id', audio.zone);
+  app.post('/audio', audio.volume);
+  app.get('/audio/sources', audio.sources);
+  app.post('/audio/create', audio.create);
 };

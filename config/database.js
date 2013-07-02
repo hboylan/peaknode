@@ -10,7 +10,10 @@ var sequelize = new Sequelize(config.database, config.username, config.password,
 var models = {};
 config.models.forEach(function(m){
   models[m] = sequelize.import(__dirname + '/../models/'+m);
+  models[m].sync();
 });
+
+models['zone'].hasOne(models['audio'], { as:'Audio' });
 
 sequelize.sync();
 module.exports = models;

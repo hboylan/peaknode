@@ -2,17 +2,44 @@
 <html>
 <head>
 	<title>WVU Peak Home System</title>
-	<link href="../pubic/css/app.css" rel="stylesheet" type="text/css">
-	<script src="../public/js/jquery.min.js" type="text/javascript"></script>
-	<script src="../public/js/bootstrap.min.js" type="text/javascript"></script>
+	<link href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" rel="stylesheet" type="text/css">
+  <script src="http://code.jquery.com/jquery-1.9.1.js" type="text/javascript"></script>
 
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
 <body>
 	<div class="container">
-    <h2><%= message %> World!</h2>
+    <h2>Volume Test</h2>
   </div>
+  <div id="slider"></div>
+  <br>
+  <b id="value"></b>
+
+	<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js" type="text/javascript"></script>
+  <script type="text/javascript">
+  $('#slider').slider({
+    min:0, max:100, step:1, orientation:'vertical',
+    slide:function(evt, ui){
+      var val = ui.value;
+      //Update view with value
+      $('#value').html(val);
+      //Perform action with API
+      $.ajax({
+        url:'http://localhost:8000/audio',
+        type:'post',
+        dataType:'json',
+        data:{
+          zone:2,
+          volume:val,
+        },
+        success:function(data){
+          console.log('Finished: '+val);
+        },
+      });
+    }
+  });
+  </script>
 </body>
 </html>
 

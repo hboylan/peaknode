@@ -10,5 +10,5 @@
   "db_host":"localhost",
   "db_type":"mysql",
   
-  "models":["user", "zone"]
+  "models":["user", "zone", "audio"]
 }

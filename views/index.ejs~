@@ -24,7 +24,7 @@
 	  <script type="text/javascript">
 	  $('#slider{%= i %}').slider({
 	    value:0, min:0, max:100, step:1, orientation:'vertical',
-	    change:function(evt, ui){
+	    slide:function(evt, ui){
 	      var val = ui.value;
 	      //Update view with value
 	      $('#value{%= i %}').html(val);

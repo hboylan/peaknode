@@ -12,7 +12,7 @@ exports.bash = function(req, res){
 
 exports.test = function(req, res){
   var client = require('../app').client();
-  client.send('getobjectstatus Audio_Zone 1');
+  client.send('setaudiosource 1 2');
   res.send('cool');
 };
 

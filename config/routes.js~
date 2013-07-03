@@ -3,7 +3,7 @@ module.exports = function(app) {
   // test
   var test = require('../controllers/test');
   app.get('/', test.index);
-  app.get('/test', test.test);
+  app.get('/test', test.bash);
   app.get('/bryant', test.bryant);
   app.post('/message', test.message);
 

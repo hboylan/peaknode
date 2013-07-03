@@ -7,8 +7,8 @@ var express = require('express')
 require('./config/environment')(app, express);
 
 //Configure TCP Client Instance
-// var client = tcp.client();
-// app.set('client', client);
+var client = tcp.client();
+app.set('client', client);
 
 //Configure route handlers
 require('./config/routes')(app);

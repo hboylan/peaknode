@@ -1,6 +1,6 @@
 {
   "http_port":"8000",
-  "tcp_host":"157.182.194.137",
+  "tcp_host":"127.0.0.1",
   "tcp_port":"2237",
   "tcp_key":"C3o8Y5x+vkFQ/ygM+vCmwQp/SNyKzToWqCZwKsdw2Lwk781E0DabovAqEbNuqgUnvFwV2ZI+K0/NE/br9PNCQw==",
   

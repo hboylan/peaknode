@@ -7,10 +7,6 @@ angular.module('peak', [
 ]).
 config(function ($routes, $location) {
   $routes.
-    when('/index', {
-      templateUrl: 'index',
-      controller: 'IndexController'
-    }).
     otherwise({
       redirectTo: '/index'
     });

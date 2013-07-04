@@ -3,8 +3,8 @@
 /* Controllers */
 
 angular.module('peak.controllers', []).
-  controller('IndexController', function ($scope, $http) {
-
+  controller('Index', function ($scope, $http) {
+    $scope.name = 'Hugh';
     $http({
       method: 'GET',
       url: '/api/users'

@@ -1,4 +1,5 @@
-extends bootstrap
+extends layout
 
 block content
-  h1 Hugh
+  div(ng-controller="Index", class="container")
+    h1 Hello {{ name }}

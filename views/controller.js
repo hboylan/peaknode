@@ -1,5 +1,5 @@
 exports.index = function(req, res){
-  res.render('navbar');
+  res.render('index');
 };
 
 exports.bash = function(req, res){

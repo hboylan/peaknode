@@ -20,20 +20,20 @@
   	      $('#value{%= i %}').html(val);
   	      //Perform action with API
   	      $.ajax({
-  		url:'http://localhost:8000/audio',
-  		type:'post',
-  		dataType:'json',
-  		data:{
-  		  zone:{%= i %},
-  		  volume:val,
-  		},
-  		success:function(data){
-  		  console.log('Finished: '+val);
-  		},
+        		url:'http://localhost:8000/audio',
+        		type:'post',
+        		dataType:'json',
+        		data:{
+        		  zone:{%= i %},
+        		  volume:val,
+        		},
+        		success:function(data){
+        		  console.log('Finished: '+val);
+        		},
   	      });
   	    }
   	  });
-   	</script>
+     	</script>
     </div>
   {% }; %}
   </div>

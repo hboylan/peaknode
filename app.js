@@ -1,10 +1,23 @@
 var express = require('express')
+  , config  = require('./config/config.json')
   , http    = require('http')
   , tcp     = require('./config/connect')
   , app     = express();
 
 //Configure our application environment
-require('./config/environment')(app, express);
+app.configure(function() {
+  app.set('port', config.http_port);
+  app.set('view engine', 'jade');
+  app.use(express.logger('dev'));
+  app.use(express.bodyParser());
+  app.use(express.methodOverride());
+  app.use(express.static(__dirname + '/public'));
+  app.use(app.router);
+});
+
+app.configure('development', function(){
+  app.use(express.errorHandler());
+});
 
 //Configure TCP Client Instance
 // var client = tcp.client();

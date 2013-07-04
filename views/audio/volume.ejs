@@ -1,34 +1,40 @@
-<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js" type="text/javascript"></script>
+<link href="css/jquery-ui.min.css" rel="stylesheet" type="text/css">
+<script src="js/lib/jquery-ui.min.js" type="text/javascript"></script>
 
-<ul>
-{% for (var zone in audio_zones) { %}
-  
-  <li id="zone{% zone.id %}">
-    <h3>Zone</h3>
-    <div id="slider{% zone.id %}">
-    <script type="text/javascript">
-    $('#slider'+zone.id).slider({
-      min:0, max:100, step:1, orientation:'vertical',
-      slide:function(evt, ui){
-        var val = ui.value;
-        //Update view with value
-        $('#value').html(val);
-        //Perform action with API
-        $.ajax({
-          url:'http://localhost:8000/audio',
-          type:'post',
-          dataType:'json',
-          data:{
-            zone:2,
-            volume:val,
-          },
-          success:function(data){
-            console.log('Finished: '+val);
-          },
-        });
-      }
-    });
-    </script>
-  </li>
-{% }; %}
-</ul>
+<div class="container">
+  <h2>Volume Test</h2>
+  <div class="row">
+  {% for (var i=1; i<=8; i++) { %}
+    <div class="span3">
+      <h5>Zone {%= i %}</h5>
+      <div id="slider{%= i %}"></div>
+      <br>
+      <b id="value{%= i %}">0</b>
+
+  	  <script type="text/javascript">
+  	  $('#slider{%= i %}').slider({
+  	    value:0, min:0, max:100, step:1, orientation:'vertical',
+  	    change:function(evt, ui){
+  	      var val = ui.value;
+  	      //Update view with value
+  	      $('#value{%= i %}').html(val);
+  	      //Perform action with API
+  	      $.ajax({
+  		url:'http://localhost:8000/audio',
+  		type:'post',
+  		dataType:'json',
+  		data:{
+  		  zone:{%= i %},
+  		  volume:val,
+  		},
+  		success:function(data){
+  		  console.log('Finished: '+val);
+  		},
+  	      });
+  	    }
+  	  });
+   	</script>
+    </div>
+  {% }; %}
+  </div>
+</div>

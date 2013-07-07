@@ -1,14 +1,19 @@
 !!! 5
-html(ng-app="peak")
+html
 
 head
   title WVU Peak Home System
-  link(rel='stylesheet', href='css/bootstrap.min.css')
-  script(type='text/javascript', href='js/lib/jquery.min.js')
-  script(type='text/javascript', href='js/lib/angular.min.js')
-  script(type='text/javascript', href='js/controllers.js')
+  link(rel='stylesheet', href='css/style.css')
+  script(src='js/lib/jquery.min.js')
+  script(src='js/lib/bootstrap.min.js')
+  script(src='js/lib/angular/angular.min.js')
+  script(src='js/lib/angular/angular-resource.min.js')
+  script(src='js/app.js')
+  script(src='js/controllers.js')
+  script(src='js/services.js')
+
   block scripts
 
-body
+body(ng-app="peak")
   include navbar
   block content

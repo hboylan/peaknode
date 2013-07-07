@@ -10,5 +10,6 @@
   "db_host":"localhost",
   "db_type":"mysql",
   
+  "cookie_secret":"cookiemonster",
   "models":["user", "zone", "audio"]
 }

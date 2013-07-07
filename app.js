@@ -10,6 +10,7 @@ app.configure(function() {
   app.set('view engine', 'jade');
   app.use(express.logger('dev'));
   app.use(express.bodyParser());
+  app.use(express.cookieParser(config.cookie_secret));
   app.use(express.methodOverride());
   app.use(express.static(__dirname + '/public'));
   app.use(app.router);

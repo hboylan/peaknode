@@ -3,6 +3,8 @@ module.exports = function(app) {
   /*** Website ***/
   var web = require('../views/controller');
   app.get('/', web.index);
+  app.get('/hvac', web.hvac);
+  app.get('/register', web.register);
   app.get('/test', web.test);
   app.get('/bryant', web.bryant);
   app.post('/message', web.message);

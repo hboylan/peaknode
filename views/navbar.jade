@@ -1,4 +1,4 @@
-div(class="navbar")
+div(class="navbar", ng-controller="NavbarCtrl")
   div(class="navbar-inner")
     div(class="container content-navbar")
       a(class="btn btn-navbar", data-toggle="collapse", data-target=".nav-collapse")
@@ -8,7 +8,24 @@ div(class="navbar")
       a(class="brand", href="/") Peak
       div(class="nav-collapse collapse", id="main-menu")
         ul(class="nav", id="main-menu-left")
-          li(id="hvac")
+          li(ng-class="route('hvac')")
             a(href="/hvac") HVAC
-          li(id="energy")
+          li(ng-class="route('energy')")
             a(href="/energy") Energy
+        ul(class="nav pull-right", id="main-menu-right")
+          -if(user)
+            li
+              a(href="/account") {{ user.username }}
+                strong(class="icon-share-alt")
+            li
+              a(href="/logout") Logout
+                strong(class="icon-cancel-alt")
+          -else
+            li
+              a(href="/register") Register
+                strong(class="icon-share-alt")
+            li
+              a(href="/login") Login
+                strong(class="icon-share-alt")
+                
+            

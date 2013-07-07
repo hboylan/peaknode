@@ -2,6 +2,14 @@ exports.index = function(req, res){
   res.render('index');
 };
 
+exports.hvac = function(req, res){
+  res.render('hvac');
+};
+
+exports.register = function(req, res){
+  res.render('user/register');
+};
+
 exports.bash = function(req, res){
   var exec = require('child_process').exec;
   function puts(error, stdout, stderr) { res.send(stdout) }

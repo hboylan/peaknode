@@ -1,5 +1,12 @@
 extends layout
 
 block content
-  div(ng-controller="Index", class="container")
-    h1 Hello {{ name }}
+  div(ng-controller="IndexCtrl")
+    img(src="img/peakhouse.jpg")
+    div(class="container")
+      div(class="page-header")
+        ul(class="inline")
+          li
+            img(class="logo", src="img/wvu.png")
+          li
+            h2 Solar Peak Project

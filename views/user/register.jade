@@ -1,0 +1,14 @@
+extends ../layout
+
+block content
+  div(class="register container", ng-controller="NewUserCtrl")
+    div(class="page-header")
+      h3 New User
+
+    form(class="center-content center")
+      input(type="text", class="input input-xlarge", placeholder="Realname", ng-model="newUser.realname")
+      input(type="text", class="input input-xlarge", placeholder="Username", ng-model="newUser.username")
+      input(type="text", class="input input-xlarge", placeholder="Password", ng-model="newUser.password")
+      input(type="text", class="input input-large", placeholder="Pinkey", ng-model="newUser.pinkey")
+      input(type="text", class="input input-xlarge", placeholder="Email", ng-model="newUser.email")
+      input(type="submit", class="btn register-btn", value="Create", ng-click="saveUser()")

@@ -12,6 +12,7 @@ module.exports = function(sequelize, DataTypes) {
       //Parses the user model for client use
       parse:function(){
         this.pinkey = require('crypto').createHash('sha512').update(String(this.pinkey)).digest('hex');
+        this.password = undefined;
         return this;
       },
       

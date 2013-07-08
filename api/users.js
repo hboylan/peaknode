@@ -31,7 +31,12 @@ exports.login = function(req, res) {
   user.find({ where:{
     username:req.body.username,
     password:req.body.password
-  }}).success(function(user){
-    res.json({ success:true, user:user.parse() });
+  }}).success(function(u){
+    res.cookie('user', JSON.stringify(u.parse()));
+    res.json({ success:true });
   });
+};
+
+exports.logout = function(req, res) {
+  res.cookie('user', undefined);
 };

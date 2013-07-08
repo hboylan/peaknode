@@ -17,7 +17,7 @@
 }
 
 .login { padding:20px; }
-.login-btn { width:100%; }
+.btn.btn-primary.login-btn { width:100%; }
 
 .media-object {
   width:120px;

@@ -3,7 +3,15 @@ exports.index = function(req, res){
 };
 
 exports.hvac = function(req, res){
-  res.render('hvac');
+  res.render('hvac', {auth:true});
+};
+
+exports.media = function(req, res){
+  res.render('audio');
+};
+
+exports.energy = function(req, res){
+  res.render('energy');
 };
 
 exports.register = function(req, res){

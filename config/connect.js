@@ -30,11 +30,7 @@ function Client() {
         if(!this.connection.writable)
           this.reconnect(attempts--);
       }, 1000);
-<<<<<<< HEAD
     };
-=======
-    },
->>>>>>> 22f797b18359e36fd957e87a06b4d57824199ab1
     
     //Send message to the server
     this.send = function(msg) {
@@ -42,7 +38,7 @@ function Client() {
     };
     
     //Query the server expecting a response
-    query = function(msg) {
+    this.query = function(msg) {
       this.send(msg);
     };
 

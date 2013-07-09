@@ -30,7 +30,7 @@ var Client = function() {
         if(!this.connection.writable)
           this.reconnect(attempts--);
       }, 1000);
-    }
+    },
     
     //Send message to the server
     send: function(msg) {

@@ -25,8 +25,8 @@ app.configure('development', function(){
 });
 
 //Configure TCP Client Instance
-// var client = tcp.client();
-// app.set('client', client);
+var client = tcp.client();
+app.set('client', client);
 
 //Configure route handlers
 require('./config/routes')(app);

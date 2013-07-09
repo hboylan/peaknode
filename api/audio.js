@@ -25,6 +25,9 @@ exports.create = function(req, res) {
 
 exports.sources = function(req, res) {
   //Query tcp for audio sources
+  res.json({
+    'sources':['source1']
+  });
 };
 
 exports.volume = function(req, res) {
@@ -33,7 +36,7 @@ exports.volume = function(req, res) {
     , zone = req.body.zone
     , client = require('../app').client();
   //Tell TCP server to change volume for zone
-  var msg = 'setaudiovolume '+zone+' '+vol;
+  var msg = 'audiovolume '+zone+' '+vol;
   client.send(msg);
   console.log(msg);
   //Wait for success msg

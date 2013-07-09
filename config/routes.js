@@ -21,15 +21,14 @@ module.exports = function(app) {
   
   // zones
   var zones = require('../api/zones');
-  app.get('/zones', zones.list);
-  app.get('/zones/:id', zones.show);
-  app.post('/zones', zones.create);
+  app.get('/api/zones', zones.list);
+  app.get('/api/zones/:id', zones.show);
+  app.post('/api/zones', zones.create);
   
   // audio
   var audio = require('../api/audio');
-  app.get('/audio', audio.zones);
-  app.get('/audio/:id', audio.zone);
-  app.post('/audio', audio.volume);
-  app.get('/audio/sources', audio.sources);
-  app.post('/audio/create', audio.create);
+  app.get('/api/audio', audio.zones);
+  app.get('/api/audio/:id', audio.zone);
+  app.post('/api/audio', audio.create);
+  app.post('/api/audio/:id', audio.volume);
 };

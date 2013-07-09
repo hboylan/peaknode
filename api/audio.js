@@ -36,20 +36,21 @@ exports.volume = function(req, res) {
     , client  = require('../app').client()
     , on      = vol == 0
     , msg     = on? 'audiocontrol '+zone+' 3' : 'audiovolume '+zone+' '+vol;
+  //Check we have proper params
+  if(zone < 1 || zone > 8)
+    return res.json({'error':'Audio Zone must be 1-8'});
+  if(vol < 0 || vol > 100)
+    return res.json({'error':'Volume must be 0-100'})
   //Tell TCP server to change volume for zone
-  if(zone > 0 && zone < 9){
-    // client.send(msg);
-    console.log(msg);
-    //Wait for success msg
-    audio.find({ zone_id:zone }).success(function(a){
-      a.active = on;
-      a.volume = vol;
-      a.save();
-      res.json(a);
-    });
-  } else {
-    res.json({'error':'Audio Zone must be 1-8'});
-  }
+  // client.send(msg);
+  console.log(msg);
+  //Update db, client response
+  audio.find({ zone_id:zone }).success(function(a){
+    a.active = on;
+    a.volume = vol;
+    a.save();
+    res.json(a);
+  });
 };
 
 exports.play = function(req, res) {

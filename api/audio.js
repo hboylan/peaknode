@@ -32,16 +32,16 @@ exports.create = function(req, res) {
 exports.volume = function(req, res) {
   // zone, setting
   var vol     = req.body.volume
-    , zone    = req.params.zone
+    , id    = req.params.id
     , client  = require('../app').client()
     , on      = vol == 0
     , msg     = on? 'audiocontrol '+zone+' 3' : 'audiovolume '+zone+' '+vol;
   //Tell TCP server to change volume for zone
-  if(zone > 0 && zone < 8){
+  if(zone > 0 && zone < 9){
     // client.send(msg);
     console.log(msg);
     //Wait for success msg
-    audio.find({ zone_id:zone }).success(function(a){
+    audio.find({ zone_id:id }).success(function(a){
       a.active = on;
       a.volume = vol;
       a.save();

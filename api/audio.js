@@ -38,7 +38,7 @@ exports.volume = function(req, res) {
     , msg     = on? 'audiocontrol '+zone+' 3' : 'audiovolume '+zone+' '+vol;
   //Tell TCP server to change volume for zone
   if(zone > 0 && zone < 8){
-    client.send(msg);
+    // client.send(msg);
     console.log(msg);
     //Wait for success msg
     audio.find({ zone_id:zone }).success(function(a){

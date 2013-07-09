@@ -10,7 +10,7 @@ var Client = function() {
     //Authenticate with the TCP server
     connect: function() {
       this.connection.connect(config.tcp_port, config.tcp_host, function() {
-        //this.write(config.tcp_key);
+        this.write(config.tcp_key);
         console.log('TCP connection successful');
       });
       this.connection.on('data', function(d){

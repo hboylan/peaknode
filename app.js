@@ -2,6 +2,7 @@ var express = require('express')
   , config  = require('./config/config.json')
   , http    = require('http')
   , tcp     = require('./config/connect')
+  , ejs     = require('ejs')
   , app     = express();
 
 //Configure our application environment
@@ -14,6 +15,9 @@ app.configure(function() {
   app.use(express.methodOverride());
   app.use(express.static(__dirname + '/public'));
   app.use(app.router);
+  
+  ejs.open = '{%';
+  ejs.close = '%}';
 });
 
 app.configure('development', function(){

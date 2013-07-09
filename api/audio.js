@@ -34,9 +34,9 @@ exports.volume = function(req, res) {
   // zone, setting
   var vol = req.body.volume
     , zone = req.body.zone
-    , client = require('../app').client();
+    , client = require('../app').client()
+    , msg = vol == 0? 'audiocontrol '+zone+' 3' : 'audiovolume '+zone+' '+vol;
   //Tell TCP server to change volume for zone
-  var msg = 'audiovolume '+zone+' '+vol;
   client.send(msg);
   console.log(msg);
   //Wait for success msg

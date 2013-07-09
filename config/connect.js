@@ -16,6 +16,9 @@ var Client = function() {
       this.connection.on('data', function(d){
         console.log(d);
       });
+      this.connection.on('close', function(){
+        console.log('TCP Connection disconnected');
+      });
     },
     
     //Send message to the server

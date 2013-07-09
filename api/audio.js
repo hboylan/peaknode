@@ -14,7 +14,7 @@ exports.zones = function(req, res) {
 };
 
 exports.zone = function(req, res) {
-  audio.find({ id:req.params.id }).success(function(a){
+  audio.find({ zone_id:req.params.id }).success(function(a){
     res.json(a);
   });
 }
@@ -32,20 +32,24 @@ exports.create = function(req, res) {
 exports.volume = function(req, res) {
   // zone, setting
   var vol     = req.body.volume
-    , zone    = req.body.zone
+    , zone    = req.params.zone
     , client  = require('../app').client()
     , on      = vol == 0
     , msg     = on? 'audiocontrol '+zone+' 3' : 'audiovolume '+zone+' '+vol;
   //Tell TCP server to change volume for zone
-  client.send(msg);
-  console.log(msg);
-  //Wait for success msg
-  audio.find({ zone_id:zone }).success(function(a){
-    a.active = on;
-    a.volume = vol;
-    a.save();
-    res.json(a);
-  });
+  if(zone > 0 && zone < 8){
+    client.send(msg);
+    console.log(msg);
+    //Wait for success msg
+    audio.find({ zone_id:zone }).success(function(a){
+      a.active = on;
+      a.volume = vol;
+      a.save();
+      res.json(a);
+    });
+  } else {
+    res.json({'error':'Audio Zone must be 1-8'});
+  }
 };
 
 exports.play = function(req, res) {

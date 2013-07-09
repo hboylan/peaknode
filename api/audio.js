@@ -10,7 +10,7 @@ exports.zone = function(req, res) {
   audio.find({ id:req.params.id }).success(function(a){
     res.json(a);
   });
-};
+}
 
 exports.create = function(req, res) {
   var zones = require('../config/database').zone
@@ -40,11 +40,11 @@ exports.volume = function(req, res) {
   client.send(msg);
   console.log(msg);
   //Wait for success msg
-  //audio.find({ id:zone }).success(function(a){
-  //  a.volume = vol;
-  //  a.save();
-  //  res.json(a);
-  //});
+  audio.find({ id:zone }).success(function(a){
+   a.volume = vol;
+   a.save();
+   res.json(a);
+  });
 };
 
 exports.play = function(req, res) {

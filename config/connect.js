@@ -30,7 +30,11 @@ function Client() {
         if(!this.connection.writable)
           this.reconnect(attempts--);
       }, 1000);
+<<<<<<< HEAD
     };
+=======
+    },
+>>>>>>> 22f797b18359e36fd957e87a06b4d57824199ab1
     
     //Send message to the server
     this.send = function(msg) {

@@ -9,6 +9,7 @@ var Client = function() {
     
     //Authenticate with the TCP server
     connect: function() {
+      console.log('Attempting to reach the TCP server...');
       this.connection.connect(config.tcp_port, config.tcp_host, function() {
         this.write(config.tcp_key);
         console.log('TCP connection successful');
@@ -18,8 +19,18 @@ var Client = function() {
       });
       this.connection.on('close', function(){
         console.log('TCP Connection disconnected');
+        this.reconnect(5);
+        
       });
     },
+    
+    reconnect: function(attempts) {
+      setTimeout(function(){
+        this.connect();
+        if(!this.connection.writable)
+          this.reconnect(attempts--);
+      }, 1000);
+    }
     
     //Send message to the server
     send: function(msg) {

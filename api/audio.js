@@ -37,6 +37,7 @@ exports.volume = function(req, res) {
     , on      = vol == 0
     , msg     = on? 'audiocontrol '+zone+' 3' : 'audiovolume '+zone+' '+vol;
   //Check we have proper params
+  console.log(zone);
   if(zone == undefined)
     return res.json({'error':'Expected parameter: zone'});
   if(zone < 1 || zone > 8)
@@ -48,7 +49,7 @@ exports.volume = function(req, res) {
   client.send(msg);
   console.log(msg);
   //Update db, client response
-  audio.find({ zone_id:zone }).success(function(a){
+  audio.find({where:{ zone_id:zone }}).success(function(a){
     a.active = on;
     a.volume = vol;
     a.save();

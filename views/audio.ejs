@@ -23,7 +23,7 @@
   	      $('#value{%= i %}').html(val);
   	      //Perform action with API
   	      $.ajax({
-        		url:'http://localhost:8000/audio',
+        		url:'http://157.182.194.137:8000/api/audio/{%= i %}',
         		type:'post',
         		dataType:'json',
         		data:{

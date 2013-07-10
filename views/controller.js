@@ -7,8 +7,6 @@ exports.hvac = function(req, res){
 };
 
 exports.media = function(req, res){
-  // var client = require('../app').client();
-  
   res.render('audio');
 };
 

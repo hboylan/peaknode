@@ -46,15 +46,16 @@ exports.volume = function(req, res) {
   client.send(msg);
   console.log(msg);
   //Update db, client response
-  audio.find({where:{ zone_id:zone }})
-    .success(function(a){
-      if(a != undefined)
-        a.active = on;
-        a.volume = vol;
-        a.save();
-      }
+  audio.find({where:{ zone_id:zone }}).success(function(a){
+    if(a != undefined) {
+      a.active = on;
+      a.volume = vol;
+      a.save();
       res.json(a);
-    });
+    }
+    else
+      res.json(null);
+  });
 };
 
 exports.play = function(req, res) {

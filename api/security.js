@@ -6,6 +6,7 @@ function crypto(val){
 
 exports.test = function(req, res){
   require('../app').client().send('security '+req.params.status);
+  res.json({status:req.params.status});
 }
 
 //Need to figure out requests to tcp server

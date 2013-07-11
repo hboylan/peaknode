@@ -10,7 +10,7 @@ app.configure(function() {
   app.set('view engine', 'qejs');
   app.set('port', config.http_port);
   app.use(express.logger('dev'));
-  app.use(express.bodyParser());
+  app.use(express.bodyParser({ uploadDir:__dirname + '/tmp' }));
   app.use(express.cookieParser(config.cookie_secret));
   app.use(express.methodOverride());
   app.use(express.static(__dirname + '/public'));

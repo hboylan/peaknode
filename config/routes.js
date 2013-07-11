@@ -32,4 +32,9 @@ module.exports = function(app) {
   app.get('/api/audio/:id', audio.zone);
   app.post('/api/audio', audio.create);
   app.post('/api/audio/:id', audio.volume);
+  
+  //security
+  var sec = require('../api/security');
+  // app.get('/api/security', sec.status);
+  app.post('/api/security', sec.setStatus);
 };

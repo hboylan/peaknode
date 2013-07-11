@@ -1,5 +1,5 @@
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('users', {
+  return sequelize.define('user', {
     username: DataTypes.STRING,
     password: DataTypes.STRING,
     pinkey: DataTypes.INTEGER(4),

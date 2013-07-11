@@ -11,5 +11,5 @@
   "db_type":"mysql",
   
   "cookie_secret":"cookiemonster",
-  "models":["user", "zone", "audio"]
+  "models":["user", "zone", "audio", "security"]
 }

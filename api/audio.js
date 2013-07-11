@@ -48,7 +48,6 @@ exports.volume = function(req, res) {
   //Update db, client response
   audio.find({where:{ zone_id:zone }}).success(function(a){
     if(a != undefined) {
-      a.active = on;
       a.volume = vol;
       a.save();
       res.json(a);

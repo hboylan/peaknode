@@ -2,12 +2,16 @@ exports.index = function(req, res){
   res.render('index');
 };
 
+exports.security = function(req, res){
+  res.render('security.html');
+};
+
 exports.hvac = function(req, res){
   res.render('hvac', {auth:true});
 };
 
 exports.media = function(req, res){
-  res.render('audio');
+  res.render('audio', {msg:'hi'});
 };
 
 exports.energy = function(req, res){

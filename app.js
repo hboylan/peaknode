@@ -7,8 +7,8 @@ var express = require('express')
 
 //Configure our application environment
 app.configure(function() {
-  app.set('port', config.http_port);
   app.set('view engine', 'ejs');
+  app.set('port', config.http_port);
   app.use(express.logger('dev'));
   app.use(express.bodyParser());
   app.use(express.cookieParser(config.cookie_secret));

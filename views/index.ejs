@@ -1,21 +1,16 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Peak Home Automation</title>
-
-  <link href="css/style.css" rel="stylesheet" type="text/css">
-  <script src="js/jquery.min.js", type="text/javascript"></script>
-  <script src="js/bootstrap.min.js" type="text/javascript"></script>
+  <title>Peak Home Automation</title>
+  
+  <link rel="stylesheet" href="css/style.css", type="text/css">
+  <%- stylesheets %>
+  
+  <script type="text/javascript" src='js/lib/jquery.min.js'></script>
+  <script type="text/javascript" src='js/lib/bootstrap.min.js'></script>
+  <%- scripts %>
 </head>
 <body>
-	{% block content %}
-  
-  {% endblock %}
-
-	<footer class="footer">
-		<div class="container center-content">
-			FOOTER
-		</div>
-	</footer>
+  <%- body -%>
 </body>
 </html>

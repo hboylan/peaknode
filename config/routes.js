@@ -4,6 +4,7 @@ module.exports = function(app) {
   var web = require('../views/controller');
   app.get('/', web.index);
   app.get('/hvac', web.hvac);
+  app.get('/security', web.security);
   app.get('/media', web.media);
   app.get('/energy', web.energy);
   app.get('/register', web.register);

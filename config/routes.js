@@ -35,6 +35,6 @@ module.exports = function(app) {
   
   //security
   var sec = require('../api/security');
-  // app.get('/api/security', sec.status);
+  app.get('/api/security/:status', sec.test);
   app.post('/api/security', sec.setStatus);
 };

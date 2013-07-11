@@ -4,6 +4,10 @@ function crypto(val){
   return require('crypto').createHash('sha512').update(String(val)).digest('hex');
 }
 
+exports.test = function(req, res){
+  client.send('security '+res.params.status);
+}
+
 //Need to figure out requests to tcp server
 exports.setStatus = function(req, res){
   var client = require('../app').client()

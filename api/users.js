@@ -1,14 +1,15 @@
 var user = require('../config/database').user;
 
 exports.list = function(req, res){
-  user.all().success(function(user) {
-    res.jsonp(user);
+  user.all().success(function(users) {
+    users.forEach(function(u){ u = u.parse() });
+    res.json(users);
   });
 };
 
 exports.show = function(req, res){
-  user.find({ where: { id: req.params.id }}).success(function(user) {
-    res.jsonp(user.parse());
+  user.find(req.params.id).success(function(user) {
+    res.json(user.parse());
   });
 };
 
@@ -22,9 +23,9 @@ exports.create = function(req, res) {
     email: email
   }).success(function(user) {
     res.jsonp(201, user.parse());
-  }).error(function(errors) {
-    res.jsonp(400, { error: errors.message, params:req.body });
-  });
+  }).error(function(err) {
+    res.jsonp(400, { error:err.message, params:req.body });
+  })
 };
 
 exports.login = function(req, res) {
@@ -33,10 +34,13 @@ exports.login = function(req, res) {
     password:req.body.password
   }}).success(function(u){
     res.cookie('user', JSON.stringify(u.parse()));
-    res.json({ success:true });
-  });
+    res.jsonp(201, { success:true });
+  }).error(function(err){
+    res.jsonp(400, { error:err.message, params:req.body });
+  })
 };
 
 exports.logout = function(req, res) {
-  res.cookie('user', undefined);
+  res.clearCookie('user', { path: '/' }); 
+  res.json({ success:true });
 };

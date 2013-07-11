@@ -9,13 +9,17 @@ module.exports = function(sequelize, DataTypes) {
   }, {
     instanceMethods: {
       
+      //Encrypt the user pin number before sending to client
+      encrypted:function(){
+        return require('crypto').createHash('sha512').update(String(this.pinkey)).digest('hex');
+      },
+      
       //Parses the user model for client use
       parse:function(){
-        this.pinkey = require('crypto').createHash('sha512').update(String(this.pinkey)).digest('hex');
+        this.pinkey = this.encrypted();
         this.password = undefined;
         return this;
       },
-      
-    }
+    }, 
   });
 };

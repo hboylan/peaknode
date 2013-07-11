@@ -11,7 +11,7 @@ exports.zones = function(req, res) {
       }]
     });
   });
-};
+}
 
 exports.zone = function(req, res) {
   audio.find({ zone_id:req.params.id }).success(function(a){
@@ -27,7 +27,7 @@ exports.create = function(req, res) {
   }).success(function(audio_zone){
     res.json(audio_zone);
   });
-};
+}
 
 exports.volume = function(req, res) {
   // zone, setting
@@ -55,9 +55,5 @@ exports.volume = function(req, res) {
     else
       res.json(null);
   });
-};
-
-exports.play = function(req, res) {
-  // start playing from source
-};
+}
 

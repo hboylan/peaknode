@@ -14,17 +14,17 @@ exports.zones = function(req, res) {
 }
 
 exports.zone = function(req, res) {
-  audio.find({ zone_id:req.params.id }).success(function(a){
+  audio.find({ zone:req.params.id }).success(function(a){
     res.json(a);
   });
 }
 
 exports.create = function(req, res) {
-  audio.create({
-    zone_id:req.body.zone,
-    name:req.body.name,
-  }).success(function(audio_zone){
-    res.json(audio_zone);
+  var z = req.body.zone
+    , n = req.body.name;
+  if(z == undefined || n == undefined) res.json({ error:'Check params supplied' });
+  audio.create({ zone:z, name:n }).success(function(a){
+    res.json(a);
   });
 }
 
@@ -35,7 +35,7 @@ exports.state = function(req, res) {
     , client  = require('../app').client();
     
   audio.checkZone(res, zone);
-  audio.find({where:{ zone_id:zone }}).success(function(a){
+  audio.find({where:{ zone:zone }}).success(function(a){
     //Turn on
     if(state == 'on' || (!a.active && vol > 0))
       a.setState(client, res, 1);

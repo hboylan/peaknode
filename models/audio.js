@@ -1,7 +1,7 @@
 module.exports = function(sequelize, DataTypes) {
   return sequelize.define('audio', {
     name: DataTypes.STRING,
-    zone_id: { type:DataTypes.INTEGER, validate:{ min:1, max:8 }},
+    zone: { type:DataTypes.INTEGER, validate:{ min:1, max:8 }},
     active: { type:DataTypes.BOOLEAN, defaultValue:false },
     volume: { type:DataTypes.INTEGER, validate:{ min:0, max:100 }, defaultValue:0 },
   }, {
@@ -9,7 +9,8 @@ module.exports = function(sequelize, DataTypes) {
     instanceMethods:{
       
       setState:function(client, res, state){
-        client.send('audiocontrol '+this.zone_id+' '+state);
+        console.log('state:'+state);
+        client.send('audiocontrol '+this.zone+' '+state);
         this.active = (state)? true : false;
         this.save();
         res.json(this);
@@ -17,7 +18,7 @@ module.exports = function(sequelize, DataTypes) {
       
       setVolume:function(client, res, vol){
         var mute    = vol == 0
-          , msg     = mute? 'audiocontrol '+this.zone_id+' 3' : 'audiovolume '+this.zone_id+' '+vol;
+          , msg     = mute? 'audiocontrol '+this.zone+' 3' : 'audiovolume '+this.zone+' '+vol;
   
         client.send(msg);
         this.active = true;

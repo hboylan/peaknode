@@ -19,17 +19,17 @@
           $('#zones').append(_.template($('#zone-volume-tmpl').html(), z));
           
           //Activate zone's volume slider
-          $('#slider-'+z.zone_id).slider({ value:z.volume, min:0, max:100, step:1, orientation:'vertical',
+          $('#slider-'+z.zone).slider({ value:z.volume, min:0, max:100, step:1, orientation:'vertical',
             change:function(evt, ui){
               var volume = ui.value;
               if(isNaN(volume)) return;
                             
               //Update view with value
-              $('#value'+z.zone_id).html(volume);
+              $('#value'+z.zone).html(volume);
                             
               //Perform action with API
               $.ajax({
-                url:'http://localhost:8000/api/audio/'+z.zone_id,
+                url:'http://localhost:8000/api/audio/'+z.zone,
                 type:'post',
                 dataType:'json',
                 data:{ volume:volume }
@@ -37,7 +37,7 @@
             },
             
             slide:function(evt, ui){
-              $('#volume-'+z.zone_id).html(ui.value);
+              $('#volume-'+z.zone).html(ui.value);
             }
           });
         });
@@ -49,9 +49,9 @@
   <script type="text/template" id="zone-volume-tmpl">
     <div class="span3">
       <h5><%= name %></h5>
-      <div id="slider-<%= zone_id %>"></div>
+      <div id="slider-<%= zone %>"></div>
       <br>
-      <b id="volume-<%= zone_id %>"><%= volume %></b>
+      <b id="volume-<%= zone %>"><%= volume %></b>
     </div>
   </script>
 </div>

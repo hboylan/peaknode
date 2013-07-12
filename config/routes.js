@@ -24,9 +24,9 @@ module.exports = function(app) {
   // audio
   var audio = require('../api/audio');
   app.get('/api/audio', audio.zones);
-  app.get('/api/audio/:id', audio.zone);
   app.post('/api/audio', audio.create);
-  app.post('/api/audio/:id', audio.volume);
+  app.get('/api/audio/:id', audio.zone);
+  app.post('/api/audio/:id', audio.state);
   
   //security
   var sec = require('../api/security');

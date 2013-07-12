@@ -8,8 +8,7 @@ function Client() {
     this.connection = new net.Socket();
     this.connection.setEncoding('utf-8');
     this.connection.on('error', function (e) {
-      if(e.code == 'ECONNREFUSED')
-        console.log('TCP server offline');
+      
     });
     this.connection.on('data', function(msg){
       console.log("TCP connection received: '"+msg+"'");
@@ -40,7 +39,10 @@ function Client() {
     this.send = function(msg) {
       var conn = this.connection;
       if(conn.writable)
+      {
         this.connection.write(msg);
+        console.log(msg);
+      }
       else
         console.log("TCP client failed to send: '"+msg+"'");
     };

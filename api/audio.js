@@ -20,7 +20,6 @@ exports.zone = function(req, res) {
 }
 
 exports.create = function(req, res) {
-  // var zone = require('../config/database').zone;
   audio.create({
     zone_id:req.body.zone,
     name:req.body.name,
@@ -29,31 +28,22 @@ exports.create = function(req, res) {
   });
 }
 
-exports.volume = function(req, res) {
-  // zone, setting
+exports.state = function(req, res) {
   var vol     = req.body.volume
+    , state   = req.body.state
     , zone    = req.params.id
-    , client  = require('../app').client()
-    , on      = vol == 0
-    , msg     = on? 'audiocontrol '+zone+' 3' : 'audiovolume '+zone+' '+vol;
-  //Check we have proper params
-  if(zone < 1 || zone > 8 || zone == undefined)
-    return res.json({'error':'Audio Zone must be 1-8'});
-  if(vol < 0 || vol > 100 || zone == undefined)
-    return res.json({'error':'Volume must be 0-100'});
-  
-  //Tell TCP server to change volume for zone
-  client.send(msg);
-  console.log(msg);
-  //Update db, client response
+    , client  = require('../app').client();
+    
+  audio.checkZone(res, zone);
   audio.find({where:{ zone_id:zone }}).success(function(a){
-    if(a != undefined) {
-      a.volume = vol;
-      a.save();
-      res.json(a);
-    }
-    else
-      res.json(null);
-  });
+    //Turn on
+    if(state == 'on' || (!a.active && vol > 0))
+      a.setState(client, res, 1);
+    //Turn off
+    if(state == 'off')
+      a.setState(client, res, 0);
+      
+    if(vol >= 0 && vol <= 100 && vol != undefined)
+      a.setVolume(client, res, vol)
+  })
 }
-

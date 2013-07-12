@@ -38,12 +38,14 @@ exports.state = function(req, res) {
   audio.find({where:{ zone:zone }}).success(function(a){
     //Turn on
     if(state == 'on' || (!a.active && vol > 0))
-      a.setState(client, res, 1);
+      a.setState(client, 1);
     //Turn off
     if(state == 'off')
-      a.setState(client, res, 0);
-      
+      a.setState(client, 0);
+    //Set volume
     if(vol >= 0 && vol <= 100 && vol != undefined)
-      a.setVolume(client, res, vol)
+      a.setVolume(client, vol)
+    //Respond to client
+    res.json(a);
   })
 }

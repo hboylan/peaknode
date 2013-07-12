@@ -8,15 +8,13 @@ module.exports = function(sequelize, DataTypes) {
     freezeTableName: true,
     instanceMethods:{
       
-      setState:function(client, res, state){
-        console.log('state:'+state);
+      setState:function(client, state){
         client.send('audiocontrol '+this.zone+' '+state);
         this.active = (state)? true : false;
         this.save();
-        res.json(this);
       },
       
-      setVolume:function(client, res, vol){
+      setVolume:function(client, vol){
         var mute    = vol == 0
           , msg     = mute? 'audiocontrol '+this.zone+' 3' : 'audiovolume '+this.zone+' '+vol;
   
@@ -24,7 +22,6 @@ module.exports = function(sequelize, DataTypes) {
         this.active = true;
         this.volume = vol;
         this.save();
-        res.json(this);
       },
       
     },

@@ -22,7 +22,7 @@ exports.create = function(req, res) {
     realname: req.body.realname,
     email: email
   }).success(function(user) {
-    res.jsonp(201, user.parse());
+    res.jsonp(201, user.parse(true));
   }).error(function(err) {
     res.jsonp(400, { error:err.message, params:req.body });
   })
@@ -33,8 +33,10 @@ exports.login = function(req, res) {
     username:req.body.username,
     password:req.body.password
   }}).success(function(u){
-    res.cookie('user', JSON.stringify(u.parse()));
-    res.jsonp(201, { success:true });
+    if(u == undefined) this.error({ message:'Invalid user' })
+    u = u.parse(true);
+    res.cookie('user', u);
+    res.json({ success:true, user:u });
   }).error(function(err){
     res.jsonp(400, { error:err.message, params:req.body });
   })

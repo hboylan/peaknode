@@ -15,8 +15,8 @@ module.exports = function(sequelize, DataTypes) {
       },
       
       //Parses the user model for client use
-      parse:function(){
-        this.pinkey = this.encrypted();
+      parse:function(showPin){
+        this.pinkey = showPin? this.encrypted() : undefined;
         this.password = undefined;
         return this;
       },

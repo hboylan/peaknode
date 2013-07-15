@@ -10,7 +10,7 @@ module.exports = function(sequelize, DataTypes) {
       
       setState:function(client, state){
         client.send('audiocontrol '+this.zone+' '+state);
-        this.active = (state)? true : false;
+        this.active = state? true : false;
         this.save();
       },
       

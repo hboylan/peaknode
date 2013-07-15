@@ -9,10 +9,10 @@ exports.test = function(req, res){
 
 exports.status = function(req, res){
   var pinkey  = req.query.pinkey
-    , uid     = req.query.uid;
+    , uid     = req.query.id;
     
   //Ensure user has permission
-  user.find(uid).success(function(u){
+  user.find(id).success(function(u){
     if(u == undefined || pinkey != u.encrypted())
       res.json({ error:'Invalid user' });
     
@@ -21,7 +21,6 @@ exports.status = function(req, res){
   })
 }
 
-//Need to figure out requests to tcp server
 exports.setStatus = function(req, res){
   var client = require('../app').client()
     , state = req.body.state

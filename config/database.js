@@ -13,7 +13,7 @@ config.models.forEach(function(m){
   models[m].sync();
 });
 
-// models['zone'].hasOne(models['audio'], { as:'Audio' });
+models['zone'].hasOne(models['audio'], { as:'Audio', primaryKey:'zone_id' });
 
 sequelize.sync();
 module.exports = models;

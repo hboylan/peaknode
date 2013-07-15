@@ -24,20 +24,20 @@ exports.status = function(req, res){
 //Need to figure out requests to tcp server
 exports.setStatus = function(req, res){
   var client = require('../app').client()
-    , status = req.body.status
+    , state = req.body.state
     , pinkey = req.body.pinkey
-    , uid = req.body.uid;
+    , id = req.body.id;
     
   //Ensure user has permission
-  user.find(uid).success(function(u){
+  user.find(id).success(function(u){
     if(u == undefined || pinkey != u.encrypted())
       res.json({ error:'Invalid user' });
     
     //Send command thru TCP
-    client.send('security '+status);
+    client.send('security '+state);
     
-    //Log/return security status change
-    sec.create({ status:status }).success(function(entry){
+    //Log/return security state change
+    sec.create({ state:state }).success(function(entry){
       res.json(entry);
     })
   });

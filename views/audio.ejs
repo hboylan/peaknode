@@ -9,11 +9,12 @@
   
   <script type="text/javascript">
     $(function(){
+      var host = '157.182.194.137:8000';
       //Empty current zones div
       $('#zones').html('');
       
       //Retrieve connected audio zones
-      $.get('http://127.0.0.1:8000/api/audio', function(data){
+      $.get('http://'+host+'/api/audio', function(data){
         console.log(data);
         data.zones.forEach(function(z){
           //Parse template for zone and append in view

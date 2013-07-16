@@ -1,7 +1,7 @@
 var audio = require('../config/database').audio;
 
 exports.zones = function(req, res) {
-  audio.all().success(function(zones){
+  audio.all({ order:'zoneId ASC' }).success(function(zones){
     zones.forEach(function(a){
       a = a.parse();
     })

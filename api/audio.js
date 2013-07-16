@@ -2,14 +2,11 @@ var audio = require('../config/database').audio;
 
 exports.zones = function(req, res) {
   audio.all({ order:'zone ASC' }).success(function(zones){
-    zones.forEach(function(a){
-      a = a.parse();
-    })
+    zones.forEach(function(a){ a = a.parse(); })
     res.json({
       'zones':zones,
       'sources':[{
-        id:1,
-        source_id:1,
+        sourceId:1,
         name:"Hugh's iPhone",
       }]
     });

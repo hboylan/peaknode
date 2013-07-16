@@ -2,7 +2,7 @@ module.exports = function(sequelize, DataTypes) {
   return sequelize.define('audio', {
     name: DataTypes.STRING,
     zone: { type:DataTypes.INTEGER, validate:{ min:1, max:8 }},
-    source: { type:DataTypes.INTEGER, validate:{ min:1, max:8 }},
+    source: { type:DataTypes.INTEGER, validate:{ min:1, max:8 }, defaultValue:1 },
     active: { type:DataTypes.BOOLEAN, defaultValue:false },
     mute: { type:DataTypes.BOOLEAN, defaultValue:false },
     volume: { type:DataTypes.INTEGER, validate:{ min:0, max:100 }, defaultValue:0 },

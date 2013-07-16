@@ -19,6 +19,6 @@
     { "name":"Bedroom", "id":4 },
     { "name":"Bathroom", "id":5 },
     { "name":"Utility", "id":6 },
-    { "name":"Deck", "id":7 }
+    { "name":"Dec", "id":7 }
   ]
 }

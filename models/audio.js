@@ -3,6 +3,7 @@ module.exports = function(sequelize, DataTypes) {
     name: DataTypes.STRING,
     zone: { type:DataTypes.INTEGER, validate:{ min:1, max:8 }},
     active: { type:DataTypes.BOOLEAN, defaultValue:false },
+    mute: { type:DataTypes.BOOLEAN, defaultValue:false },
     volume: { type:DataTypes.INTEGER, validate:{ min:0, max:100 }, defaultValue:0 },
   }, {
     freezeTableName: true,

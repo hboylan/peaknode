@@ -13,7 +13,7 @@
       $('#zones').html('');
       
       //Retrieve connected audio zones
-      $.get('http://localhost:8000/api/audio', function(data){
+      $.get('http://127.0.0.1:8000/api/audio', function(data){
         console.log(data);
         data.zones.forEach(function(z){
           //Parse template for zone and append in view

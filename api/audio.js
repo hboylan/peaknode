@@ -17,7 +17,7 @@ exports.zones = function(req, res) {
 }
 
 exports.zone = function(req, res) {
-  audio.find({ zone:req.params.id }).success(function(a){
+  audio.find({ where:{ zone:req.params.id }}).success(function(a){
     res.json(a.parse());
   });
 }

@@ -11,5 +11,14 @@
   "db_type":"mysql",
   
   "cookie_secret":"cookiemonster",
-  "models":["user", "zone", "audio", "security"]
+  "models":["user", "zone", "audio", "security"],
+  "zones":[
+    { "name":"Living Room", "id":1 },
+    { "name":"Kitchen", "id":2 },
+    { "name":"Master Bedroom", "id":3 },
+    { "name":"Bedroom", "id":4 },
+    { "name":"Bathroom", "id":5 },
+    { "name":"Utility", "id":6 },
+    { "name":"Deck", "id":7 }
+  ]
 }

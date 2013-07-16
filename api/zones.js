@@ -15,7 +15,7 @@ exports.show = function(req, res) {
 exports.create = function(req, res) {
   zone.create({
     name:req.body.name,
-    zone_id:req.body.zone
+    zoneId:req.body.zone
   }).success(function(zone){
     res.json(zone);
   });

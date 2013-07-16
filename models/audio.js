@@ -11,7 +11,7 @@ module.exports = function(sequelize, DataTypes) {
       parse:function(){
         this.id = this.createdAt = this.updatedAt = undefined;
         return this;
-      }
+      },
       
       setState:function(client, state){
         client.send('audiocontrol '+this.zone+' '+state);

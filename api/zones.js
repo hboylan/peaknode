@@ -7,7 +7,7 @@ exports.list = function(req, res) {
 };
 
 exports.show = function(req, res) {
-  zone.find({ where:{ id:req.params.id }}).success(function(zone){
+  zone.find({ where:{ zoneId:req.params.id }}).success(function(zone){
     res.json(zone);
   });
 };

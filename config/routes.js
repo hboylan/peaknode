@@ -1,10 +1,4 @@
 module.exports = function(app) {
-  
-  /*** Website ***/
-  var web = require('../views/controller');
-  app.get('/', web.index);
-  app.get('/security', web.security);
-  app.get('/media', web.media);
 
   /*** API ***/
   // users
@@ -33,4 +27,7 @@ module.exports = function(app) {
   app.get('/api/security/:status', sec.test);
   app.get('/api/security', sec.status);
   app.post('/api/security', sec.setStatus);
+  
+  /*** Website ***/
+  app.get('*', function(req, res){ res.render('index'); });
 };

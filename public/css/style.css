@@ -1,6 +1,10 @@
 @import url('bootstrap.min.css');
 @import url('bootstrap-responsive.min.css');
 
+body {
+  margin-top:80px;
+}
+
 /* My CSS Selectors */
 .logo {
   width:50px;

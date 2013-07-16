@@ -1,7 +1,7 @@
 var zone = require('../config/database').zone;
 
 exports.list = function(req, res) {
-  zone.all().success(function(zones){
+  zone.all({ order:'zoneId ASC' }).success(function(zones){
     zones.forEach(function(z){
       z = z.parse();
     });

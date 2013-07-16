@@ -3,7 +3,7 @@ exports.index = function(req, res){
 }
 
 exports.media = function(req, res){
-  res.render('audio');
+  res.render('index', { page:'audio' });
 }
 
 exports.security = function(req, res){

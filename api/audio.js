@@ -2,6 +2,9 @@ var audio = require('../config/database').audio;
 
 exports.zones = function(req, res) {
   audio.all().success(function(zones){
+    zones.forEach(function(a){
+      a = a.parse();
+    })
     res.json({
       'zones':zones,
       'sources':[{
@@ -15,7 +18,7 @@ exports.zones = function(req, res) {
 
 exports.zone = function(req, res) {
   audio.find({ zone:req.params.id }).success(function(a){
-    res.json(a);
+    res.json(a.parse());
   });
 }
 
@@ -24,7 +27,7 @@ exports.create = function(req, res) {
     , n = req.body.name;
   if(z == undefined || n == undefined) res.json({ error:'Check params supplied' });
   audio.create({ zone:z, name:n }).success(function(a){
-    res.json(a);
+    res.json(a.parse());
   });
 }
 
@@ -46,6 +49,6 @@ exports.state = function(req, res) {
     if(vol >= 0 && vol <= 100 && vol != undefined)
       a.setVolume(client, vol)
     //Respond to client
-    res.json(a);
+    res.json(a.parse());
   })
 }

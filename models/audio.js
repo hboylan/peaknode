@@ -8,6 +8,11 @@ module.exports = function(sequelize, DataTypes) {
     freezeTableName: true,
     instanceMethods:{
       
+      parse:function(){
+        this.id = this.createdAt = this.updatedAt = undefined;
+        return this;
+      }
+      
       setState:function(client, state){
         client.send('audiocontrol '+this.zone+' '+state);
         this.active = state? true : false;

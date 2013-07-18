@@ -23,16 +23,16 @@ exports.resync = function(req, res) {
     res.json({ error:'Invalid credentials' });
 
   //Drop the table and resync with config file
-  Zone.drop().success(function(e){
-    Zone.sync().success(function(e){
+  Zone.drop().success(function(){
+    Zone.sync().success(function(){
       zones = config.zones;
       zones.forEach(function(z){
         db.zone.create({ name:z.name, zoneId:z.id });
       });
     
       //Drop the table and resync with config file
-      db.audio.drop().success(function(e){
-        db.audio.sync().success(function(e){
+      db.audio.drop().success(function(){
+        db.audio.sync().success(function(){
           audio = config.audio;
           audio.forEach(function(a){
             db.audio.create({ audioId:a.id, zoneId:a.zone, name:a.name });

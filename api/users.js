@@ -30,12 +30,12 @@ exports.create = function(req, res) {
 
 exports.login = function(req, res) {
   User.logout(res);
-  User.find({ where:{ username:u, password:p }})
+  User.find({ where:{ username:req.body.username, password:req.body.password }})
     .success(function(u){
       if(u == undefined)  return res.json({ error:'Invalid user' });
       u = u.parse(true);
       res.cookie('user', u);
-      res.json({ success:true, user:u });
+      res.json(u);
     })
     .error(function(err){
       res.json({ error:'Invalid username/password' });

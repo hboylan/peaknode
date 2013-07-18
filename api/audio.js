@@ -1,7 +1,6 @@
 var db      = require('../config/database')
   , config  = require('../config/config.json')
-  , Audio   = db.audio
-  , User    = db.user;
+  , Audio   = db.audio;
 
 exports.zones = function(req, res) {
   Audio.list(res, function(zones){

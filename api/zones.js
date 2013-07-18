@@ -11,18 +11,10 @@ exports.list = function(req, res) {
 }
 
 exports.show = function(req, res) {
-  Zone.find({ where:{ zoneId:req.params.id }}).success(function(zone){
+  Zone.find({ include:[db.audio], where:{ zoneId:req.params.id }}).success(function(zone){
+    zone.audio.forEach(function(a){ a = a.parse(); })
     res.json(zone.parse());
   });
-}
-
-exports.create = function(req, res) {
-  Zone.create({
-    name:req.body.name,
-    zoneId:req.body.zone
-  }).success(function(zone){
-    res.json(zone.parse());
-  })
 }
 
 exports.resync = function(req, res) {
@@ -33,10 +25,11 @@ exports.resync = function(req, res) {
     Zone.list(res, function(zones){
       //Clear existing zones
       zones.forEach(function(z){ z.destroy() });
-      for(n in config.zones){
-        var zone = config.zones[n];
-        Zone.create({ name:zone.name, zoneId:zone.id });
-      }
+      //Create new zones from config file
+      zones = config.zones;
+      zones.forEach(function(z){
+        Zone.create({ name:z.name, zoneId:z.id });
+      })
       res.json({ success:true });
     })
   })

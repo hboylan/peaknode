@@ -11,7 +11,8 @@ var models = {};
 ['user', 'zone', 'security', 'audio'].forEach(function(m){
   models[m] = sequelize.import(__dirname + '/../models/'+m);
 });
-// models['zone'].hasOne(models['audio'], { as:'Audio' });
+models['zone'].hasMany(models['audio'], { foreignKey:'zoneId' });
+models['audio'].belongsTo(models['zone'], { foreignKey:'zoneId' });
 
 //Sync zones with config file
 sequelize.sync().done(function(e, a){

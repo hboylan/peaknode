@@ -1,7 +1,10 @@
-var audio = require('../config/database').audio;
+var db      = require('../config/database')
+  , config  = require('../config/config.json')
+  , Audio   = db.audio
+  , User    = db.user;
 
 exports.zones = function(req, res) {
-  audio.all({ order:'zone ASC' }).success(function(zones){
+  Audio.list(res, function(zones){
     zones.forEach(function(a){ a = a.parse(); })
     res.json({
       'zones':zones,
@@ -14,16 +17,7 @@ exports.zones = function(req, res) {
 }
 
 exports.zone = function(req, res) {
-  audio.find({ where:{ zone:req.params.id }}).success(function(a){
-    res.json(a.parse());
-  });
-}
-
-exports.create = function(req, res) {
-  var z = req.body.zone
-    , n = req.body.name;
-  if(z == undefined || n == undefined) res.json({ error:'Check params supplied' });
-  audio.create({ zone:z, name:n }).success(function(a){
+  Audio.find({ where:{ audioId:req.params.id }}).success(function(a){
     res.json(a.parse());
   });
 }
@@ -34,7 +28,7 @@ exports.state = function(req, res) {
     , zone    = req.params.id
     , client  = require('../app').client();
     
-  audio.find({where:{ zone:zone }}).success(function(a){
+  Audio.find({where:{ zone:zone }}).success(function(a){
     if(a == undefined) res.json({ error:'Invalid zone' });
     //Turn on
     if(state == 'on' || (!a.active && vol > 0))
@@ -47,5 +41,24 @@ exports.state = function(req, res) {
       a.setVolume(client, vol)
     //Respond to client
     res.json(a.parse());
+  })
+}
+
+exports.resync = function(req, res) {
+  var username  = req.query.username
+    , password  = req.query.password;
+  
+  User.login(res, username, password, function(u){
+    Audio.list(res, function(zones){
+      //Clear existing audio zones
+      zones.forEach(function(z){ z.destroy() });
+      //Create new audio zones from config file
+      audio = config.audio;
+      audio.forEach(function(a){
+        Audio.create({ audioId:a.id, zoneId:a.zone, name:a.name });
+      })
+      Audio.sync();
+      res.json({ success:true });
+    })
   })
 }

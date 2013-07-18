@@ -12,14 +12,13 @@ module.exports = function(app) {
   // zones
   var zones = require('../api/zones');
   app.get('/api/zones', zones.list);
-  app.post('/api/zones', zones.create);
   app.get('/api/zones/resync', zones.resync);
   app.get('/api/zones/:id', zones.show);
   
   // audio
   var audio = require('../api/audio');
   app.get('/api/audio', audio.zones);
-  app.post('/api/audio', audio.create);
+  app.get('/api/audio/resync', audio.resync);
   app.get('/api/audio/:id', audio.zone);
   app.post('/api/audio/:id', audio.state);
   
@@ -29,8 +28,11 @@ module.exports = function(app) {
   app.post('/api/security', sec.setStatus);
   
   //lighting
-  var lights = require('../api/lighting');
-  app.get('/api/lights', lights.list);
+  // var lights = require('../api/lighting');
+  // app.get('/api/lights', lights.list);
+  
+  //API catch-all
+  app.get('/api/*', function(req, res){ res.json({ error:'Invalid API call' })});
   
   /*** Website ***/
   app.get('*', function(req, res){ res.render('index'); });

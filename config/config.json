@@ -13,12 +13,22 @@
   "cookie_secret":"cookiemonster",
   "models":["user", "zone", "audio", "security"],
   "zones":[
-    { "name":"Living Room", "id":1 },
-    { "name":"Kitchen", "id":2 },
-    { "name":"Master Bedroom", "id":3 },
-    { "name":"Bedroom", "id":4 },
-    { "name":"Bathroom", "id":5 },
-    { "name":"Utility", "id":6 },
-    { "name":"Deck", "id":7 }
+    { "id":1, "name":"Living Room" },
+    { "id":2, "name":"Kitchen" },
+    { "id":3, "name":"Master Bedroom" },
+    { "id":4, "name":"Bedroom" },
+    { "id":5, "name":"Bathroom" },
+    { "id":6, "name":"Utility" },
+    { "id":7, "name":"Deck" }
+  ],
+  "audio":[
+    { "id":1, "zone":1, "name":"Living Room L"},
+    { "id":2, "zone":1, "name":"Living Room Right"},
+    { "id":3, "zone":2, "name":"Kitchen"},
+    { "id":4, "zone":3, "name":"Master Bedroom"},
+    { "id":5, "zone":4, "name":"Bedroom"},
+    { "id":6, "zone":5, "name":"Bathroom"},
+    { "id":7, "zone":6, "name":"Deck Front"},
+    { "id":8, "zone":7, "name":"Deck Back"}
   ]
 }

@@ -1,5 +1,5 @@
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('zone', {
+  return sequelize.define('light', {
     name: DataTypes.STRING,
     zoneId: { type:DataTypes.INTEGER, validate:{ min:1, max:8 }},
   }, {
@@ -13,7 +13,7 @@ module.exports = function(sequelize, DataTypes) {
     classMethods:{
       list:function(res, success){
         this.all({ order:'zoneId ASC' }).success(success);
-      },
+      }
     }
   });
 };

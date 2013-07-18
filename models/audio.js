@@ -32,12 +32,5 @@ module.exports = function(sequelize, DataTypes) {
       },
       
     },
-    
-    classMethods:{
-      //Helper functions
-      checkZone:function(res, zone){
-        if(zone < 1 || zone > 8 || zone == undefined) res.json({'error':'Audio Zone must be 1-8'});
-      },
-    }
   });
 };

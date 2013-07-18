@@ -12,8 +12,9 @@ module.exports = function(app) {
   // zones
   var zones = require('../api/zones');
   app.get('/api/zones', zones.list);
-  app.get('/api/zones/:id', zones.show);
   app.post('/api/zones', zones.create);
+  app.get('/api/zones/resync', zones.resync);
+  app.get('/api/zones/:id', zones.show);
   
   // audio
   var audio = require('../api/audio');
@@ -24,9 +25,12 @@ module.exports = function(app) {
   
   //security
   var sec = require('../api/security');
-  app.get('/api/security/:status', sec.test);
   app.get('/api/security', sec.status);
   app.post('/api/security', sec.setStatus);
+  
+  //lighting
+  var lights = require('../api/lighting');
+  app.get('/api/lights', lights.list);
   
   /*** Website ***/
   app.get('*', function(req, res){ res.render('index'); });

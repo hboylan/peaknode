@@ -13,22 +13,9 @@ var models = {};
 });
 // models['zone'].hasOne(models['audio'], { as:'Audio' });
 
+//Sync zones with config file
 sequelize.sync().done(function(e, a){
-  var Zone = models['zone'];
-  Zone.all().success(function(zones){
-    if(zones == undefined || zones.length != config.zones.length)
-    {
-      //Reset zones
-      if(zones != undefined)
-        for(z in zones)
-          zones[z].destroy();
-      for(n in config.zones)
-      {
-        var zone = config.zones[n];
-        Zone.create({ name:zone.name, zoneId:zone.id });
-      }
-    }
-  });
+  console.log('Finished syncing DB');
 });
 
 module.exports = models;

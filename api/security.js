@@ -2,11 +2,6 @@ var db    = require('../config/database')
   , sec   = db.security
   , user  = db.user;
 
-exports.test = function(req, res){
-  require('../app').client().send('security '+req.params.status);
-  res.json({ status:req.params.status });
-}
-
 exports.status = function(req, res){
   var pinkey  = req.query.pinkey
     , uid     = req.query.id;
@@ -37,7 +32,7 @@ exports.setStatus = function(req, res){
     
     //Log/return security state change
     sec.create({ state:state }).success(function(entry){
-      res.json(entry);
+      res.json(entry.parse());
     })
-  });
+  })
 }

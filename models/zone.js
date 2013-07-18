@@ -8,6 +8,12 @@ module.exports = function(sequelize, DataTypes) {
         this.id = this.updatedAt = this.createdAt = undefined;
         return this;
       }
+    },
+    
+    classMethods:{
+      list:function(res, success){
+        this.all({ order:'zoneId ASC' }).success(success);
+      }
     }
   });
 };

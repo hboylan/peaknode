@@ -34,8 +34,8 @@ exports.state = function(req, res) {
     , zone    = req.params.id
     , client  = require('../app').client();
     
-  audio.checkZone(res, zone);
   audio.find({where:{ zone:zone }}).success(function(a){
+    if(a == undefined) res.json({ error:'Invalid zone' });
     //Turn on
     if(state == 'on' || (!a.active && vol > 0))
       a.setState(client, true);

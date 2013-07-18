@@ -22,7 +22,7 @@
     { "id":7, "name":"Deck" }
   ],
   "audio":[
-    { "id":1, "zone":1, "name":"Living Room L"},
+    { "id":1, "zone":1, "name":"Living Room Left"},
     { "id":2, "zone":1, "name":"Living Room Right"},
     { "id":3, "zone":2, "name":"Kitchen"},
     { "id":4, "zone":3, "name":"Master Bedroom"},

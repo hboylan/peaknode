@@ -43,22 +43,3 @@ exports.state = function(req, res) {
     res.json(a.parse());
   })
 }
-
-exports.resync = function(req, res) {
-  var username  = req.query.username
-    , password  = req.query.password;
-  
-  User.login(res, username, password, function(u){
-    Audio.list(res, function(zones){
-      //Clear existing audio zones
-      zones.forEach(function(z){ z.destroy() });
-      //Create new audio zones from config file
-      audio = config.audio;
-      audio.forEach(function(a){
-        Audio.create({ audioId:a.id, zoneId:a.zone, name:a.name });
-      })
-      Audio.sync();
-      res.json({ success:true });
-    })
-  })
-}

@@ -24,17 +24,6 @@ module.exports = function(sequelize, DataTypes) {
     },
     
     classMethods: {
-      login:function(res, u, p, success){
-        this.find({ where:{ username:u, password:p }})
-          .success(function(u){
-            if(u == undefined)  return res.json({ error:'Invalid user' });
-            success(u);
-          })
-          .error(function(err){
-            res.json({ error:'Invalid username/password' });
-          });
-      },
-      
       logout:function(res){
         res.clearCookie('user', { path: '/' }); 
       }

@@ -30,11 +30,16 @@ exports.create = function(req, res) {
 
 exports.login = function(req, res) {
   User.logout(res);
-  User.login(res, req.body.username, req.body.password, function(u){
-    u = u.parse(true);
-    res.cookie('user', u);
-    res.json({ success:true, user:u });
-  });
+  User.find({ where:{ username:u, password:p }})
+    .success(function(u){
+      if(u == undefined)  return res.json({ error:'Invalid user' });
+      u = u.parse(true);
+      res.cookie('user', u);
+      res.json({ success:true, user:u });
+    })
+    .error(function(err){
+      res.json({ error:'Invalid username/password' });
+    })
 }
 
 exports.logout = function(req, res) {

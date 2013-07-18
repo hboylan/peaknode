@@ -18,7 +18,6 @@ module.exports = function(app) {
   // audio
   var audio = require('../api/audio');
   app.get('/api/audio', audio.zones);
-  app.get('/api/audio/resync', audio.resync);
   app.get('/api/audio/:id', audio.zone);
   app.post('/api/audio/:id', audio.state);
   

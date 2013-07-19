@@ -28,7 +28,7 @@
     { "id":4, "zone":3, "name":"Master Bedroom"},
     { "id":5, "zone":4, "name":"Bedroom"},
     { "id":6, "zone":5, "name":"Bathroom"},
-    { "id":7, "zone":6, "name":"Deck Front"},
+    { "id":7, "zone":7, "name":"Deck Front"},
     { "id":8, "zone":7, "name":"Deck Back"}
   ]
 }

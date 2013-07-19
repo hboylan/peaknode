@@ -17,7 +17,6 @@ module.exports = function(sequelize, DataTypes) {
       setState:function(client, state){
         client.send('audiocontrol '+this.audioId+' '+state);
         this.state = state;
-        this.save();
       },
       
       setVolume:function(client, vol){
@@ -26,8 +25,7 @@ module.exports = function(sequelize, DataTypes) {
   
         client.send(msg);
         this.state = 'on';
-        this.volume = vol;
-        this.save();
+        this.volume = parseInt(vol, 10);
       },
       
     },

@@ -27,18 +27,20 @@ exports.state = function(req, res) {
     , zone    = req.params.id
     , client  = require('../app').client();
     
-  Audio.find({where:{ zone:zone }}).success(function(a){
+  Audio.find({where:{ audioId:zone }}).success(function(a){
     if(a == undefined) res.json({ error:'Invalid zone' });
     //Turn on
     if(state == 'on' || (a.state == 'off' && vol))
       a.setState(client, 'on');
     //Turn off
-    else if(state == ('off' || 'mute'))
+    else if(state == 'off' || state == 'mute')
       a.setState(client, state);
     //Set volume
     if(vol >= 0 && vol <= 100 && vol != undefined)
-      a.setVolume(client, vol)
-    //Respond to client
-    res.json(a.parse());
+      a.setVolume(client, vol);
+    a.save().success(function(a){
+      //Respond to client
+      res.json(a.parse());
+    })
   })
 }

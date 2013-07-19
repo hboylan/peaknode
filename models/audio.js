@@ -1,7 +1,6 @@
 module.exports = function(sequelize, DataTypes) {
   return sequelize.define('audio', {
     name: DataTypes.STRING,
-    audioId: { type:DataTypes.INTEGER, validate:{ min:1, max:8 }},
     source: { type:DataTypes.INTEGER, validate:{ min:1, max:8 }, defaultValue:1 },
     state: { type:DataTypes.ENUM, values:['on', 'off', 'mute'], defaultValue:'off' },
     volume: { type:DataTypes.INTEGER, validate:{ min:0, max:100 }, defaultValue:0 },
@@ -10,7 +9,7 @@ module.exports = function(sequelize, DataTypes) {
     instanceMethods:{
       
       parse:function(){
-        this.id = this.createdAt = this.updatedAt = undefined;
+        this.createdAt = this.updatedAt = undefined;
         return this;
       },
       
@@ -29,12 +28,5 @@ module.exports = function(sequelize, DataTypes) {
       },
       
     },
-    
-    classMethods: {
-      
-      list:function(success){
-        this.all({ order:'audioId ASC' }).success(success);
-      }
-    }
   });
 };

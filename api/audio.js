@@ -3,7 +3,7 @@ var db      = require('../config/database')
   , Audio   = db.audio;
 
 exports.list = function(req, res) {
-  Audio.list(function(zones){
+  Audio.all().success(function(zones){
     zones.forEach(function(a){ a = a.parse(); })
     res.json({
       'zones':zones,
@@ -16,7 +16,7 @@ exports.list = function(req, res) {
 }
 
 exports.zone = function(req, res) {
-  Audio.find({ where:{ audioId:req.params.id }}).success(function(a){
+  Audio.find(req.params.id).success(function(a){
     res.json(a.parse());
   });
 }
@@ -27,7 +27,7 @@ exports.state = function(req, res) {
     , zone    = req.params.id
     , client  = require('../app').client();
     
-  Audio.find({where:{ audioId:zone }}).success(function(a){
+  Audio.find(zone).success(function(a){
     if(a == undefined) res.json({ error:'Invalid zone' });
     //Turn on
     if(state == 'on' || (a.state == 'off' && vol))

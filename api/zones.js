@@ -9,13 +9,31 @@ exports.list = function(req, res) {
   })
 }
 
+function contains(arr, obj){
+  for(o in arr)
+    if(arr[o].id == obj.id)
+      return true;
+  return false;
+}
+
 exports.show = function(req, res) {
-  Zone.find({ include:[db.audio], where:{ zoneId:req.params.id }}).success(function(zone){
-    if(zone == undefined) return res.json({ error:'Invalid zone'});
-    
-    zone.audio.forEach(function(a){ a = a.parse(); })
-    res.json(zone.parse());
-  });
+  Zone.find({ include:[db.light, db.audio], where:{ zoneId:req.params.id } })
+    .success(function(zone){
+      if(zone == undefined) return res.json({ error:'Invalid zone'});
+
+      var audio = [], lights = [];
+      zone.audio.forEach(function(a){
+        if(!contains(audio, a)) audio.push(a);
+      })
+      zone.lights.forEach(function(l){
+        if(!contains(lights, l)) lights.push(l);
+      })
+      audio.forEach(function(a){ a = a.parse(); })
+      lights.forEach(function(l){ l = l.parse(); })
+      zone.audio = audio;
+      zone.lights = lights;
+      res.json(zone.parse());
+    })
 }
 
 exports.resync = function(req, res) {

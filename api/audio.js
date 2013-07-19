@@ -2,8 +2,8 @@ var db      = require('../config/database')
   , config  = require('../config/config.json')
   , Audio   = db.audio;
 
-exports.zones = function(req, res) {
-  Audio.list(res, function(zones){
+exports.list = function(req, res) {
+  Audio.list(function(zones){
     zones.forEach(function(a){ a = a.parse(); })
     res.json({
       'zones':zones,
@@ -30,11 +30,11 @@ exports.state = function(req, res) {
   Audio.find({where:{ zone:zone }}).success(function(a){
     if(a == undefined) res.json({ error:'Invalid zone' });
     //Turn on
-    if(state == 'on' || (!a.active && vol > 0))
-      a.setState(client, true);
+    if(state == 'on' || (a.state == 'off' && vol))
+      a.setState(client, 'on');
     //Turn off
-    if(state == 'off')
-      a.setState(client, false);
+    else if(state == ('off' || 'mute'))
+      a.setState(client, state);
     //Set volume
     if(vol >= 0 && vol <= 100 && vol != undefined)
       a.setVolume(client, vol)

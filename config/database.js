@@ -7,16 +7,21 @@ var sequelize = new Sequelize(config.database, config.username, config.password,
   pool: { maxConnections: 15, maxIdleTime: 30}
 });
 
+//Instantiate models
 var models = {};
-['user', 'zone', 'security', 'audio'].forEach(function(m){
+['user', 'zone', 'security', 'audio', 'light'].forEach(function(m){
   models[m] = sequelize.import(__dirname + '/../models/'+m);
 });
-models['zone'].hasMany(models['audio'], { foreignKey:'zoneId' });
-models['audio'].belongsTo(models['zone'], { foreignKey:'zoneId' });
 
-//Sync zones with config file
-sequelize.sync().done(function(e, a){
-  console.log('Finished syncing DB');
-});
+//Create model relationships
+var Zone  = models.zone
+  , Audio = models.audio
+  , Light = models.light;
+
+Zone.hasMany(Audio);
+Zone.hasMany(Light);
+
+//Sync updates
+sequelize.sync();
 
 module.exports = models;

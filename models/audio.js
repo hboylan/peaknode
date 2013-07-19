@@ -3,8 +3,7 @@ module.exports = function(sequelize, DataTypes) {
     name: DataTypes.STRING,
     audioId: { type:DataTypes.INTEGER, validate:{ min:1, max:8 }},
     source: { type:DataTypes.INTEGER, validate:{ min:1, max:8 }, defaultValue:1 },
-    active: { type:DataTypes.BOOLEAN, defaultValue:false },
-    mute: { type:DataTypes.BOOLEAN, defaultValue:false },
+    state: { type:DataTypes.ENUM, values:['on', 'off', 'mute'], defaultValue:'off' },
     volume: { type:DataTypes.INTEGER, validate:{ min:0, max:100 }, defaultValue:0 },
   }, {
     freezeTableName: true,
@@ -17,7 +16,7 @@ module.exports = function(sequelize, DataTypes) {
       
       setState:function(client, state){
         client.send('audiocontrol '+this.audioId+' '+state);
-        this.active = state? true : false;
+        this.state = state;
         this.save();
       },
       
@@ -26,7 +25,7 @@ module.exports = function(sequelize, DataTypes) {
           , msg     = mute? 'audiocontrol '+this.audioId+' 3' : 'audiovolume '+this.audioId+' '+vol;
   
         client.send(msg);
-        this.active = true;
+        this.state = 'on';
         this.volume = vol;
         this.save();
       },
@@ -35,7 +34,7 @@ module.exports = function(sequelize, DataTypes) {
     
     classMethods: {
       
-      list:function(res, success){
+      list:function(success){
         this.all({ order:'audioId ASC' }).success(success);
       }
     }

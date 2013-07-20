@@ -19,8 +19,6 @@ var Zone  = models.zone
   , Light = models.light;
 
 Zone.hasMany(Audio).hasMany(Light);
-Audio.belongsTo(Zone);
-Light.belongsTo(Zone);
 
 //Sync updates
 sequelize.sync();

@@ -9,31 +9,20 @@ exports.list = function(req, res) {
   })
 }
 
-function contains(arr, obj){
-  for(o in arr)
-    if(arr[o].id == obj.id)
-      return true;
-  return false;
-}
-
 exports.show = function(req, res) {
-  Zone.find(req.params.id, { include:[db.light, db.audio] })
-    .success(function(zone){
-      if(zone == undefined) return res.json({ error:'Invalid zone'});
-
-      var audio = [], lights = [];
-      // zone.audio.forEach(function(a){
-      //   if(!contains(audio, a)) audio.push(a);
-      // })
-      // zone.lights.forEach(function(l){
-      //   if(!contains(lights, l)) lights.push(l);
-      // })
-      // audio.forEach(function(a){ a = a.parse(); })
-      // lights.forEach(function(l){ l = l.parse(); })
-      // zone.audio = audio;
-      // zone.lights = lights;
-      res.json(zone.parse());
+  Zone.find(req.params.id, { include:[db.audio] }).success(function(zone){
+    if(zone == undefined) return res.json({ error:'Invalid zone'});
+    
+    db.audio.findAll({ where:{ zoneId:zone.id }}).success(function(audioZones){
+      if(audioZones != undefined) audioZones.forEach(function(a){ a = a.parse(); })
+      
+      db.light.findAll({ where:{ zoneId:zone.id }}).success(function(lights){
+        if(lights != undefined) lights.forEach(function(l){ l = l.parse(); })
+        
+        res.json(zone.parse({ audio:audioZones, lights:lights }))
+      })
     })
+  })
 }
 
 exports.resync = function(req, res) {

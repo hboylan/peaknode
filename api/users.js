@@ -14,13 +14,12 @@ exports.show = function(req, res){
 }
 
 exports.create = function(req, res) {
-  var email = (req.body.email)? req.body.email : null;
   User.create({
     username: req.body.username,
     password: req.body.password,
     pinkey: req.body.pinkey,
     realname: req.body.realname,
-    email: email
+    email: req.body.email
   }).success(function(user) {
     res.jsonp(201, user.parse(true));
   }).error(function(err) {

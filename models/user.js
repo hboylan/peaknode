@@ -5,7 +5,7 @@ module.exports = function(sequelize, DataTypes) {
     pinkey: DataTypes.INTEGER(4),
     
     realname: DataTypes.STRING,
-    email:{type:DataTypes.STRING, allowNull:true, defaultValue:true},
+    email: { type:DataTypes.STRING, allowNull:true, defaultValue:null },
   }, {
     instanceMethods: {
       
@@ -17,8 +17,7 @@ module.exports = function(sequelize, DataTypes) {
       //Parses the user model for client use
       parse:function(showPin){
         this.pinkey = showPin? this.encrypted() : undefined;
-        this.password = undefined;
-        this.createdAt = this.updatedAt = undefined;
+        this.password = this.createdAt = this.updatedAt = undefined;
         return this;
       },
     },

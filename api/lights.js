@@ -7,6 +7,10 @@ exports.list = function(req, res){
   })
 }
 
+exports.show = function(req, res){
+  Light.update(req.params.id, res, function(){});
+}
+
 exports.create = function(req, res){
   var zone = req.body.zone
     , unit = req.body.unit
@@ -37,22 +41,20 @@ exports.state = function(req, res){
   })
 }
 
-exports.dim = function(req, res){
-  var level = req.body.level
-    , time  = req.body.time
-    , id    = req.params.id;
-  res.json({ error:'Function not implemented yet' })
-  Light.update(res, function(light){
-    
-  })
-}
+exports.timeout = function(req, res){
+  var client  = require('../app').client()
+    , level   = req.body.level
+    , time    = req.body.time
+    , id      = req.params.id
+    , action  = req.params.action;
 
-exports.brighten = function(req, res){
-  var level = req.body.level
-    , time  = req.body.time
-    , id    = req.params.id;
-  res.json({ error:'Function not implemented yet' })  
-  Light.find(id).success(function(light){
-    
+  Light.update(id, res, function(light){
+    if(level >= 0  && level <= 100 && time >= 2 && time <= 99)
+      if(action == 'dim' || action == 'brighten')
+        light.step(client, action, level, time);
+      else
+        res.json({ error:'Expected API call: /api/lights/:id/(dim/brighten)' })
+    else
+      res.json({ error:'Expected parameters: time (2-99) and level (0-100)' })
   })
 }

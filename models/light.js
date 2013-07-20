@@ -13,13 +13,31 @@ module.exports = function(sequelize, DataTypes) {
       },
       
       setState:function(client, state){
-        client.send('setlight '+this.id+' '+state);
+        client.send('setlight '+this.unit+' '+state);
         this.state = state;
       },
       
       setLevel:function(client, level){
-        client.send('setlight '+this.id+' '+level);
+        client.send('setlight '+this.unit+' '+level);
         this.level = parseInt(level, 10);
+      },
+      
+      step:function(client, action, level, time){
+        client.send('set'+action+' '+this.unit+' '+level+' '+time);
+        this.timeout(time);
+        this.level = parseInt(level, 10);
+        this.state = (action == 'dim')? 'dimming':'brightening';
+      },
+      
+      timeout:function(time){
+        var light = this, c = this.createdAt, u = this.updatedAt;
+        setTimeout(function(){
+          var action = light.state;
+          light.createdAt = c;
+          light.updatedAt = u;
+          light.updateAttributes({ state:(light.level == 0)? 'off':'on' })
+            .success(function(light){ console.log('Finished '+action+': '+light.name)})
+        }, time * 1000)
       },
       
     },

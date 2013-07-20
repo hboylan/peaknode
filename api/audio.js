@@ -36,7 +36,7 @@ exports.state = function(req, res) {
     else if(state == 'off' || state == 'mute')
       a.setState(client, state);
     //Set volume
-    if(vol >= 0 && vol <= 100 && vol != undefined)
+    if(vol >= 0 && vol <= 100)
       a.setVolume(client, vol);
     a.save().success(function(a){
       //Respond to client

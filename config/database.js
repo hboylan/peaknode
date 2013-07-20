@@ -17,7 +17,6 @@ var models = {};
 var Zone  = models.zone
   , Audio = models.audio
   , Light = models.light;
-
 Zone.hasMany(Audio).hasMany(Light);
 
 //Sync updates

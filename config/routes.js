@@ -30,6 +30,9 @@ module.exports = function(app) {
   var lights = require('../api/lights');
   app.get('/api/lights', lights.list);
   app.post('/api/lights', lights.create);
+  app.post('/api/lights/:id', lights.state);
+  app.post('/api/lights/:id/dim', lights.dim);
+  app.post('/api/lights/:id/brighten', lights.brighten);
   
   //API catch-all
   app.get('/api/*', function(req, res){ res.json({ error:'Invalid API call' })});

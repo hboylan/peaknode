@@ -13,9 +13,8 @@ module.exports = function(app){
   xbmcApi.on('connection:close', function() { console.log('XBMC Disconnected'); });
   xbmcApi.on('connection:data', function(json){
     if(json.method != undefined){
-      console.log('Callback: '+json.method);
-      var data = json.params.data;
-      console.log(data);
+      console.log('XBMC: '+json.method);
+      console.log(json.params);
     }
   });
   

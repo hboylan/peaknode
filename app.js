@@ -38,7 +38,10 @@ require('./config/routes')(app);
 //Function exports
 exports.client = function() {
   return app.get('client');
-};
+}
+exports.xbmc = function(){
+  return app.get('xbmc');
+}
 
 //Begin listening to port specified in 'config.http_port'
 http.createServer(app).listen(app.get('port'), function(){

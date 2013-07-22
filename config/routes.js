@@ -34,6 +34,10 @@ module.exports = function(app) {
   app.post('/api/lights/:id', lights.state);
   app.post('/api/lights/:id/:action', lights.timeout);
   
+  //XBMC
+  var xbmc = require('../api/xbmc');
+  app.get('/api/xbmc', xbmc.test);
+  
   //API catch-all
   app.get('/api/*', function(req, res){ res.json({ error:'Invalid API call' })});
   

@@ -28,5 +28,13 @@ module.exports = function(sequelize, DataTypes) {
       },
       
     },
+    classMethods:{
+      
+      parse:function(audioZones){
+        if(audioZones == undefined) audioZones = [];
+        else audioZones.forEach(function(a){ a = a.parse(); })
+        return audioZones;
+      }
+    }
   });
 };

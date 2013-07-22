@@ -45,7 +45,8 @@ module.exports = function(sequelize, DataTypes) {
     classMethods:{
       
       parse:function(lights){
-        lights.forEach(function(l){ l = l.parse(); })
+        if(lights == undefined) lights = [];
+        else lights.forEach(function(l){ l = l.parse(); })
         return lights;
       },
       

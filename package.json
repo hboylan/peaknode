@@ -10,6 +10,7 @@
     "ejs": "*",
     "sequelize": "*",
     "crypto":"*",
-    "mysql":"*"
+    "mysql":"*",
+    "fitbit-js":"*"
   }
 }

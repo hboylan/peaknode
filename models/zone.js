@@ -8,7 +8,7 @@ module.exports = function(sequelize, DataTypes) {
         return this;
       },
       
-      parse:function(attr){
+      eagerParse:function(attr){
         this.audio = (attr.audio != undefined)? attr.audio : undefined;
         this.lights = (attr.lights != undefined)? attr.lights : undefined;
         return {
@@ -21,8 +21,11 @@ module.exports = function(sequelize, DataTypes) {
     },
     
     classMethods:{
-      list:function(res, success){
-        this.all({ order:'zoneId ASC' }).success(success);
+      
+      parse:function(zones){
+        if(zones == undefined) zones = [];
+        else zones.forEach(function(z){ z = z.parse(); });
+        return zones;
       },
     },
   });

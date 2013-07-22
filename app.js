@@ -1,7 +1,6 @@
 var express = require('express')
   , config  = require('./config/config.json')
   , http    = require('http')
-  , tcp     = require('./config/connect')
   , ejs     = require('ejs')
   , app     = express();
 
@@ -25,8 +24,13 @@ app.configure('development', function(){
 });
 
 //Configure TCP Client Instance
-var client = tcp.client();
-app.set('client', client);
+app.set('client', require('./config/connect').client());
+
+//Configure FitBit Client
+require('./config/plugins/fitbit')(app);
+
+// Configure XBMC Client
+require('./config/plugins/xbmc')(app);
 
 //Configure route handlers
 require('./config/routes')(app);

@@ -3,23 +3,21 @@ var db      = require('../config/database')
   , Zone    = db.zone;
 
 exports.list = function(req, res) {
-  Zone.list(res, function(zones){
-    zones.forEach(function(z){ z = z.parse(); });
-    res.json(zones);
+  Zone.all().success(function(zones){
+    res.json(Zone.parse(zones));
   })
 }
 
 exports.show = function(req, res) {
-  Zone.find(req.params.id, { include:[db.audio] }).success(function(zone){
+  Zone.find(req.params.id).success(function(zone){
     if(zone == undefined) return res.json({ error:'Invalid zone'});
     
     db.audio.findAll({ where:{ zoneId:zone.id }}).success(function(audioZones){
-      if(audioZones != undefined) audioZones.forEach(function(a){ a = a.parse(); })
-      
       db.light.findAll({ where:{ zoneId:zone.id }}).success(function(lights){
-        if(lights != undefined) lights.forEach(function(l){ l = l.parse(); })
-        
-        res.json(zone.parse({ audio:audioZones, lights:lights }))
+        res.json(zone.eagerParse({
+          audio:db.audio.parse(audioZones),
+          lights:db.light.parse(lights)
+        }))
       })
     })
   })

@@ -11,6 +11,9 @@
   "db_type":"mysql",
   
   "cookie_secret":"cookiemonster",
+  "fitbit_key":"7f4c494ce2864ef5888744b05708e058",
+  "fitbit_secret":"667a1f5d36d3493a870f858be99734ba",
+  
   "models":["user", "zone", "audio", "security"],
   "zones":[ "Living Room", "Kitchen", "Master Bedroom", "Bedroom", "Bathroom", "Utility", "Deck" ],
   "audio":[

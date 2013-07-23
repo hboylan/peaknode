@@ -1,20 +1,19 @@
-var fitbit  = require('fitbit-js')('7f4c494ce2864ef5888744b05708e058', '667a1f5d36d3493a870f858be99734ba');
+var config  = require('../config.json')
+  , fitbit  = require('fitbit-js')(config.fitbit_key, config.fitbit_secret);
 
 module.exports = function(app){
   
-  app.get('/fitbit', function (req, res) {
-    fitbit.getAccessToken(req, res, function (error, newToken) {
-      console.log(newToken);
-      res.json({ success:true })
-    });
-  });
-
-  app.get('/fitbit/test', function (req, res) {
-    fitbitClient.apiCall('GET', '/user/-/activities/date/2011-05-25.json',
-      {token: token},
+  app.get('/api/fitbit', function(req, res){
+    fitbit.getAccessToken(req, res, function(err, token){
+      res.json({ success:true, token:token })
+    })
+  })
+  
+  app.get('/api/fitbit/test', function (req, res) {
+    fitbit.apiCall('GET', '/user/26RNTZ/profile.json', { token:req.cookies.fitbit_client },
       function(err, resp, json) {
-        if (err) return res.send(err, 500);
-        res.json(json);
-    });
-  });
+        if(err) res.send(err, 500);
+        res.json(json)
+    })
+  })
 }

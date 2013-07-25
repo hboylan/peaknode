@@ -1,4 +1,4 @@
-var config  = require('../config.json')
+var config  = require('./config.json')
   , fitbit  = require('fitbit-js')(config.fitbit_key, config.fitbit_secret);
 
 module.exports = function(app){

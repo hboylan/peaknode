@@ -6,7 +6,7 @@ function Client(){
   this.connect = function(){
     this.connection = undefined, this.api = undefined;
     this.connection = new xbmc.TCPConnection({
-      host: '127.0.0.1',
+      host: '192.168.1.104',
       port: 9090,
       verbose: false
     }), this.api = new xbmc.XbmcApi;
@@ -28,7 +28,7 @@ function Client(){
     // setTimeout(function(){ res.json({ error:'timeout' }) }, 1500)
     this.connection.send({ method:cmd, id:1, params:p }).then(function(data){ res.json(data) })
   }
-
+  
   this.chain = function(cmd, p, fn){
     this.connection.send({ method:cmd, id:1, params:p }).then(fn)
   }
@@ -36,7 +36,7 @@ function Client(){
   this.player = function(action, res){
     var p = { playerid:0 }, self = this, cmd;
     self.chain('Player.GetActivePlayers', {}, function(d){
-      if(!d.result.length) res.json({ error:'No players detected' })
+      if(!d.result.length) return res.json({ error:'No players detected' })
       var player = d.result[0]
       
       if(player.playerid == 0){ //Music
@@ -45,14 +45,15 @@ function Client(){
           else if(action == 'next')   cmd = 'Player.Move', p.direction = 'right';
           else if(action == 'back')   cmd = 'Player.Move', p.direction = 'left';
           else if(action == 'stop')   cmd = 'Player.Stop';
-          else if(action == 'state')  res.json({ player:d.result[0], item:player.result.item })
-          else res.json({ error:'Invalid action: '+action })
+          else if(action == 'state')  return res.json({ player:d.result[0], item:player.result.item })
+          else return res.json({ error:'Invalid action: '+action })
           //Send Action
           self.command(cmd, p, res)
         })
       }
       else if(player.playerid == 1){ //Video
-        res.json(p)
+        if(action == 'toggle')    cmd = 'Player.PlayPause';
+        self.command(cmd, p, res)
       }
     })
   }
@@ -63,6 +64,7 @@ module.exports = function(app){
   client.connect();
 
   app.get('/api/xbmc', function(req, res){
+    // client.connect();
     client.player('state', res)
   })
   
@@ -70,6 +72,14 @@ module.exports = function(app){
     client.chain('Playlist.GetItems', { playlistid:0 }, function(music){
       client.chain('Playlist.GetItems', { playlistid:1 }, function(videos){
         res.json({ music:music.result, video:videos.result })
+      })
+    })
+  })
+  
+  app.get('/api/xbmc/scan', function(req, res){
+    client.chain('AudioLibrary.Scan', {}, function(){
+      client.chain('VideoLibrary.Scan', {}, function(v){
+        res.json({ message:'Finished!' })
       })
     })
   })
@@ -108,7 +118,8 @@ module.exports = function(app){
         p.item.songid = parseInt(song, 10);
       else
         p.item.playlistid = parseInt(list, 10), p.item.position = parseInt(pos, 10)
-      client.command('Player.Open', p, function(d){ res.json(d) })
+        console.log(p);
+      client.command('Player.Open', p, res)
     }
     else
       client.player(action, res);

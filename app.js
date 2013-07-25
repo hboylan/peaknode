@@ -27,10 +27,10 @@ app.configure('development', function(){
 app.set('client', require('./config/connect').client());
 
 //Configure FitBit Client
-require('./config/plugins/fitbit')(app);
+require('./config/fitbit')(app);
 
 // Configure XBMC Client
-require('./config/plugins/xbmc')(app);
+require('./config/xbmc')(app);
 
 //Configure route handlers
 require('./config/routes')(app);

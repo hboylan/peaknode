@@ -24,7 +24,7 @@ app.configure('development', function(){
 });
 
 //Configure TCP Client Instance
-app.set('client', require('./config/connect').client());
+app.set('omni', require('./config/omnilink'));
 
 //Configure FitBit Client
 require('./config/fitbit')(app);
@@ -35,16 +35,10 @@ require('./config/xbmc')(app);
 //Configure route handlers
 require('./config/routes')(app);
 
-//Function exports
-exports.client = function() {
-  return app.get('client');
-}
-exports.xbmc = function(){
-  return app.get('xbmc');
-}
-
 //Begin listening to port specified in 'config.http_port'
 http.createServer(app).listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));
 });
 
+//Export app
+module.exports = function(){ return app; }

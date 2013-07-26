@@ -6,7 +6,7 @@ function Client(){
   this.connect = function(){
     this.connection = undefined, this.api = undefined;
     this.connection = new xbmc.TCPConnection({
-      host: '192.168.1.104',
+      host: '127.0.0.1',
       port: 9090,
       verbose: false
     }), this.api = new xbmc.XbmcApi;
@@ -17,15 +17,10 @@ function Client(){
     this.api.on('connection:data', function(json){
       if(json.method != undefined) //Display callback methods
         console.log('XBMC: '+json.method+'\n'+json.params);
-    });
-  }
-
-  this.request = function(cmd, res){
-    this.connection.send({ method:cmd, id:1 }).then(function(data){ res.json(data) })
+    })
   }
 
   this.command = function(cmd, p, res){
-    // setTimeout(function(){ res.json({ error:'timeout' }) }, 1500)
     this.connection.send({ method:cmd, id:1, params:p }).then(function(data){ res.json(data) })
   }
   
@@ -66,6 +61,25 @@ module.exports = function(app){
   app.get('/api/xbmc', function(req, res){
     // client.connect();
     client.player('state', res)
+  })
+  
+  app.get('/api/xbmc/input/:action', function(req, res){
+    var action = req.params.action;
+    
+    if(action == 'home')
+      client.request('Input.Home', res)
+    else if(action == 'left')
+      client.request('Input.Left', res)
+    else if(action == 'right')
+      client.request('Input.Right', res)
+    else if(action == 'up')
+      client.request('Input.Up', res)
+    else if(action == 'down')
+      client.request('Input.Down', res)
+    else if(action == 'back')
+      client.request('Input.Back', res)
+    else if(action == 'select')
+      client.request('Input.Select', res)
   })
   
   app.get('/api/xbmc/playlists', function(req, res){
@@ -121,6 +135,8 @@ module.exports = function(app){
         console.log(p);
       client.command('Player.Open', p, res)
     }
+    else if(action == 'reboot')
+      client.command(action, {}, res)
     else
       client.player(action, res);
   })

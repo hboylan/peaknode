@@ -41,4 +41,4 @@ http.createServer(app).listen(app.get('port'), function(){
 });
 
 //Export app
-module.exports = function(){ return app; }
+module.exports = app;

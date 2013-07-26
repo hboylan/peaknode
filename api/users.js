@@ -1,4 +1,4 @@
-var User = require('../config/database').user;
+var User = require('../lib/database').user;
 
 exports.list = function(req, res){
   User.all().success(function(users) {

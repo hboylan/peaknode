@@ -1,4 +1,4 @@
-var db    = require('../config/database')
+var db    = require('../lib/database')
   , Light = db.light;
 
 exports.list = function(req, res){

@@ -14,18 +14,25 @@ module.exports = function(sequelize, DataTypes) {
       },
       
       setState:function(state){
-        var states  = ['off', 'on', 'unmute', 'mute'];
-        require('../app').get('omni').command('audio.control', [this.id, states.indexOf(state)]);
+        this.tellOmni('control', ['off', 'on', 'unmute', 'mute'].indexOf(state))
         this.state = state;
       },
       
       setVolume:function(vol){
-        // if(this.state == 'off') client.send('audiocontrol '+this.id+' 1');
-        require('../app').get('omni').command('audio.volume', [this.id, vol]);
+        this.tellOmni('volume', vol)
         this.state = 'on';
         this.volume = parseInt(vol, 10);
       },
       
+      setSource:function(source){
+        this.tellOmni('source', source)
+        this.source = parseInt(source, 10);
+      },
+      
+      tellOmni:function(cmd, params){
+        var data = [this.id].push(params);
+        require('../app').get('omnilink-client').command('audio.'+cmd, data)
+      }
     },
     classMethods:{
       

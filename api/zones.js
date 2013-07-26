@@ -1,5 +1,5 @@
-var db      = require('../config/database')
-  , config  = require('../config/config.json')
+var db      = require('../lib/database')
+  , config  = require('../config.json')
   , Zone    = db.zone;
 
 exports.list = function(req, res) {

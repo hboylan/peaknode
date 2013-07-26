@@ -1,4 +1,4 @@
-var db    = require('../config/database')
+var db    = require('../lib/database')
   , sec   = db.security
   , user  = db.user;
 

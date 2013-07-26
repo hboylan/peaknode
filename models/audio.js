@@ -15,13 +15,13 @@ module.exports = function(sequelize, DataTypes) {
       
       setState:function(state){
         var states  = ['off', 'on', 'unmute', 'mute'];
-        require('../app').get('omni').send('audiocontrol '+this.id+' '+states.indexOf(state));
+        require('../app').get('omni').command('audio.control', [this.id, states.indexOf(state)]);
         this.state = state;
       },
       
       setVolume:function(vol){
         // if(this.state == 'off') client.send('audiocontrol '+this.id+' 1');
-        require('../app').get('omni').send('audiovolume '+this.id+' '+vol);
+        require('../app').get('omni').command('audio.volume', [this.id, vol]);
         this.state = 'on';
         this.volume = parseInt(vol, 10);
       },

@@ -37,16 +37,16 @@ function OmniClient() {
     
     //Send message to the server
     this.send = function(json) {
-      var conn = this.connection;
+      var conn = this.connection, str = JSON.stringify(json);
       if(conn.writable)
-        this.connection.write(JSON.stringify(json));
+        this.connection.write(str);
       else
         console.log('TCP client failed to send:');
-      console.log(json);
+      console.log(str);
     }
     
     this.command = function(cmd, data){
-      this.send({ node:'omnilink', command:cmd, params:data })
+      this.send({ node:'omnilink', command:cmd, params:d })
     }
 };
 

@@ -46,7 +46,7 @@ function OmniClient() {
     }
     
     this.command = function(cmd, data){
-      this.send({ node:'omnilink', command:cmd, params:d })
+      this.send({ node:'omnilink', command:cmd, params:data })
     }
 };
 

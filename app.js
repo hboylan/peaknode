@@ -24,7 +24,7 @@ app.configure('development', function(){
 });
 
 //Configure TCP Client Instance
-app.set('omni', require('./config/omnilink'));
+require('./config/omnilink')(app);
 
 //Configure FitBit Client
 require('./config/fitbit')(app);

@@ -50,8 +50,8 @@ function OmniClient() {
     }
 };
 
-module.exports = function() {
+module.exports = function(app) {
   var client = new OmniClient();
   client.connect();
-  return client;
-};
+  app.set('omni', client);
+}

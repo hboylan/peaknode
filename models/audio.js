@@ -29,9 +29,8 @@ module.exports = function(sequelize, DataTypes) {
         this.source = parseInt(source, 10);
       },
       
-      tellOmni:function(cmd, params){
-        var data = [this.id].push(params);
-        require('../app').get('omnilink-client').command('audio.'+cmd, data)
+      tellOmni:function(cmd, data){
+        require('../app').get('omnilink-client').command('audio.'+cmd, [this.id, data])
       }
     },
     classMethods:{

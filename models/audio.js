@@ -19,7 +19,7 @@ module.exports = function(sequelize, DataTypes) {
       },
       
       setVolume:function(vol){
-        this.tellOmni('volume', { volume:vol })
+          this.tellOmni('volume', { volume:parseInt(vol,10) })
         this.state = 'on';
         this.volume = parseInt(vol, 10);
       },

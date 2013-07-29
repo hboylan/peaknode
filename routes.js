@@ -51,5 +51,7 @@ module.exports = function(app) {
   app.get('/api/*', function(req, res){ res.json({ error:'Invalid API call' })})
   
   /*** Website ***/
+  app.get('/', function(req, res){ res.render('index') })
+  app.get('/audio', function(req, res){ res.render('audio') })
   app.get('*', function(req, res){ res.render('index') })
 };

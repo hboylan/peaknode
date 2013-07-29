@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html ng-app="peakApp">
+  <head>
+    <title>Peak User Interface</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="css/style.css" rel="stylesheet" media="screen">
+    
+    <script type="text/javascript" src="/js/lib/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="/js/lib/angular/angular.min.js"></script>
+    <script type="text/javascript" src="/js/lib/application.js"></script>
+    <script type="text/javascript" src="/js/lib/controllers.js"></script>
+    <script type="text/javascript" src="/js/lib/directives.js"></script>
+    <script type="text/javascript" src="/js/lib/filters.js"></script>
+    <script type="text/javascript" src="/js/lib/services.js"></script>
+  </head>
+  <body>
+    <div class="sidePanel">
+      <div class="panelHeader">
+        <header id="headerImg"></header>
+      </div>
+      <ul class="panelNav">
+        <li class="navHeader">Services</li>
+        <li class="active"><a href="#/hvac"><span class="icon li_cloud"></span>HVAC</a></li>
+        <li><a href="#/electric"><span class="icon li_bulb"></span>Electric</a></li>
+        <li><a href="#/heat"><span class="icon li_fire"></span>Heat</a></li>
+        <li><a href="#/water"><span class="icon li_food"></span>Water</a></li>
+        <li class="navHeader">Controls</li>
+        <li><a href="#/hvac"><span class="icon li_params"></span>Temperature</a></li>
+        <li><a href="#/electric"><span class="icon li_bulb"></span>Electric</a></li>
+      </ul>
+    </div>
+    <div class="topPanel">
+      <div class="panelControl">
+        <input type="text" id="shell" />
+      </div>
+    </div>
+    <div class="mainPanel group section">
+      <div class="panelAdjust">
+        <div class="panel col span_1_of_2">
+          <h2>Panel Header</h2>
+        </div>
+        <div class="panel col span_1_of_2" id="second">
+          <h2>Second Panel</h2>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

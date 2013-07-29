@@ -14,22 +14,23 @@ module.exports = function(sequelize, DataTypes) {
       },
       
       setState:function(state){
-        this.tellOmni('control', {zone:this.id, control:['off', 'on', 'unmute', 'mute'].indexOf(state)})
+        this.tellOmni('control', { control:['off', 'on', 'unmute', 'mute'].indexOf(state) })
         this.state = state;
       },
       
       setVolume:function(vol){
-          this.tellOmni('volume', {zone:this.id, volume:parseInt(vol, 10)})
+        this.tellOmni('volume', { volume:vol })
         this.state = 'on';
         this.volume = parseInt(vol, 10);
       },
       
-      setSource:function(source){
-        this.tellOmni('source', {zone:this.id, source:source})
-        this.source = parseInt(source, 10);
+      setSource:function(s){
+        this.tellOmni('source', { source:s })
+        this.source = parseInt(s, 10);
       },
       
       tellOmni:function(cmd, data){
+        data.zone = this.id;
         require('../app').get('omnilink-client').command('audio.'+cmd, data)
       }
     },

@@ -6,6 +6,7 @@ var express = require('express')
 
 //Configure our application environment
 app.configure(function() {
+  app.set('views', __dirname + '/views')
   app.set('view engine', 'ejs')
   app.set('port', config.http_port)
   app.use(express.logger('dev'))

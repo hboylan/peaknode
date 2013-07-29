@@ -1,100 +1,48 @@
 <!DOCTYPE html>
-<html>
-<head>
-  <title>Peak Home Automation</title>
-  <link href="css/style.css" rel="stylesheet" type="text/css">
-  <link href="css/jquery-ui.min.css" rel="stylesheet" type="text/css">
-
-  <script type="text/template" id="inner-navbar-tmpl">
-		<% if(user){ %>
-			<li class="dropdown">
-				<a class="dropdown-toggle" data-toggle="dropdown" href=""><%= user.username %> <b class="caret"></b></a>
-				<ul class="dropdown-menu">
-					<li><a href="">Logout <i class="icon-remove icon-white pull-right"></i></a></li>
-        </ul>
-			</li>
-		<% }else{ %>
-			<li><a href="/signup">Sign Up</a></li>
-			<li class="divider-vertical"></li>
-			<li class="dropdown">
-				<a class="dropdown-toggle" data-toggle="dropdown" href="#">Login <b class="caret"></b></a>
-				<div class="dropdown-menu">
-        </div>
-			</li>
-		<% } %>
-  </script>
-
-  <script type="text/template" id="home-tmpl">
-    <div class="container">
-      <h2>Hello World!</h2>
-    </div>
-  </script>
-
-  <script type="text/template" id="media-tmpl">
-    <div class="container">
-      <h2>Volume Test</h2>
-      <div id="zones" class="row"><% zones %></div>
-    </div>
-  </script>
-  
-  <script type="text/template" id="volume-tmpl">
-    <div class="span3">
-      <h5><%= z.name %></h5>
-      <div id="slider-<%= z.zone %>"></div>
-      <br>
-      <b id="volume-<%= z.zone %>"><%= z.volume %></b>
-    </div>
+<html ng-app="peakApp">
+  <head>
+    <title>Peak User Interface</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="css/style.css" rel="stylesheet" media="screen">
     
-    <script type="text/javascript">
-      //Activate zone's volume slider
-      $('#slider-'+z.zone).slider({ value:z.volume, min:0, max:100, step:1, orientation:'vertical',
-        change:function(evt, ui){
-          var volume = ui.value;
-          if(isNaN(volume)) return;
-                  
-          //Update view with value
-          $('#value'+z.zone).html(volume);
-                  
-          //Perform action with API
-          $.ajax({
-            url:'http://'+host+'/api/audio/'+z.zone,
-            type:'post',
-            dataType:'json',
-            data:{ volume:volume }
-          });
-        },
-  
-        slide:function(evt, ui){
-          $('#volume-'+z.zone).html(ui.value);
-        }
-      });
-    </script>
-  </script>
-</head>
-
-<body>
-	<div class="navbar navbar-fixed-top">
-		<div class="navbar-inner">
-			<div class="container content-navbar">
-				<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></a>
-				<a class="brand" href="#">Peak</a>
-				<div class="nav-collapse collapse" id="main-menu">
-			  	<ul class="nav" id="main-menu-left"></ul>
-					<ul class="nav pull-right" id="main-menu-right"></ul>
-	    	</div>
-			</div>
-		</div>
-	</div>
-  
-  <div id="content"></div>
-  
-
-  <script src="js/jquery.min.js" type="text/javascript"></script>
-  <script src="js/jquery-ui.min.js" type="text/javascript"></script>
-  <script src="js/underscore.min.js" type="text/javascript"></script>
-  <script src="js/backbone.js" type="text/javascript"></script>
-  <script src="js/bootstrap.min.js" type="text/javascript"></script>
-  <script src="js/jquery.cookie.js" type="text/javascript"></script>
-  <script src="js/app.js" type="text/javascript"></script>
-</body>
+    <script type="text/javascript" src="/js/lib/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="/js/lib/angular/angular.min.js"></script>
+    <script type="text/javascript" src="/js/lib/application.js"></script>
+    <script type="text/javascript" src="/js/lib/controllers.js"></script>
+    <script type="text/javascript" src="/js/lib/directives.js"></script>
+    <script type="text/javascript" src="/js/lib/filters.js"></script>
+    <script type="text/javascript" src="/js/lib/services.js"></script>
+  </head>
+  <body>
+    <div class="sidePanel">
+      <div class="panelHeader">
+        <header id="headerImg"></header>
+      </div>
+      <ul class="panelNav" ng-controller="peakApp.ZoneCtrl">
+        <li class="navHeader">Services</li>
+        <li class="active"><a href="#/hvac"><span class="icon li_cloud"></span>HVAC</a></li>
+        <li><a href="#/energy"><span class="icon li_bulb"></span>Energy</a></li>
+        <li><a href="#/heat"><span class="icon li_fire"></span>Heat</a></li>
+        <li><a href="#/water"><span class="icon li_food"></span>Water</a></li>
+        <li class="navHeader">Zones {% test %}</li>
+        <li><a href="#/hvac"><span class="icon li_params"></span>Temperature</a></li>
+        <li><a href="#/electric"><span class="icon li_bulb"></span>Electric</a></li>
+      </ul>
+    </div>
+    <div class="topPanel">
+      <div class="panelControl">
+        <input type="text" id="shell" />
+      </div>
+    </div>
+    <div class="mainPanel group section">
+      <div class="panelAdjust">
+        <div class="panel col span_1_of_2">
+          <h2>Panel Header</h2>
+        </div>
+        <div class="panel col span_1_of_2" id="second">
+          <h2>Second Panel</h2>
+        </div>
+      </div>
+    </div>
+  </body>
 </html>

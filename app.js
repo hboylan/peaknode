@@ -8,7 +8,6 @@ var express = require('express')
 app.configure(function() {
   app.set('views', __dirname + '/views')
   app.set('view engine', 'ejs')
-  app.set('view options', { open:'{%', close:'%}' })
   app.set('port', config.http_port)
   app.use(express.logger('dev'))
   app.use(express.bodyParser({ uploadDir:__dirname + '/tmp' }))
@@ -16,6 +15,9 @@ app.configure(function() {
   app.use(express.methodOverride())
   app.use(express.static(__dirname + '/public'))
   app.use(app.router)
+  
+  ejs.open = '{%';
+  ejs.close = '%}';
 })
 
 app.configure('development', function(){

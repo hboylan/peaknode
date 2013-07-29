@@ -1,21 +1,15 @@
 'use strict';
 
 /* Controllers */
-
-function AppCtrl($scope, $http) {
-  $http({method: 'GET', url: '/api/name'}).
-  success(function(data, status, headers, config) {
-    $scope.name = data.name;
-  }).
-  error(function(data, status, headers, config) {
-    $scope.name = 'Error!'
-  });
-}
-
-function MyCtrl1() {}
-MyCtrl1.$inject = [];
-
-
-function MyCtrl2() {
-}
-MyCtrl2.$inject = [];
+angular.module('controllers', []).
+  controller('ZoneCtrl', ['$scope', '$http'], function($scope, $http){
+    $scope.test = 'hello';
+    $http({method: 'GET', url: '/api/zones'}).
+      success(function(data, status, headers, config) {
+        console.log(data);
+        $scope.zones = data;
+      }).
+      error(function(data, status, headers, config) {
+        $scope.zones = [];
+      })
+  })

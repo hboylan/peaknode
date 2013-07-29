@@ -1,10 +1,10 @@
-var users   = require('./api/users')
-  , zones   = require('./api/zones')
-  , audio   = require('./api/audio')
-  , sec     = require('./api/security')
-  , lights  = require('./api/lights')
-  , fitbit  = require('./api/fitbit')
-  , xbmc    = require('./api/xbmc')
+var users   = require('./controllers/users')
+  , zones   = require('./controllers/zones')
+  , audio   = require('./controllers/audio')
+  , sec     = require('./controllers/security')
+  , lights  = require('./controllers/lights')
+  , fitbit  = require('./controllers/fitbit')
+  , xbmc    = require('./controllers/xbmc')
 
 module.exports = function(app) {
 

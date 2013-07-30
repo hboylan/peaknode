@@ -48,11 +48,15 @@ module.exports = function(app) {
   app.get('/api/xbmc/songs', xbmc.songs)
   
   //API catch-all
-  app.get('/api/*', function(req, res){ res.json({ error:'Invalid API call' })})
+  app.get('/api/*', function(req, res){ res.json({ error:'Invalid API call' }) })
   
   /*** Website ***/
   app.get('/', function(req, res){ res.render('index') })
-  app.get('/energy', function(req, res){ res.render('energy') })
-  app.get('/audio', function(req, res){ res.render('audio') })
+  app.get('/partials/:view', function(req, res){
+    res.render('partials/' + req.params.view, {}, function(err, html) {
+      if(err) res.status(404).send('Failed to load partial')
+      else res.end(html)
+    })
+  })
   app.get('*', function(req, res){ res.render('index') })
 };

@@ -7,26 +7,21 @@
     
     <script type="text/javascript" src="/js/lib/jquery/jquery.min.js"></script>
     <script type="text/javascript" src="/js/lib/angular/angular.min.js"></script>
-    <script type="text/javascript" src="/js/lib/application.js"></script>
-    <script type="text/javascript" src="/js/lib/controllers.js"></script>
-    <script type="text/javascript" src="/js/lib/directives.js"></script>
-    <script type="text/javascript" src="/js/lib/filters.js"></script>
-    <script type="text/javascript" src="/js/lib/services.js"></script>
+    <script type="text/javascript" src="/js/lib/angular/angular-resource.js"></script>
   </head>
+  
   <body>
     <div class="sidePanel">
       <div class="panelHeader">
-        <header id="headerImg"></header>
+        <header id="headerImg" ng-click="home()"></header>
       </div>
-      <ul class="panelNav" ng-controller="peakApp.ZoneCtrl">
+      <ul class="panelNav">
         <li class="navHeader">Services</li>
-        <li class="active"><a href="#/hvac"><span class="icon li_cloud"></span>HVAC</a></li>
-        <li><a href="#/energy"><span class="icon li_bulb"></span>Energy</a></li>
-        <li><a href="#/heat"><span class="icon li_fire"></span>Heat</a></li>
-        <li><a href="#/water"><span class="icon li_food"></span>Water</a></li>
-        <li class="navHeader">Zones {% test %}</li>
-        <li><a href="#/hvac"><span class="icon li_params"></span>Temperature</a></li>
-        <li><a href="#/electric"><span class="icon li_bulb"></span>Electric</a></li>
+        <li class="active"><a href="#/energy"><span class="icon li_star"></span>Energy</a></li>
+        <li><a href="/hvac"><span class="icon li_params"></span>HVAC</a></li>
+        <li><a href="/lighting"><span class="icon li_bulb"></span>Lighting</a></li>
+        <li><a href="/media"><span class="icon li_music"></span>Media</a></li>
+        <li class="navHeader">Zones</li>
       </ul>
     </div>
     <div class="topPanel">
@@ -34,15 +29,12 @@
         <input type="text" id="shell" />
       </div>
     </div>
-    <div class="mainPanel group section">
-      <div class="panelAdjust">
-        <div class="panel col span_1_of_2">
-          <h2>Panel Header</h2>
-        </div>
-        <div class="panel col span_1_of_2" id="second">
-          <h2>Second Panel</h2>
-        </div>
-      </div>
-    </div>
+    <div ng-view>
+    
+    <script type="text/javascript" src="/js/application.js"></script>
+    <script type="text/javascript" src="/js/controllers.js"></script>
+    <script type="text/javascript" src="/js/directives.js"></script>
+    <script type="text/javascript" src="/js/filters.js"></script>
+    <script type="text/javascript" src="/js/services.js"></script>
   </body>
 </html>

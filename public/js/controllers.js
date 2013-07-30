@@ -1,15 +1,8 @@
-'use strict';
-
-/* Controllers */
-angular.module('controllers', []).
-  controller('ZoneCtrl', ['$scope', '$http'], function($scope, $http){
-    $scope.test = 'hello';
-    $http({method: 'GET', url: '/api/zones'}).
-      success(function(data, status, headers, config) {
-        console.log(data);
-        $scope.zones = data;
-      }).
-      error(function(data, status, headers, config) {
-        $scope.zones = [];
-      })
+angular.module('peakApp.controllers', []).
+  controller('ZoneCtrl', function($scope, $location, Zone){
+    $scope.zones = Zone.query();
+    $scope.home = function(){ $location.path('') };
+  }).
+  controller('MediaCtrl', function($scope, $http, AudioZone){
+    $scope.audioZones = AudioZone.query();
   })

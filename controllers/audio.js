@@ -4,13 +4,7 @@ var db      = require('../lib/database')
 exports.list = function(req, res) {
   Audio.all().success(function(zones){
     zones.forEach(function(a){ a = a.parse(); })
-    res.json({
-      'zones':zones,
-      'sources':[{
-        sourceId:1,
-        name:"Hugh's iPhone",
-      }]
-    });
+    res.json(zones);
   });
 }
 

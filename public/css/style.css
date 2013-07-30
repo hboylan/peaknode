@@ -161,7 +161,7 @@ p {
   -webkit-box-sizing:border-box;
   -moz-box-sizing: border-box;
 }
-.sidePanel .panelHeader {}
+.sidePanel .panelHeader:hover {}
 .sidePanel .panelHeader > header {
   color: whitesmoke;
   font: 300 32px/36px Lato, "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
@@ -172,6 +172,9 @@ p {
   background: url("../img/peak-logo.png");
   height: 70px;
   background-size: cover;
+}
+.sidePanel .panelHeader > header#headerImg:hover {
+  cursor:pointer;
 }
 .sidePanel .panelNav {
   list-style: none;

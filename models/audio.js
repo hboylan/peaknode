@@ -25,7 +25,7 @@ module.exports = function(sequelize, DataTypes) {
       },
       
       setSource:function(s){
-        this.tellOmni('source', { source:s })
+        this.tellOmni('source', { source:parseInt(s,10) })
         this.source = parseInt(s, 10);
       },
       

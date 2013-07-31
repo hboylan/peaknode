@@ -1,6 +1,7 @@
 var express = require('express')
   , config  = require('./config.json')
   , http    = require('http')
+  , cors    = require('cors')
   , ejs     = require('ejs')
   , app     = express();
 
@@ -14,6 +15,7 @@ app.configure(function() {
   app.use(express.cookieParser(config.cookie_secret))
   app.use(express.methodOverride())
   app.use(express.static(__dirname + '/public'))
+  app.use(cors())
   app.use(app.router)
 })
 

@@ -30,7 +30,7 @@ app.set('omnilink-client', require('./lib/omnilink'))
 app.set('fitbit-client', require('./lib/fitbit')(config.fitbit_key, config.fitbit_secret))
 
 //Configure XBMC Client
-app.set('xbmc-client', require('./lib/xbmc'))
+app.set('xbmc-client', require('./lib/xbmc')(config))
 
 //Configure API Handlers
 require('./routes')(app)

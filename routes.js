@@ -43,9 +43,11 @@ module.exports = function(app) {
   app.get('/fitbit/test', fitbit.test)
   
   //xbmc
-  xbmc = new xbmc.API(app.get('xbmc-client'));
+  xbmc = new xbmc.API(app.get('xbmc-client'))
   app.get('/xbmc', xbmc.status)
+  app.get('/xbmc/reconnect', xbmc.reconnect)
   app.get('/xbmc/songs', xbmc.songs)
+  app.get('/xbmc/videos', xbmc.videos)
   
   //API catch-all
   app.get('*', function(req, res){ res.status(400).json({ error:'Invalid API call' }) })

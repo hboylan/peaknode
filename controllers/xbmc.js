@@ -2,6 +2,8 @@ function API(client){
   this.status = function(req, res){ client.player('state', res) }
   
   this.songs = function(req, res){ client.command('AudioLibrary.GetSongs', {}, res) }
+  
+  // this.input = function(req, res){ }
 }
 
 exports.API = API;

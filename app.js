@@ -37,7 +37,7 @@ require('./routes')(app)
 
 //Begin listening to port specified in 'config.http_port'
 http.createServer(app).listen(app.get('port'), function(){
-  console.log("PeakHomeAutomation API listening at localhost:" + app.get('port'))
+  console.log("WVUPeak API running at localhost:" + app.get('port'))
 })
 
 //Export app

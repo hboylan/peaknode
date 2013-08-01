@@ -12,7 +12,7 @@ app.configure(function() {
   app.set('port', config.http_port)
   app.use(express.logger('dev'))
   app.use(express.bodyParser({ uploadDir:__dirname + '/tmp' }))
-  app.use(express.cookieParser(config.cookie_secret))
+  app.use(express.cookieParser('wvu-peak-api'))
   app.use(express.methodOverride())
   app.use(express.static(__dirname + '/public'))
   app.use(cors())
@@ -27,7 +27,7 @@ app.configure('development', function(){
 app.set('omnilink-client', require('./lib/omnilink'))
 
 //Configure FitBit Client
-app.set('fitbit-client', require('./lib/fitbit')(config.fitbit_key, config.fitbit_secret))
+app.set('fitbit-client', require('./lib/fitbit')(config.fitbit_key, config.fitbit_secret, 'http://localhost:8000/fitbit'))
 
 //Configure XBMC Client
 app.set('xbmc-client', require('./lib/xbmc')(config))

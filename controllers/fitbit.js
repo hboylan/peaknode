@@ -1,17 +1,16 @@
 function API(client){
-  this.auth = function(req, res){
-    client.getAccessToken(req, res, function(error){
-      res.send(err, 500)
-    })
+  
+  function apiHandle(res){
+    return function(err, json) {
+      if(err) return res.status(500).json(err)
+      res.status(200).json(json)
+    }
   }
   
-  this.test = function(req, res){
-    client.apiCall('GET', '/user/26RNTZ/profile.json', { token:req.cookies.fitbit_client },
-      function(err, resp, json) {
-        if(err) res.send(err, 500)
-        res.json(json)
-    })
-  }
+  this.auth = function(req, res){ client.getAccessToken(req, res, apiHandle(res)) }
+  
+  this.profile = function(req, res){ client.user('profile', req, apiHandle(res)) }
+  this.devices = function(req, res){ client.user('devices', req, apiHandle(res)) }
 }
 
 exports.API = API;

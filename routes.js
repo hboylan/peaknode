@@ -40,7 +40,8 @@ module.exports = function(app) {
   //fitbit
   fitbit = new fitbit.API(app.get('fitbit-client'));
   app.get('/fitbit', fitbit.auth)
-  app.get('/fitbit/test', fitbit.test)
+  app.get('/fitbit/:uid/profile', fitbit.profile)
+  app.get('/fitbit/:uid/devices', fitbit.devices)
   
   //xbmc
   xbmc = new xbmc.API(app.get('xbmc-client'))
@@ -58,9 +59,9 @@ module.exports = function(app) {
   app.get('/xbmc/albums', xbmc.albums)
   app.get('/xbmc/album', xbmc.album)
   app.get('/xbmc/ctl/:control', xbmc.control)
-  app.get('/xbmc/song/:songid(\d+)', xbmc.playSong)
+  app.get('/xbmc/song/:songid(0-9]+)', xbmc.playSong)
   app.post('/xbmc/file', xbmc.playFile)
-  app.get('/xbmc/:playlist(\d+)/:id(\d+)', xbmc.playPlaylist)
+  app.get('/xbmc/:playlist(0-9]+)/:id(0-9]+)', xbmc.playPlaylist)
   
   //API catch-all
   app.get('*', function(req, res){ res.status(400).json({ error:'Invalid API call' }) })

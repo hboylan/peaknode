@@ -6,6 +6,10 @@ module.exports = function(sequelize, DataTypes) {
     
     realname: DataTypes.STRING,
     email: { type:DataTypes.STRING, allowNull:true, defaultValue:null },
+    
+    fitbit_id: { type:DataTypes.STRING, allowNull:true, defaultValue:null },
+    fitbit_username: { type:DataTypes.STRING, allowNull:true, defaultValue:null },
+    fitbit_password: { type:DataTypes.STRING, allowNull:true, defaultValue:null },
   }, {
     instanceMethods: {
       

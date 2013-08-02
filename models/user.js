@@ -29,16 +29,6 @@ module.exports = function(sequelize, DataTypes) {
       logout:function(res){
         res.clearCookie('user', { path: '/' }); 
       },
-      
-      setFitbit:function(id, token, secret){
-        this.find(id).success(function(user){
-          if(user != undefined){
-            user.fitbit_token = token
-            user.fitbit_secret = secret
-            user.save()
-          }
-        })
-      }
     }
   });
 };

@@ -12,8 +12,8 @@ module.exports = function(app, db) {
   users = new users.API(db.user, app.get('fitbit-client'));
   app.get('/users', users.list)
   app.post('/users', users.create)
-  app.post('/users/login', users.login)
-  app.get('/users/logout', users.logout)
+  app.post('/login', users.login)
+  app.get('/logout', users.logout)
   app.get('/users/:id', users.show)
   
   // zones
@@ -69,6 +69,14 @@ module.exports = function(app, db) {
   app.post('/xbmc/file', xbmc.playFile)
   app.get('/xbmc/:playlist(0-9]+)/:id(0-9]+)', xbmc.playPlaylist)
   
+  
+  var h = 'http://localhost:8000'
+  app.get('/', function(req, res){
+    var u = req.cookies.user
+    if(u != undefined) res.render('index', {user:u})
+    else res.redirect('/auth')
+  })
+  app.get('/auth', function(req, res){ res.render('login', {host:h}) })
   //API catch-all
   app.get('*', function(req, res){ res.status(400).json({ error:'Invalid API call' }) })
 };

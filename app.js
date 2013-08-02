@@ -17,6 +17,8 @@ app.configure(function() {
   app.use(express.static(__dirname + '/public'))
   app.use(cors())
   app.use(app.router)
+  ejs.open = '{{'
+  ejs.close = '}}'
 })
 
 app.configure('development', function(){

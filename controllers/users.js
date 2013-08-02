@@ -44,7 +44,7 @@ function UserAPI(User, fitbit)
 
   this.logout = function(req, res) {
     User.logout(res);
-    res.json({ success:true });
+    res.redirect('/auth');
   }
 }
 exports.API = UserAPI

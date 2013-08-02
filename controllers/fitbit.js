@@ -12,6 +12,7 @@ function API(client){
   
   this.profile = function(req, res){ client.user('profile', req, apiHandle(res)) }
   this.activity = function(req, res){ client.user('activities', req, apiHandle(res)) }
+  this.recent   = function(req, res){ client.user('activities/recent', req, apiHandle(res)) }
   this.devices = function(req, res){ client.user('devices', req, apiHandle(res)) }
   this.measure = function(req, res){ client.user('body', req, apiHandle(res)) }
   this.friends = function(req, res){ client.user('friends', req, apiHandle(res)) }

@@ -8,8 +8,8 @@ module.exports = function(sequelize, DataTypes) {
     email: { type:DataTypes.STRING, allowNull:true, defaultValue:null },
     
     fitbit_id: { type:DataTypes.STRING, allowNull:true, defaultValue:null },
-    fitbit_username: { type:DataTypes.STRING, allowNull:true, defaultValue:null },
-    fitbit_password: { type:DataTypes.STRING, allowNull:true, defaultValue:null },
+    fibtit_token: { type:DataTypes.STRING, allowNull:true, defaultValue:null },
+    fibtit_secret: { type:DataTypes.STRING, allowNull:true, defaultValue:null },
   }, {
     instanceMethods: {
       

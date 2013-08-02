@@ -41,14 +41,7 @@ module.exports = function(app) {
   fitbit = new fitbit.API(app.get('fitbit-client'));
   app.get('/fitbit', fitbit.auth)
   app.get('/fitbit/access', fitbit.access)
-  app.get('/fitbit/:uid/profile', fitbit.profile)
-  app.get('/fitbit/:uid/activities', fitbit.activity)
-  app.get('/fitbit/:uid/recent', fitbit.recent)
-  app.get('/fitbit/:uid/devices', fitbit.devices)
-  app.get('/fitbit/:uid/measures', fitbit.measure)
-  app.get('/fitbit/:uid/friends', fitbit.friends)
-  app.get('/fitbit/:uid/leaderboard', fitbit.board)
-  app.get('/fitbit/:uid/:date', fitbit.date)
+  app.get('/fitbit/:action', fitbit.userAction)
   
   //xbmc
   xbmc = new xbmc.API(app.get('xbmc-client'))

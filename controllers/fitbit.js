@@ -16,7 +16,7 @@ function API(client){
   this.measure = function(req, res){ client.user('body', req, apiHandle(res)) }
   this.friends = function(req, res){ client.user('friends', req, apiHandle(res)) }
   this.board   = function(req, res){ client.user('friends/leaderboard', req, apiHandle(res)) }
-  this.board   = function(req, res){ client.user('activities/date/'+req.params.date, req, apiHandle(res)) }
+  this.date   = function(req, res){ client.user('activities/date/'+req.params.date, req, apiHandle(res)) }
 }
 
 exports.API = API;

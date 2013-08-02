@@ -1,9 +1,10 @@
 function API(client){
   
   function apiHandle(res){
-    return function(err, json) {
+    return function(err, json, other) {
       if(err) return res.status(500).json(err)
-      res.status(200).json(json)
+      console.log(json, other)
+      res.status(200).json({success:true})
     }
   }
   

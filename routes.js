@@ -1,15 +1,15 @@
-var users   = require('./controllers/users')
-  , zones   = require('./controllers/zones')
-  , audio   = require('./controllers/audio')
-  , sec     = require('./controllers/security')
-  , lights  = require('./controllers/lights')
-  , fitbit  = require('./controllers/fitbit')
-  , xbmc    = require('./controllers/xbmc')
-
-module.exports = function(app) {
+module.exports = function(app, db) {
+  var users   = require('./controllers/users')
+    , zones   = require('./controllers/zones')
+    , audio   = require('./controllers/audio')
+    , sec     = require('./controllers/security')
+    , lights  = require('./controllers/lights')
+    , fitbit  = require('./controllers/fitbit')
+    , xbmc    = require('./controllers/xbmc')
 
   /*** API ***/
   // users
+  users = new users.API(db.user);
   app.get('/users', users.list)
   app.post('/users', users.create)
   app.post('/users/login', users.login)
@@ -17,20 +17,24 @@ module.exports = function(app) {
   app.get('/users/:id', users.show)
   
   // zones
+  zones = new zones.API(db.zone, db.audio, db.light)
   app.get('/zones', zones.list)
   app.get('/zones/resync', zones.resync)
   app.get('/zones/:id', zones.show)
   
   // audio
+  audio = new audio.API(db.audio)
   app.get('/audio', audio.list)
   app.get('/audio/:id', audio.zone)
   app.post('/audio/:id', audio.state)
   
   //security
+  sec = new sec.API(db.user, db.security)
   app.get('/security', sec.status)
   app.post('/security', sec.setStatus)
   
   //lighting
+  lights = new lights.API(db.light);
   app.get('/lights', lights.list)
   app.post('/lights', lights.create)
   app.get('/lights/:id', lights.show)

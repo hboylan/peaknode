@@ -1,59 +1,58 @@
-var db      = require('../lib/database')
-  , config  = require('../config.json')
-  , Zone    = db.zone;
+function ZoneAPI(Zone, Audio, Light)
+{
+  var config = require('../config.json')
 
-exports.list = function(req, res) {
-  Zone.all().success(function(zones){
-    res.json(Zone.parse(zones));
-  })
-}
+  function syncZones(zones){
+    if(!zones.length) return;
+    Zone.create({ name:zones.pop() }).success(function(){ syncZones(zones) });
+  }
+  function syncAudio(audio){
+    if(!audio.length) return;
+    var a = audio.pop();
+    Audio.create({ name:a.name, zoneId:a.zone }).success(function(){ syncAudio(audio) });
+  }
 
-exports.show = function(req, res) {
-  Zone.find(req.params.id).success(function(zone){
-    if(zone == undefined) return res.json({ error:'Invalid zone'});
-    
-    db.audio.findAll({ where:{ zoneId:zone.id }}).success(function(audioZones){
-      db.light.findAll({ where:{ zoneId:zone.id }}).success(function(lights){
-        res.json(zone.eagerParse({
-          audio:db.audio.parse(audioZones),
-          lights:db.light.parse(lights)
-        }))
-      })
+  this.list = function(req, res) {
+    Zone.all().success(function(zones){
+      res.json(Zone.parse(zones));
     })
-  })
-}
+  }
 
-exports.resync = function(req, res) {
-  if(req.query.username != config.username || req.query.password != config.password)
-    res.json({ error:'Invalid credentials' });
-
-  //Drop the table and resync with config file
-  Zone.drop().success(function(){
-    Zone.sync().success(function(){
-      zones = config.zones;
-      syncZones(zones.reverse());
+  this.show = function(req, res) {
+    Zone.find(req.params.id).success(function(zone){
+      if(zone == undefined) return res.json({ error:'Invalid zone'});
     
-      //Drop the table and resync with config file
-      db.audio.drop().success(function(){
-        db.audio.sync().success(function(){
-          audio = config.audio;
-          syncAudio(audio.reverse());
-          res.json({ success:true });
+      Audio.findAll({ where:{ zoneId:zone.id }}).success(function(audioZones){
+        Light.findAll({ where:{ zoneId:zone.id }}).success(function(lights){
+          res.json(zone.eagerParse({
+            audio:Audio.parse(audioZones),
+            lights:Light.parse(lights)
+          }))
         })
       })
     })
-  })
-}
+  }
 
-function syncZones(zones){
-  if(!zones.length) return;
-  
-  db.zone.create({ name:zones.pop() }).success(function(){ syncZones(zones) });
-}
+  this.resync = function(req, res) {
+    if(req.query.username != config.username || req.query.password != config.password)
+      res.json({ error:'Invalid credentials' });
 
-function syncAudio(audio){
-  if(!audio.length) return;
-  
-  var a = audio.pop();
-  db.audio.create({ name:a.name, zoneId:a.zone }).success(function(){ syncAudio(audio) });
+    //Drop the table and resync with config file
+    Zone.drop().success(function(){
+      Zone.sync().success(function(){
+        zones = config.zones;
+        syncZones(zones.reverse());
+    
+        //Drop the table and resync with config file
+        Audio.drop().success(function(){
+          Audio.sync().success(function(){
+            audio = config.audio;
+            syncAudio(audio.reverse());
+            res.json({ success:true });
+          })
+        })
+      })
+    })
+  }
 }
+exports.API = ZoneAPI

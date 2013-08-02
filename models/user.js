@@ -7,7 +7,6 @@ module.exports = function(sequelize, DataTypes) {
     realname: DataTypes.STRING,
     email: { type:DataTypes.STRING, allowNull:true, defaultValue:null },
     
-    fitbit_id: { type:DataTypes.STRING, allowNull:true, defaultValue:null },
     fibtit_token: { type:DataTypes.STRING, allowNull:true, defaultValue:null },
     fibtit_secret: { type:DataTypes.STRING, allowNull:true, defaultValue:null },
   }, {

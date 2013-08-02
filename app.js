@@ -33,7 +33,8 @@ app.set('fitbit-client', require('./lib/fitbit')(config.fitbit_key, config.fitbi
 app.set('xbmc-client', require('./lib/xbmc')(config))
 
 //Configure API Handlers
-require('./routes')(app)
+//Pass MySQL connection via SequelizeJS
+require('./routes')(app, require('./lib/database'))
 
 //Begin listening to port specified in 'config.http_port'
 http.createServer(app).listen(app.get('port'), function(){

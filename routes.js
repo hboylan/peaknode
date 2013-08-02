@@ -43,6 +43,7 @@ module.exports = function(app) {
   app.get('/fitbit/access', fitbit.access)
   app.get('/fitbit/:action', fitbit.userAction)
   app.get('/fitbit/:action/:sub', fitbit.userSubAction)
+  app.get('/fitbit/body/:sub(bmi|weight)/date/:start/:end', fitbit.bodyRange)
   
   //xbmc
   xbmc = new xbmc.API(app.get('xbmc-client'))

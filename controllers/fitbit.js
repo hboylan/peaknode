@@ -26,6 +26,8 @@ function API(client)
   this.access         = function(req, res){ client.getAccessToken(req, res) }
   this.userAction     = function(req, res){ client.userRequest(req.params.action, req, apiHandle(res)) }
   this.userSubAction  = function(req, res){ client.userRequest(req.params.action+'/'+req.params.sub, req, apiHandle(res)) }
+  
+  this.bodyRange   = function(req, res){ client.userRequest('body/'+req.params.sub+'/date/'+req.params.start+'/'+req.params.end, req, apiHandle(res)) }
 }
 
 exports.API = API;

@@ -12,6 +12,7 @@ function API(client){
   
   this.profile = function(req, res){ client.user('profile', req, apiHandle(res)) }
   this.devices = function(req, res){ client.user('devices', req, apiHandle(res)) }
+  this.measure = function(req, res){ client.user('body/date/2013-08-02', req, apiHandle(res)) }
 }
 
 exports.API = API;

@@ -41,6 +41,7 @@ module.exports = function(app) {
   fitbit = new fitbit.API(app.get('fitbit-client'));
   app.get('/fitbit', fitbit.auth)
   app.get('/fitbit/access', fitbit.access)
+  app.get('/fitbit/measures', fitbit.measure)
   app.get('/fitbit/:uid/profile', fitbit.profile)
   app.get('/fitbit/:uid/devices', fitbit.devices)
   

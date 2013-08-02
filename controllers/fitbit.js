@@ -22,9 +22,10 @@ function API(client)
     }
   }
   
-  this.auth       = function(req, res){ client.getRequestToken(req, res) }
-  this.access     = function(req, res){ client.getAccessToken(req, res) }
-  this.userAction = function(req, res){ client.userRequest(req.params.action, req, apiHandle(res)) }
+  this.auth           = function(req, res){ client.getRequestToken(req, res) }
+  this.access         = function(req, res){ client.getAccessToken(req, res) }
+  this.userAction     = function(req, res){ client.userRequest(req.params.action, req, apiHandle(res)) }
+  this.userSubAction  = function(req, res){ client.userRequest(req.params.action+'/'+req.params.sub, req, apiHandle(res)) }
 }
 
 exports.API = API;

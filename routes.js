@@ -42,6 +42,7 @@ module.exports = function(app) {
   app.get('/fitbit', fitbit.auth)
   app.get('/fitbit/access', fitbit.access)
   app.get('/fitbit/:action', fitbit.userAction)
+  app.get('/fitbit/:action/:sub', fitbit.userSubAction)
   
   //xbmc
   xbmc = new xbmc.API(app.get('xbmc-client'))

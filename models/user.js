@@ -7,8 +7,8 @@ module.exports = function(sequelize, DataTypes) {
     realname: DataTypes.STRING,
     email: { type:DataTypes.STRING, allowNull:true, defaultValue:null },
     
-    fibtit_token: { type:DataTypes.STRING, allowNull:true, defaultValue:null },
-    fibtit_secret: { type:DataTypes.STRING, allowNull:true, defaultValue:null },
+    fitbit_token: { type:DataTypes.STRING, allowNull:true, defaultValue:null },
+    fitbit_secret: { type:DataTypes.STRING, allowNull:true, defaultValue:null },
   }, {
     instanceMethods: {
       
@@ -27,7 +27,8 @@ module.exports = function(sequelize, DataTypes) {
     
     classMethods: {
       logout:function(res){
-        res.clearCookie('user', { path: '/' }); 
+        res.clearCookie('user', {path:'/'})
+        res.clearCookie('fitbit_client', {path:'/'})
       },
     }
   });

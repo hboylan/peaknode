@@ -33,7 +33,7 @@ function UserAPI(User, fitbit)
       .success(function(u){
         if(u == undefined)  return res.json({ error:'Invalid user' });
         u = u.parse(true);
-        res.cookie('user', u);
+        res.cookie('user', u)
         fitbit.cookie(res, fitbit.serializer.stringify({token:u.fitbit_token, secret:u.fitbit_secret}))
         res.json(u);
       })

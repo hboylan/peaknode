@@ -13,7 +13,7 @@
  */
 
 
-function API(client)
+function API(User, client)
 {  
   function apiHandle(res){
     return function(err, resp, json){
@@ -23,7 +23,27 @@ function API(client)
   }
   
   this.auth           = function(req, res){ client.getRequestToken(req, res) }
-  this.access         = function(req, res){ client.getAccessToken(req, res) }
+  this.access         = function(req, res){
+    var token     = req.query.oauth_token
+      , verifier  = req.query.oauth_verifier;
+    // Access token
+    client.oauth.getOAuthAccessToken(token, '', verifier,
+      function (error, token, secret, other) {
+        if(error) return res.status(400).json(error)
+        client.cookie(res, token, secret) //client cookie
+      
+        User.find(req.cookies.user.id).success(function(u){ //persist in db
+          if(u != undefined){
+            u.fitbit_token = token
+            u.fitbit_secret = secret
+            u.save().success(function(u){
+              console.log(u)
+            })
+          }
+        })
+        res.status(200).json({oauth_token:token, oauth_token_secret:secret})
+    })
+  }
   this.userAction     = function(req, res){ client.userRequest(req.params.action, req, apiHandle(res)) }
   this.userSubAction  = function(req, res){ client.userRequest(req.params.action+'/'+req.params.sub, req, apiHandle(res)) }
   

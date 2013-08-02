@@ -42,7 +42,7 @@ module.exports = function(app, db) {
   app.post('/lights/:id/:action', lights.timeout)
   
   //fitbit
-  fitbit = new fitbit.API(app.get('fitbit-client'));
+  fitbit = new fitbit.API(db.user, app.get('fitbit-client'));
   app.get('/fitbit', fitbit.auth)
   app.get('/fitbit/access', fitbit.access)
   app.get('/fitbit/:action', fitbit.userAction)

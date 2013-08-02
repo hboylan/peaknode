@@ -27,7 +27,7 @@ app.configure('development', function(){
 app.set('omnilink-client', require('./lib/omnilink'))
 
 //Configure FitBit Client
-app.set('fitbit-client', require('./lib/fitbit')(config.fitbit_key, config.fitbit_secret, 'http://localhost:8000/fitbit'))
+app.set('fitbit-client', require('./lib/fitbit')(config.fitbit_key, config.fitbit_secret, 'http://157.182.194.137:8000/fitbit/access'))
 
 //Configure XBMC Client
 app.set('xbmc-client', require('./lib/xbmc')(config))

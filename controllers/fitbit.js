@@ -7,7 +7,8 @@ function API(client){
     }
   }
   
-  this.auth = function(req, res){ client.getAccessToken(req, res, apiHandle(res)) }
+  this.auth   = function(req, res){ client.getRequestToken(req, res) }
+  this.access = function(req, res){ client.getAccessToken(req, res) }
   
   this.profile = function(req, res){ client.user('profile', req, apiHandle(res)) }
   this.devices = function(req, res){ client.user('devices', req, apiHandle(res)) }

@@ -9,7 +9,7 @@ module.exports = function(app, db) {
 
   /*** API ***/
   // users
-  users = new users.API(db.user);
+  users = new users.API(db.user, app.get('fitbit-client'));
   app.get('/users', users.list)
   app.post('/users', users.create)
   app.post('/users/login', users.login)

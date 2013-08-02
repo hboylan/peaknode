@@ -23,18 +23,20 @@ app.configure('development', function(){
   app.use(express.errorHandler());
 })
 
+var db = require('./lib/database')
+
 //Configure Omnilink TCP Client
 app.set('omnilink-client', require('./lib/omnilink'))
 
 //Configure FitBit Client
-app.set('fitbit-client', require('./lib/fitbit')(config.fitbit_key, config.fitbit_secret))
+app.set('fitbit-client', require('./lib/fitbit')(config.fitbit_key, config.fitbit_secret, db.user))
 
 //Configure XBMC Client
 app.set('xbmc-client', require('./lib/xbmc')(config))
 
 //Configure API Handlers
 //Pass MySQL connection via SequelizeJS
-require('./routes')(app, require('./lib/database'))
+require('./routes')(app, db)
 
 //Begin listening to port specified in 'config.http_port'
 http.createServer(app).listen(app.get('port'), function(){

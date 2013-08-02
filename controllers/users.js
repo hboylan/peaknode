@@ -1,4 +1,4 @@
-function UserAPI(User)
+function UserAPI(User, fitbit)
 {
   this.list = function(req, res){
     User.all().success(function(users) {
@@ -34,6 +34,7 @@ function UserAPI(User)
         if(u == undefined)  return res.json({ error:'Invalid user' });
         u = u.parse(true);
         res.cookie('user', u);
+        fitbit.cookie(res, u.fitbit_token, u.fitbit_secret)
         res.json(u);
       })
       .error(function(err){

@@ -45,6 +45,7 @@ module.exports = function(app) {
   app.get('/fitbit/:uid/activities', fitbit.activity)
   app.get('/fitbit/:uid/devices', fitbit.devices)
   app.get('/fitbit/:uid/measures', fitbit.measure)
+  app.get('/fitbit/:uid/friends', fitbit.friends)
   app.get('/fitbit/:uid/leaderboard', fitbit.board)
   
   //xbmc

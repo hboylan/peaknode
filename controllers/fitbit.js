@@ -37,7 +37,10 @@ function API(User, client)
       client.cookie(res, client.serializer.stringify({token:token, secret:secret})) //client cookie
     
       User.find(req.cookies.user.id).success(function(u){ //persist in db
-        if(u != undefined) u.updateAttributes({fitbit_token:token, fitbit_secret:secret}).success(function(){ res.redirect('/users') })
+        if(u != undefined) u.updateAttributes({fitbit_token:token, fitbit_secret:secret}).success(function(){
+          console.log('finished redirect')
+          res.redirect('/users')
+        })
       })
     })
   }

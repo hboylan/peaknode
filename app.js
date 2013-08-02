@@ -31,7 +31,7 @@ var db = require('./lib/database')
 app.set('omnilink-client', require('./lib/omnilink'))
 
 //Configure FitBit Client
-app.set('fitbit-client', require('./lib/fitbit')(config.fitbit_key, config.fitbit_secret, db.user))
+app.set('fitbit-client', require('./lib/fitbit')(config.fitbit_key, config.fitbit_secret))
 
 //Configure XBMC Client
 app.set('xbmc-client', require('./lib/xbmc')(config))

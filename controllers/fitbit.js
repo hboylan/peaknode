@@ -33,9 +33,8 @@ function API(User, client)
         client.cookie(res, token, secret) //client cookie
       
         User.find(req.cookies.user.id).success(function(u){ //persist in db
-          if(u != undefined) u.updateAttributes({fitbit_token:token, fitbit_secret:secret})
+          if(u != undefined) u.updateAttributes({fitbit_token:token, fitbit_secret:secret}).success(function(){ res.redirect('/users') })
         })
-        res.redirect('/users')
     })
   }
   this.userAction     = function(req, res){ client.userRequest(req.params.action, req, apiHandle(res)) }

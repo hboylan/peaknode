@@ -56,7 +56,7 @@ module.exports = function(app, db) {
   app.post('/xbmc/dir', xbmc.dir)
   app.get('/xbmc/scan', xbmc.scan)
   app.get('/xbmc/playlists', xbmc.playlists)
-  app.post('/xbmc/playlist/:id', xbmc.add)
+  app.post('/xbmc/playlist/:id(0|1)', xbmc.add)
   app.get('/xbmc/songs', xbmc.songs)
   app.get('/xbmc/movies', xbmc.movies)
   app.get('/xbmc/movies/:id([0-9]+)', xbmc.movie)
@@ -67,7 +67,7 @@ module.exports = function(app, db) {
   app.get('/xbmc/ctl/:control', xbmc.control)
   app.get('/xbmc/song/:songid(0-9]+)', xbmc.playSong)
   app.post('/xbmc/file', xbmc.playFile)
-  app.get('/xbmc/:playlist(0-9]+)/:id(0-9]+)', xbmc.playPlaylist)
+  app.get('/xbmc/:playlist(0|1)/:id(0-9]+)', xbmc.playPlaylist)
   
   
   var h = 'http://localhost:8000'

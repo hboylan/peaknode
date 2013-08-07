@@ -12,13 +12,13 @@ module.exports = function(sequelize, DataTypes) {
         return this;
       },
       
-      setState:function(client, state){
-        client.send('setlight '+this.unit+' '+state);
+      setState:function(state){
+        this.tellOmni('control', {state:state})
         this.state = state;
       },
       
-      setLevel:function(client, level){
-        client.send('setlight '+this.unit+' '+level);
+      setLevel:function(level){
+        this.tellOmni('level', {percentage:level})
         this.level = parseInt(level, 10);
       },
       
@@ -40,6 +40,10 @@ module.exports = function(sequelize, DataTypes) {
         }, time * 1000)
       },
       
+      tellOmni:function(cmd, data){
+        data.unit = this.unit;
+        require('../app').get('omnilink-client').command('light.'+cmd, data)
+      }
     },
     
     classMethods:{

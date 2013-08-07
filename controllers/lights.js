@@ -25,12 +25,12 @@ function LightAPI(Light)
       , state   = req.body.state
       , level   = req.body.level
       , id      = req.params.id;
-  
+    
     Light.update(id, res, function(light){
       if(state == 'on' || state == 'off')
-        light.setState(client, state);
+        light.setState(state);
       else if(level >= 0  && level <= 100)
-        light.setLevel(client, level);
+        light.setLevel(level);
       else
         res.json({ error:'Expected parameters: state (on/off) or level (0-100)' })
     

@@ -18,7 +18,7 @@ module.exports = function(sequelize, DataTypes) {
       },
       
       setLevel:function(level){
-        this.tellOmni('level', {percentage:level})
+        this.tellOmni('level', {percentage:parseInt(level, 10)})
         this.level = parseInt(level, 10);
       },
       

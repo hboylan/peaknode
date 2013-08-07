@@ -8,7 +8,11 @@ module.exports = function(sequelize, DataTypes) {
       parse:function(){
         this.updatedAt = undefined;
         return this;
-      }
+      },
+      
+      // tellOmni:function(cmd, data){
+      //   require('../app').get('omnilink-client').command('security.')
+      // }
     },
     classMethods: {
       

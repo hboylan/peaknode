@@ -22,23 +22,22 @@ module.exports = function(sequelize, DataTypes) {
         this.level = parseInt(level, 10);
       },
       
-      step:function(client, action, level, time){
-        client.send('set'+action+' '+this.unit+' '+level+' '+time);
-        this.timeout(time);
-        this.level = parseInt(level, 10);
-        this.state = (action == 'dim')? 'dimming':'brightening';
-      },
-      
-      timeout:function(time){
-        var light = this, c = this.createdAt, u = this.updatedAt;
-        setTimeout(function(){
-          var action = light.state;
-          light.createdAt = c;
-          light.updatedAt = u;
-          light.updateAttributes({ state:(light.level == 0)? 'off':'on' })
-            .success(function(light){ console.log('Finished '+action+': '+light.name)})
-        }, time * 1000)
-      },
+      // step:function(client, action, level, time){
+      //   this.timeout(time);
+      //   this.level = parseInt(level, 10);
+      //   this.state = (action == 'dim')? 'dimming':'brightening';
+      // },
+      // 
+      // timeout:function(time){
+      //   var light = this, c = this.createdAt, u = this.updatedAt;
+      //   setTimeout(function(){
+      //     var action = light.state;
+      //     light.createdAt = c;
+      //     light.updatedAt = u;
+      //     light.updateAttributes({ state:(light.level == 0)? 'off':'on' })
+      //       .success(function(light){ console.log('Finished '+action+': '+light.name)})
+      //   }, time * 1000)
+      // },
       
       tellOmni:function(cmd, data){
         data.unit = 3;

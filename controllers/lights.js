@@ -21,8 +21,7 @@ function LightAPI(Light)
   }
 
   this.state = function(req, res){
-    var client  = require('../app').client()
-      , state   = req.body.state
+    var state   = req.body.state
       , level   = req.body.level
       , id      = req.params.id;
     
@@ -41,8 +40,7 @@ function LightAPI(Light)
   }
 
   this.timeout = function(req, res){
-    var client  = require('../app').client()
-      , level   = req.body.level
+    var level   = req.body.level
       , time    = req.body.time
       , id      = req.params.id
       , action  = req.params.action;

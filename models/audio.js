@@ -15,7 +15,7 @@ module.exports = function(sequelize, DataTypes) {
       
       setState:function(state){
         this.tellOmni('control', { control:['off', 'on', 'unmute', 'mute'].indexOf(state) })
-        this.state = state;
+        this.state = (state == 'unmute')? 'on':state;
       },
       
       setVolume:function(vol){

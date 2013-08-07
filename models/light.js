@@ -41,7 +41,7 @@ module.exports = function(sequelize, DataTypes) {
       },
       
       tellOmni:function(cmd, data){
-        data.unit = this.unit;
+        data.unit = 3;
         require('../app').get('omnilink-client').command('light.'+cmd, data)
       }
     },

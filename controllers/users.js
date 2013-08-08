@@ -31,9 +31,10 @@ function UserAPI(User, fitbit)
     User.find({ where:{ username:req.body.username, password:User.encrypt(req.body.password) }})
       .success(function(u){
         if(u == undefined)  return res.json({ error:'Invalid user' });
-        u = u.parse()
         req.session.user = u
         fitbit.persist(req, fitbit.serializer.stringify({token:u.fitbit_token, secret:u.fitbit_secret}))
+
+        u = u.parse(req.sessionID)
         res.json(u)
       })
       .error(function(err){

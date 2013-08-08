@@ -13,7 +13,10 @@ app.configure(function() {
   app.use(express.logger('dev'))
   app.use(express.bodyParser({ uploadDir:__dirname + '/tmp' }))
   app.use(express.cookieParser('wvu-peak-api'))
-  app.use(express.session({ secret:'7]fo+>+yR-&}}|!Kh>kC6Vbl:Krb)TrG&Ibkcu~AcRV/t[$+H+:_xb#a4G20MK>a' }))
+  app.use(express.session({
+    store:new express.session.MemoryStore(),
+    secret:'7]fo+>+yR-&}}|!Kh>kC6Vbl:Krb)TrG&Ibkcu~AcRV/t[$+H+:_xb#a4G20MK>a',
+  }))
   app.use(express.methodOverride())
   app.use(express.static(__dirname + '/public'))
   app.use(cors())

@@ -28,7 +28,7 @@ function UserAPI(User, fitbit)
   }
 
   this.login = function(req, res) {
-    User.find({ where:{ username:req.body.username, password:req.body.password }})
+    User.find({ where:{ username:req.body.username, password:User.encrypt(req.body.password) }})
       .success(function(u){
         if(u == undefined)  return res.json({ error:'Invalid user' });
         u = u.parse()

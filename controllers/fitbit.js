@@ -34,12 +34,11 @@ function API(User, client)
     // Access token
     client.oauth.getOAuthAccessToken(token, '', verifier, function (error, token, secret, other){
       if(error) return res.status(400).json(error)
-      client.cookie(res, client.serializer.stringify({token:token, secret:secret})) //client cookie
-    
-      User.find(req.cookies.user.id).success(function(u){ //persist in db
+      client.persist(req, client.serializer.stringify({token:token, secret:secret})) //persist in session
+      
+      User.find(req.session.user.id).success(function(u){ //persist in db
         if(u != undefined) u.updateAttributes({fitbit_token:token, fitbit_secret:secret}).success(function(){
-          console.log('finished redirect')
-          res.redirect('/users')
+          res.status(200).send()
         })
       })
     })

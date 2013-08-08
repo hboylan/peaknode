@@ -13,7 +13,6 @@ module.exports = function(app, db) {
   app.get('/users', users.list)
   app.post('/users', users.create)
   app.post('/login', users.login)
-  app.get('/logout', users.logout)
   app.get('/users/:id', users.show)
   
   // zones

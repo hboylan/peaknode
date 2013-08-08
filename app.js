@@ -13,6 +13,7 @@ app.configure(function() {
   app.use(express.logger('dev'))
   app.use(express.bodyParser({ uploadDir:__dirname + '/tmp' }))
   app.use(express.cookieParser('wvu-peak-api'))
+  app.use(express.session({ secret:'7]fo+>+yR-&}}|!Kh>kC6Vbl:Krb)TrG&Ibkcu~AcRV/t[$+H+:_xb#a4G20MK>a' }))
   app.use(express.methodOverride())
   app.use(express.static(__dirname + '/public'))
   app.use(cors())
@@ -22,7 +23,7 @@ app.configure(function() {
 })
 
 app.configure('development', function(){
-  app.use(express.errorHandler());
+  app.use(express.errorHandler())
 })
 
 var db = require('./lib/database')
@@ -46,4 +47,4 @@ http.createServer(app).listen(app.get('port'), function(){
 })
 
 //Export app
-module.exports = app;
+module.exports = app

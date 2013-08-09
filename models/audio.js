@@ -7,31 +7,9 @@ module.exports = function(sequelize, DataTypes) {
   }, {
     freezeTableName: true,
     instanceMethods:{
-      
       parse:function(){
         this.createdAt = this.updatedAt = undefined;
         return this;
-      },
-      
-      setState:function(state){
-        this.tellOmni('control', { control:['off', 'on', 'unmute', 'mute'].indexOf(state) })
-        this.state = (state == 'unmute')? 'on':state;
-      },
-      
-      setVolume:function(vol){
-        this.tellOmni('volume', { volume:parseInt(vol,10) })
-        this.state = 'on';
-        this.volume = parseInt(vol, 10);
-      },
-      
-      setSource:function(s){
-        this.tellOmni('source', { source:parseInt(s,10) })
-        this.source = parseInt(s, 10);
-      },
-      
-      tellOmni:function(cmd, data){
-        data.zone = this.id;
-        require('../app').get('omnilink-client').command('audio.'+cmd, data)
       }
     },
     classMethods:{

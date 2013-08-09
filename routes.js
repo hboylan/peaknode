@@ -1,4 +1,4 @@
-module.exports = function(app, db) {
+module.exports = function(app, db, omni_client, fit_client, xbmc_client) {
   var users   = require('./controllers/users')
     , zones   = require('./controllers/zones')
     , audio   = require('./controllers/audio')
@@ -9,7 +9,7 @@ module.exports = function(app, db) {
 
   /*** API ***/
   // users
-  users = new users.API(db.user, app.get('fitbit-client'));
+  users = new users.API(db.user, fit_client);
   app.get('/users', users.list)
   app.post('/users', users.create)
   app.post('/login', users.login)
@@ -22,26 +22,26 @@ module.exports = function(app, db) {
   app.get('/zones/:id', zones.show)
   
   // audio
-  audio = new audio.API(db.audio)
+  audio = new audio.API(omni_client, db)
   app.get('/audio', audio.list)
   app.get('/audio/:id', audio.zone)
   app.post('/audio/:id', audio.state)
   
   //security
-  sec = new sec.API(db.user, db.security)
+  sec = new sec.API(omni_client, db.user, db.security)
   app.get('/security', sec.status)
   app.post('/security', sec.setStatus)
   
   //lighting
-  lights = new lights.API(db.light);
+  lights = new lights.API(omni_client, db);
   app.get('/lights', lights.list)
   app.post('/lights', lights.create)
   app.get('/lights/:id', lights.show)
   app.post('/lights/:id', lights.state)
-  app.post('/lights/:id/:action', lights.timeout)
+  // app.post('/lights/:id/:action', lights.timeout)
   
   //fitbit
-  fitbit = new fitbit.API(db.user, app.get('fitbit-client'));
+  fitbit = new fitbit.API(db.user, fit_client);
   app.get('/fitbit', fitbit.auth)
   app.get('/fitbit/access', fitbit.access)
   app.get('/fitbit/:action', fitbit.userAction)
@@ -49,7 +49,7 @@ module.exports = function(app, db) {
   app.get('/fitbit/body/:sub(bmi|weight)/date/:start/:end', fitbit.bodyRange)
   
   //xbmc
-  xbmc = new xbmc.API(app.get('xbmc-client'))
+  xbmc = new xbmc.API(xbmc_client)
   app.get('/xbmc', xbmc.status)
   app.get('/xbmc/reconnect', xbmc.reconnect)
   app.post('/xbmc/dir', xbmc.dir)

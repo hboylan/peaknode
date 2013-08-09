@@ -1,4 +1,4 @@
-function SecurityAPI(User, Security)
+function SecurityAPI(Omni, User, Security)
 {
   this.status = function(req, res){
     var pinkey  = req.query.pinkey

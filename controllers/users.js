@@ -21,9 +21,9 @@ function UserAPI(User, fitbit)
       realname: req.body.realname,
       email: req.body.email
     }).success(function(user) {
-      res.jsonp(201, user.parse())
+      res.json(user.parse())
     }).error(function(err) {
-      res.jsonp(400, { error:err.message, params:req.body })
+      res.status(400).json({ error:err.message, params:req.body })
     })
   }
 
@@ -31,14 +31,16 @@ function UserAPI(User, fitbit)
     User.find({ where:{ username:req.body.username, password:User.encrypt(req.body.password) }})
       .success(function(u){
         if(u == undefined)  return res.json({ error:'Invalid user' });
+        console.log(req.sessionID)
+        u = u.parse(req.sessionID)
+        
         req.session.user = u
         fitbit.persist(req, fitbit.serializer.stringify({token:u.fitbit_token, secret:u.fitbit_secret}))
 
-        u = u.parse(req.sessionID)
         res.json(u)
       })
       .error(function(err){
-        res.json({ error:'Invalid username/password' })
+        res.status(400).json({ error:'Invalid username/password' })
       })
   }
 }

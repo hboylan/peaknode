@@ -1,27 +1,16 @@
 module.exports = function(sequelize, DataTypes) {
   return sequelize.define('light', {
     name: DataTypes.STRING,
-    unit: { type:DataTypes.INTEGER, validate:{ min:1, max:511 } },
+    unit: { type:DataTypes.INTEGER, validate:{ min:1, max:511 }, allowNull:false },
     level: { type:DataTypes.INTEGER, validate:{ min:0, max:100 }, defaultValue:0 },
     state: { type:DataTypes.ENUM, values:['on', 'off', 'dimming', 'brightening'], defaultValue:'off' },
   }, {
     instanceMethods:{
-      
       parse:function(){
-        this.updatedAt = this.createdAt = undefined;
+        this.id = this.updatedAt = this.createdAt = undefined;
         return this;
       },
-      
-      setState:function(state){
-        this.tellOmni('control', {state:state})
-        this.state = state;
-      },
-      
-      setLevel:function(level){
-          this.tellOmni('level', {level:parseInt(level, 10)})
-        this.level = parseInt(level, 10);
-      },
-      
+      //TODO update this in omnilink client for bright/dimming
       // step:function(client, action, level, time){
       //   this.timeout(time);
       //   this.level = parseInt(level, 10);
@@ -38,11 +27,6 @@ module.exports = function(sequelize, DataTypes) {
       //       .success(function(light){ console.log('Finished '+action+': '+light.name)})
       //   }, time * 1000)
       // },
-      
-      tellOmni:function(cmd, data){
-        data.unit = 3;
-        require('../app').get('omnilink-client').command('light.'+cmd, data)
-      }
     },
     
     classMethods:{
@@ -59,8 +43,8 @@ module.exports = function(sequelize, DataTypes) {
       
       update:function(id, res, success){
         this.find(id).success(function(light){
-          if(light == undefined) res.json({ error:'Invalid light' })
-          success(light);
+          if(light == undefined) return res.status(400).json({ error:'Invalid light' });
+          success(light)
           res.json(light.parse())
         })
       },

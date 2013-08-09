@@ -4,7 +4,11 @@ function LightAPI(omni, db)
     db.zone.all({ include:[db.light] }).success(function(zones){
       var lights = []
       zones.forEach(function(z){
-        lights.push({ id:z.id, name:z.name, lights:(z.lights == undefined)?[]:z.lights })
+        lights.push({
+          id:z.id,
+          name:z.name,
+          lights:(z.lights == undefined)? [] : db.light.parse(z.lights)
+        })
       })
       res.json(lights)
     })

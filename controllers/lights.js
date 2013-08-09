@@ -1,8 +1,12 @@
 function LightAPI(omni, db)
 {
   this.list = function(req, res){
-    db.light.list(function(lights){
-      res.json(db.light.parse(lights))
+    db.zone.all({ include:[db.light] }).success(function(zones){
+      var lights = []
+      zones.forEach(function(z){
+        lights.push({ id:z.id, name:z.name, lights:(z.lights == undefined)?[]:z.lights })
+      })
+      res.json(lights)
     })
   }
 

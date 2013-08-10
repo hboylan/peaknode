@@ -19,13 +19,16 @@
   "models":["user", "zone", "audio", "security"],
   "zones":[ "Living Room", "Kitchen", "Master Bedroom", "Bedroom", "Bathroom", "Utility", "Deck" ],
   "audio":[
-    { "zone":1, "name":"Living Room Left"},
-    { "zone":1, "name":"Living Room Right"},
-    { "zone":2, "name":"Kitchen"},
-    { "zone":3, "name":"Master Bedroom"},
-    { "zone":4, "name":"Bedroom"},
-    { "zone":5, "name":"Bathroom"},
-    { "zone":7, "name":"Deck Front"},
-    { "zone":7, "name":"Deck Back"}
+    { "zone":1, "name":"Living Room Left" },
+    { "zone":1, "name":"Living Room Right" },
+    { "zone":2, "name":"Kitchen" },
+    { "zone":3, "name":"Master Bedroom" },
+    { "zone":4, "name":"Bedroom" },
+    { "zone":5, "name":"Bathroom" },
+    { "zone":7, "name":"Deck Front" },
+    { "zone":7, "name":"Deck Back" }
+  ],
+  "lights":[
+    { "zone":1, "unit":3, "name":"Test Dimmer" }
   ]
 }

@@ -18,29 +18,15 @@ function LightAPI(omni, db)
     db.light.update(req.params.id, res, function(){});
   }
 
-  this.create = function(req, res){
-    var zone = req.body.zone
-      , unit = req.body.unit
-      , name = req.body.name;
-    
-    db.light.create({ name:name, unit:unit, zoneId:zone }).
-      success(function(l){
-        res.status(200).end()
-      }).
-      error(function(err){
-        res.status(400).json(err)
-      })
-  }
-
   this.state = function(req, res){
     var state   = req.body.state
       , level   = req.body.level
-      , id      = req.params.id;
+      , id      = req.body.id
     
     db.light.update(id, res, function(light){
-      if(state == 'on' || state == 'off'){
-        omni.light('control', { unit:light.unit, state:['on', 'off'].indexOf(state) })
-        light.state = state
+      if(state == 'toggle'){
+        omni.light('control', { unit:light.unit, state:light.on? 0:1  })
+        light.on = !light.on
       }else if(level >= 0  && level <= 100){
         omni.light('level', { unit:light.unit, level:parseInt(level, 10) })
         light.level = parseInt(level, 10)

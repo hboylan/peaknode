@@ -3,11 +3,12 @@ module.exports = function(sequelize, DataTypes) {
     name: DataTypes.STRING,
     unit: { type:DataTypes.INTEGER, validate:{ min:1, max:511 }, allowNull:false },
     level: { type:DataTypes.INTEGER, validate:{ min:0, max:100 }, defaultValue:0 },
-    state: { type:DataTypes.ENUM, values:['on', 'off', 'dimming', 'brightening'], defaultValue:'off' },
+    on: { type:DataTypes.BOOLEAN, defaultValue:false },
+    active: { type:DataTypes.BOOLEAN, defaultValue:false }
   }, {
     instanceMethods:{
       parse:function(){
-        this.id = this.updatedAt = this.createdAt = undefined;
+        this.updatedAt = this.createdAt = undefined;
         return this;
       },
       //TODO update this in omnilink client for bright/dimming
@@ -45,7 +46,6 @@ module.exports = function(sequelize, DataTypes) {
         this.find(id).success(function(light){
           if(light == undefined) return res.status(400).json({ error:'Invalid light' });
           success(light)
-          res.json(light.parse())
         })
       },
     }

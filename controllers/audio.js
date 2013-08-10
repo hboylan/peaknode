@@ -16,10 +16,11 @@ function AudioAPI(omni, db)
 
   this.state = function(req, res) {
     var vol     = parseInt(req.body.volume, 10)
-      , state   = req.body.state
+      , toggle  = req.body.toggle
       , source  = parseInt(req.body.source, 10)
-      , zone    = parseInt(req.params.id, 10)
+      , zone    = parseInt(req.body.id, 10)
     
+    if(zone == NaN) return res.status(400).json({ error:'Invalid zone id' })
     db.audio.find(zone).success(function(a){
       if(a == undefined) return res.status(400).json({ error:'Invalid zone' });
       //Update Audio Zone state
@@ -29,9 +30,12 @@ function AudioAPI(omni, db)
       } else if(1 <= source && source <= 12){
         omni.audio('source', { zone:a.id, source:source })
         a.source = source
-      } else if(['off', 'on', 'unmute', 'mute'].indexOf(state) != -1){
-        omni.audio('control', { zone:a.id, state:['off', 'on', 'unmute', 'mute'].indexOf(state) })
-        a.state = (state == 'unmute')? 'on' : state
+      } else if(toggle == 'power'){
+        omni.audio('control', { zone:a.id, state:a.on? 0:1 })
+        a.on = !a.on
+      } else if(toggle == 'mute'){
+        omni.audio('control', { zone:a.id, state:a.mute? 2:3 })
+        a.mute = !a.mute
       } else
         res.json({ error:'Invalid POST params' })
     

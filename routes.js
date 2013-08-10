@@ -16,7 +16,7 @@ module.exports = function(app, db, omni_client, fit_client, xbmc_client) {
   app.get('/users/:id', users.show)
   
   // zones
-  zones = new zones.API(db.zone, db.audio, db.light)
+  zones = new zones.API(db)
   app.get('/zones', zones.list)
   app.get('/zones/resync', zones.resync)
   app.get('/zones/:id', zones.show)
@@ -24,8 +24,8 @@ module.exports = function(app, db, omni_client, fit_client, xbmc_client) {
   // audio
   audio = new audio.API(omni_client, db)
   app.get('/audio', audio.list)
+  app.post('/audio', audio.state)
   app.get('/audio/:id', audio.zone)
-  app.post('/audio/:id', audio.state)
   
   //security
   sec = new sec.API(omni_client, db.user, db.security)
@@ -35,9 +35,9 @@ module.exports = function(app, db, omni_client, fit_client, xbmc_client) {
   //lighting
   lights = new lights.API(omni_client, db);
   app.get('/lights', lights.list)
-  app.post('/lights', lights.create)
+  // app.post('/lights', lights.create)
   app.get('/lights/:id', lights.show)
-  app.post('/lights/:id', lights.state)
+  app.post('/lights', lights.state)
   // app.post('/lights/:id/:action', lights.timeout)
   
   //fitbit

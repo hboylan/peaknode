@@ -19,13 +19,13 @@ function LightAPI(omni, db)
   }
 
   this.state = function(req, res){
-    var state   = req.body.state
+    var toggle  = req.body.toggle
       , level   = req.body.level
       , id      = req.body.id
     
     db.light.update(id, res, function(light){
-      if(state == 'toggle'){
-        omni.light('control', { unit:light.unit, state:light.on? 0:1  })
+      if(toggle){
+        omni.light('control', { unit:light.unit, state:light.on? 0:1 })
         light.on = !light.on
       }else if(level >= 0  && level <= 100){
         omni.light('level', { unit:light.unit, level:parseInt(level, 10) })

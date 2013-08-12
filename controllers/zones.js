@@ -46,12 +46,12 @@ function ZoneAPI(db)
     db.zone.drop().success(function(){
       db.zone.sync().success(function(){
         zones = config.zones;
-        syncZones(zones.reverse());
+        syncZones(zones.reverse())
     
         //Drop the table and resync with config file
         db.audio.drop().success(function(){
           db.audio.sync().success(function(){
-            audio = config.audio;
+            audio = config.audio
             syncAudio(audio.reverse())
             
             db.light.drop().success(function(){

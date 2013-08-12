@@ -27,14 +27,17 @@ function LightAPI(omni, db)
       if(toggle){
         omni.light('control', { unit:light.unit, state:light.on? 0:1 })
         light.on = !light.on
+        light.level = light.on? light.level:0
       }else if(level >= 0  && level <= 100){
         omni.light('level', { unit:light.unit, level:parseInt(level, 10) })
         light.level = parseInt(level, 10)
+        light.on = (level > 0)? true:false
       }else
         res.json({ error:'Expected parameters: state (on/off) or level (0-100)' })
     
-      light.save().success(function(l){
-        res.status(200).end('ok')
+      light.save()
+      db.light_archive.create({ state:light.on, level:light.level, lightId:light.id }).success(function(archive){
+        res.json(archive.parse())
       })
     })
   }

@@ -33,11 +33,11 @@ function UserAPI(fitbit, db)
   }
   
   this.unlock = function(req, res){
-    db.user.find({ where:{id:req.body.id, pinkey:db.user.encrypt(req.body.pinkey)}}).success(function(user){
+    db.user.find({ where:{id:req.body.id, pinkey:db.user.encrypt(req.body.pinkey)} }).success(function(user){
       if(user == undefined) return res.status(400).json({ error:'Invalid user' })
       
       require('crypto').randomBytes(48, function(err, bytes){
-        req.session.auth = { key:bytes.toString('hex'), timeout:new Date(Date.now() + user.token_timeout) }
+        // req.session.auth = { key:bytes.toString('hex'), timeout:new Date(Date.now() + user.token_timeout) }
         res.json(req.session.auth)
       })
     }).error(function(err){

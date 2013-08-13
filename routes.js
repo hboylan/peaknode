@@ -46,7 +46,7 @@ module.exports = function(app, db, omni_client, fit_client, xbmc_client) {
   app.get('/fitbit/access', fitbit.access)
   app.get('/fitbit/:action', fitbit.userAction)
   app.get('/fitbit/:action/:sub', fitbit.userSubAction)
-  app.get('/fitbit/:action/:sub(bmi|weight)/date/:start/:end', fitbit.dateRange)
+  app.get('/fitbit/:action/:sub/date/:start/:end', fitbit.dateRange)
   
   //xbmc
   xbmc = new xbmc.API(xbmc_client)

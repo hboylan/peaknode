@@ -46,7 +46,7 @@ module.exports = function(app, db, omni_client, fit_client, xbmc_client) {
   app.get('/fitbit/access', fitbit.access)
   app.get('/fitbit/:action', fitbit.userAction)
   app.get('/fitbit/:action/:sub', fitbit.userSubAction)
-  app.get('/fitbit/body/:sub(bmi|weight)/date/:start/:end', fitbit.bodyRange)
+  app.get('/fitbit/:action/:sub(bmi|weight)/date/:start/:end', fitbit.dateRange)
   
   //xbmc
   xbmc = new xbmc.API(xbmc_client)
@@ -78,4 +78,4 @@ module.exports = function(app, db, omni_client, fit_client, xbmc_client) {
   app.get('/auth', function(req, res){ res.render('login', {host:h}) })
   //API catch-all
   app.get('*', function(req, res){ res.status(400).json({ error:'Invalid API call' }) })
-};
+}

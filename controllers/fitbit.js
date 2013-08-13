@@ -1,15 +1,22 @@
 /*
  * User Request Options
+ * https://wiki.fitbit.com/display/API/Fitbit+Resource+Access+API
  * 
  * /profile
  * /activities
+ * /activities/recent
+ * /activities/frequent
+ * /activities/favorites
  * /friends
  * /friends/leaderboard
- * /body
  * 
- * /activities/:resource/date/:start/:end, [distance, calories, activeScore]
+ * Time Series Requests
+ * https://wiki.fitbit.com/display/API/API-Get-Time-Series
+ * 
+ * /activities/:resource/date/:start/:end [distance, calories, activeScore]
  * /sleep/:resource/date/:start/:end [timeInBed, efficiency]
  * /body/:resource/date/:start/:end [weight, bmi]
+ * 
  */
 
 
@@ -47,7 +54,7 @@ function API(User, client)
   this.userAction = function(req, res){ client.userRequest(req.params.action, req, apiHandle(res)) }
   this.userSubAction = function(req, res){ client.userRequest(req.params.action+'/'+req.params.sub, req, apiHandle(res)) }
   
-  this.bodyRange = function(req, res){ client.userRequest('body/'+req.params.sub+'/date/'+req.params.start+'/'+req.params.end, req, apiHandle(res)) }
+  this.dateRange = function(req, res){ client.userRequest(req.params.action+'/'+req.params.sub+'/date/'+req.params.start+'/'+req.params.end, req, apiHandle(res)) }
 }
 
 exports.API = API;

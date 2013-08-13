@@ -23,6 +23,8 @@ function API(User, client)
   }
   
   this.auth = function(req, res){
+      console.log(req.session.user)
+    if(req.session.user == undefined) return res.status(400).json({ error:'Invalid session' })
     // Request token
     client.oauth.getOAuthRequestToken(function (error, token, secret, authorize_url, other) {
       if(error) return res.status(400).json({ error:'Failed to request token' })
@@ -35,7 +37,6 @@ function API(User, client)
     client.oauth.getOAuthAccessToken(token, '', verifier, function (error, token, secret, other){
       if(error) return res.status(400).json(error)
       client.persist(req, client.serializer.stringify({token:token, secret:secret})) //persist in session
-      
       User.find(req.session.user.id).success(function(u){ //persist in db
         if(u != undefined) u.updateAttributes({fitbit_token:token, fitbit_secret:secret}).success(function(){
           res.status(200).send()

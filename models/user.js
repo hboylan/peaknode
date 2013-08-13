@@ -13,9 +13,7 @@ module.exports = function(sequelize, DataTypes) {
     instanceMethods: {
       //Parses the user model for client use
       parse:function(sessID){
-        this.pinkey = this.password = this.fitbit_token = this.fitbit_secret = this.createdAt = this.updatedAt = undefined;
-        this.sessionID = sessID
-        return this;
+        return { username:this.username, realname:this.realname, email:this.email, sessionID:sessID }
       },
     },
     

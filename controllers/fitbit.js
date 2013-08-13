@@ -13,14 +13,14 @@
  * Time Series Requests
  * https://wiki.fitbit.com/display/API/API-Get-Time-Series
  * 
- * /activities/:resource/date/:start/:end [distance, calories, activeScore]
- * /sleep/:resource/date/:start/:end [timeInBed, efficiency]
- * /body/:resource/date/:start/:end [weight, bmi]
+ * /activities/:resource/date/:start/:end [distance, calories, activeScore, etc]
+ * /sleep/:resource/date/:start/:end [timeInBed, efficiency, etc]
+ * /body/:resource/date/:start/:end [weight, bmi, etc]
  * 
  */
 
 
-function API(User, client)
+function API(client, db)
 {  
   function apiHandle(res){
     return function(err, resp, json){
@@ -44,7 +44,7 @@ function API(User, client)
     client.oauth.getOAuthAccessToken(token, '', verifier, function (error, token, secret, other){
       if(error) return res.status(400).json(error)
       client.persist(req, client.serializer.stringify({token:token, secret:secret})) //persist in session
-      User.find(req.session.user.id).success(function(u){ //persist in db
+      db.user.find(req.session.user.id).success(function(u){ //persist in db
         if(u != undefined) u.updateAttributes({fitbit_token:token, fitbit_secret:secret}).success(function(){
           res.status(200).end('ok')
         })

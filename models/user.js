@@ -9,6 +9,8 @@ module.exports = function(sequelize, DataTypes) {
     
     fitbit_token: { type:DataTypes.STRING, allowNull:true, defaultValue:null },
     fitbit_secret: { type:DataTypes.STRING, allowNull:true, defaultValue:null },
+
+    // token_timeout: { type:DataTypes.INTEGER, validate:{min:30*1000, max:30*60*1000}, defaultValue:15*60*1000 },
   }, {
     instanceMethods: {
       //Parses the user model for client use

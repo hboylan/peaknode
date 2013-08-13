@@ -2,13 +2,10 @@ var express = require('express')
   , config  = require('./config.json')
   , http    = require('http')
   , cors    = require('cors')
-  , ejs     = require('ejs')
   , app     = express();
 
 //Configure our application environment
 app.configure(function() {
-  app.set('views', __dirname + '/views')
-  app.set('view engine', 'ejs')
   app.set('port', config.http_port)
   app.use(express.logger('dev'))
   app.use(express.bodyParser({ uploadDir:__dirname + '/tmp' }))
@@ -16,13 +13,11 @@ app.configure(function() {
   app.use(express.session({
     store:new express.session.MemoryStore(),
     secret:'7]fo+>+yR-&}}|!Kh>kC6Vbl:Krb)TrG&Ibkcu~AcRV/t[$+H+:_xb#a4G20MK>a',
+    cookie:{maxAge:365 * 24 * 60 * 60 * 1000}
   }))
   app.use(express.methodOverride())
-  app.use(express.static(__dirname + '/public'))
   app.use(cors())
   app.use(app.router)
-  ejs.open = '{{'
-  ejs.close = '}}'
 })
 
 app.configure('development', function(){

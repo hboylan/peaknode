@@ -1,38 +1,35 @@
-function SecurityAPI(Omni, User, Security)
+function API(omni, db)
 {
   this.status = function(req, res){
     var pinkey  = req.query.pinkey
       , uid     = req.query.id;
     
     //Ensure user has permission
-    User.find(id).success(function(u){
-      if(u == undefined || pinkey != u.encrypted())
+    db.user.find(id).success(function(u){
+      if(u == undefined || pinkey != u.pinkey)
         res.json({ error:'Invalid user' });
     
       //Return security status
-      Security.entries(res);
+      db.security.entries(res);
     })
   }
 
   this.setStatus = function(req, res){
-    var client = require('../app').client()
-      , state = req.body.state
-      , pinkey = req.body.pinkey
-      , id = req.body.id;
+    var state = req.body.state
     
     //Ensure user has permission
-    User.find(id).success(function(u){
-      if(u == undefined || pinkey != u.encrypted())
-        res.json({ error:'Invalid user' });
+    db.user.find(req.body.id).success(function(u){
+      if(u == undefined) return res.status(400).json({ error:'Invalid user' })
+      else if(req.body.pinkey != u.pinkey) return res.status(400).json({ error:'Invalid pinkey' })
     
       //Send command thru TCP
-      client.send('security '+state);
+      omni.security('control', {state:state})
     
       //Log/return security state change
-      Security.create({ state:state }).success(function(entry){
-        res.json(entry.parse());
+      db.security.create({ state:state }).success(function(entry){
+        res.json(entry.parse())
       })
     })
   }
 }
-exports.API = SecurityAPI
+exports.API = API

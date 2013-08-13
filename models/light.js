@@ -29,24 +29,11 @@ module.exports = function(sequelize, DataTypes) {
       //   }, time * 1000)
       // },
     },
-    
     classMethods:{
-      
       parse:function(lights){
         if(lights == undefined) lights = [];
         else lights.forEach(function(l){ l = l.parse(); })
         return lights;
-      },
-      
-      list:function(success){
-        this.all({ order:'unit ASC' }).success(success);
-      },
-      
-      update:function(id, res, success){
-        this.find(id).success(function(light){
-          if(light == undefined) return res.status(400).json({ error:'Invalid light' });
-          success(light)
-        })
       },
     }
   });

@@ -29,10 +29,12 @@ function ZoneAPI(db)
     
       db.audio.findAll({ where:{ zoneId:zone.id }}).success(function(audioZones){
         Light.findAll({ where:{ zoneId:zone.id }}).success(function(lights){
-          res.json(zone.eagerParse({
+          res.json({
+            id:zone.id,
+            name:zone.name,
             audio:Audio.parse(audioZones),
             lights:Light.parse(lights)
-          }))
+          })
         })
       })
     })

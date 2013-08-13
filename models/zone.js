@@ -7,15 +7,6 @@ module.exports = function(sequelize, DataTypes) {
         this.updatedAt = this.createdAt = undefined;
         return this;
       },
-      
-      eagerParse:function(attr){
-        return {
-          id: this.id,
-          name: this.name,
-          audio: attr.audio,
-          lights: attr.lights,
-        };
-      },
     },
     
     classMethods:{

@@ -1,18 +1,13 @@
-function dateFormat(date){
-  return date.getFullYear() + '-' + (date.getMonth()+1) + '-'  + date.getDate()
-}
-function dateMinutes(date){
-  return (date.getHours() * 60) + date.getMinutes()
-}
-
 module.exports = function(sequelize, DataTypes) {
+  var dt = require('../../lib/datetime')
+  
   return sequelize.define('security_archive', {
     state: { type:DataTypes.ENUM, values:['off', 'day', 'night', 'vacation', 'day armed', 'disarming', 'arming'] },
   }, {
     freezeTableName: true,
     instanceMethods: {
       parse:function(){
-        return { id:this.id, state:this.state, timestamp:dateFormat(this.createdAt) };
+        return { id:this.id, state:this.state, timestamp:dt.dateTimeFormat(this.createdAt) };
       },
     },
     classMethods: {

@@ -1,13 +1,14 @@
 module.exports = function(sequelize, DataTypes) {
   var dt = require('../../lib/datetime')
   
-  return sequelize.define('energy_archive', {
-    power: DataTypes.DECIMAL(3, 2),
+  return sequelize.define('temperature_archive', {
+    fahrenheit: DataTypes.DECIMAL(3, 1),
+    celcius: DataTypes.DECIMAL(2, 1)
   }, {
     freezeTableName: true,
     instanceMethods: {
       parse:function(){
-        return { id:this.id, power:this.power, timestamp:dt.dateTimeFormat(this.createdAt) };
+        return { id:this.id, fahrenheit:this.fahrenheit, celcius:this.celcius, timestamp:dt.dateTimeFormat(this.createdAt) }
       },
     },
     classMethods: {

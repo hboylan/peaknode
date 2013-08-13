@@ -1,18 +1,16 @@
-function dateFormat(date){
-  return date.getFullYear() + '-' + (date.getMonth()+1) + '-'  + date.getDate()
-}
-function dateMinutes(date){
-  return (date.getHours() * 60) + date.getMinutes()
-}
-
-module.exports = function(sequelize, DataTypes) {
+module.exports = function(sequelize, DataTypes, time) {
+  var dt = require('../../lib/datetime')
+  
   return sequelize.define('light_archive', {
     level: DataTypes.INTEGER,
   }, {
     freezeTableName: true,
     instanceMethods: {
       parse:function(){
-        return { level:this.level, date:dateFormat(this.createdAt), minute:dateMinutes(this.createdAt) }
+        return { level:this.level, timestamp:dt.dateTimeFormat(this.createdAt) }
+      },
+      graphParse:function(){
+        return { level:this.level, date:dt.dateFormat(this.createdAt), mins:dt.dateMinutes(this.createdAt) }
       },
     },
     classMethods: {

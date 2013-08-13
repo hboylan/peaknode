@@ -1,7 +1,7 @@
 function LightAPI(omni, db)
 {
   this.list = function(req, res){
-    db.zone.all({ include:[db.light] }).success(function(zones){
+    db.zone.all({ order:'unit ASC', include:[db.light] }).success(function(zones){
       var lights = []
       zones.forEach(function(z){
         lights.push({
@@ -15,7 +15,16 @@ function LightAPI(omni, db)
   }
 
   this.show = function(req, res){
-    db.light.update(req.params.id, res, function(){});
+    var e = { error:'Invalid light' }, hist = [];
+    db.light.find(req.params.id).success(function(light){
+      if(light == undefined) return res.status(400).json(e);
+      db.light_archive.findAll({ where:{lightId:light.id}, limit:50, order:'id DESC' }).success(function(archives){
+        archives.forEach(function(a){ hist.push(a.parse()) })
+        res.json({ name:light.name, unit:light.unit, level:light.level, on:light.on, active:light.active, archives:hist })
+      })
+    }).error(function(err){
+      res.status(400).json(e)
+    })
   }
 
   this.state = function(req, res){
@@ -23,7 +32,8 @@ function LightAPI(omni, db)
       , level   = req.body.level
       , id      = req.body.id
     
-    db.light.update(id, res, function(light){
+    db.light.find(id).success(function(light){
+      if(light == undefined) return res.status(400).json({ error:'Invalid light' });
       if(toggle){
         omni.light('control', { unit:light.unit, state:light.on? 0:1 })
         light.on = !light.on

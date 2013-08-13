@@ -39,7 +39,7 @@ function API(User, client)
       client.persist(req, client.serializer.stringify({token:token, secret:secret})) //persist in session
       User.find(req.session.user.id).success(function(u){ //persist in db
         if(u != undefined) u.updateAttributes({fitbit_token:token, fitbit_secret:secret}).success(function(){
-          res.status(200).send()
+          res.status(200).end('ok')
         })
       })
     })

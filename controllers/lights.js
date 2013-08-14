@@ -1,7 +1,7 @@
 function LightAPI(omni, db)
 {
   this.list = function(req, res){
-    db.zone.all({ order:'unit ASC', include:[db.light] }).success(function(zones){
+    db.zone.all({ order:'id ASC', include:[{model:db.light, order:'unit ASC'}] }).success(function(zones){
       var lights = []
       zones.forEach(function(z){
         lights.push({
@@ -46,9 +46,9 @@ function LightAPI(omni, db)
         res.json({ error:'Expected parameters: state (on/off) or level (0-100)' })
     
       light.save()
-      db.light_archive.create({ state:light.on, level:light.level, lightId:light.id }).success(function(archive){
-        res.json(archive.parse())
-      })
+      // db.light_archive.create({ state:light.on, level:light.level, lightId:light.id }).success(function(archive){
+        res.json(true)
+      // })
     })
   }
   //TODO implement this for bright/dimming functions

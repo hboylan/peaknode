@@ -45,29 +45,7 @@ function ZoneAPI(db)
       return res.json({ error:'Invalid credentials' })
 
     //Drop the table and resync with config file
-    db.zone.drop().success(function(){
-      db.zone.sync().success(function(){
-        zones = config.zones;
-        syncZones(zones.reverse())
-    
-        //Drop the table and resync with config file
-        db.audio.drop().success(function(){
-          db.audio.sync().success(function(){
-            audio = config.audio
-            syncAudio(audio.reverse())
-            
-            db.light.drop().success(function(){
-              db.light.sync().success(function(){
-                lights = config.lights;
-                syncLights(lights.reverse())
-            
-                res.json({ success:true })
-              })
-            })
-          })
-        })
-      })
-    })
+    db.resync()
   }
 }
 exports.API = ZoneAPI

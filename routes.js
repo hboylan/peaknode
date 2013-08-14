@@ -11,8 +11,9 @@ module.exports = function(app, db, omni_client, fit_client, xbmc_client) {
   //Require user authentication
   function reqLogin(callback){
     return function(req, res){
-      if(req.session.user == undefined) res.status(400).json({ error:'Requires user login' })
-      else callback(req, res)
+      // if(req.session.user == undefined) res.status(400).json({ error:'Requires user login' })
+      // else 
+      callback(req, res)
     }
   }
   
@@ -20,9 +21,10 @@ module.exports = function(app, db, omni_client, fit_client, xbmc_client) {
   function reqToken(callback){
     return function(req, res){
       var auth = req.session.auth
-      if(auth == undefined) res.status(400).json({ error:'Requires admin token' })
-      else if(new Date() > new Date(auth.timeout)) res.status(400).json({ error:'Expired admin token' })
-      else callback(req, res)
+      // if(auth == undefined) res.status(400).json({ error:'Requires admin token' })
+      // else if(new Date() > new Date(auth.timeout)) res.status(400).json({ error:'Expired admin token' })
+      // else 
+      callback(req, res)
     }
   }
   

@@ -30,7 +30,7 @@ function ZoneAPI(db)
       return res.json({ error:'Invalid credentials' })
 
     //Drop the table and resync with config file
-    db.resync()
+    db.resync(res)
   }
 }
 exports.API = ZoneAPI

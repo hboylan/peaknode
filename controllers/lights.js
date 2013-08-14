@@ -1,7 +1,7 @@
 function LightAPI(omni, db)
 {
   this.list = function(req, res){
-    db.zone.all({ order:'id ASC', include:[{model:db.light, order:'id ASC'}] }).success(function(zones){
+    db.zone.all({ order:'id ASC', include:[db.light] }).success(function(zones){
       var lights = []
       zones.forEach(function(z){
         lights.push({

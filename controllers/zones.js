@@ -1,5 +1,7 @@
 function ZoneAPI(db)
 {
+  var config = require('../config.json')
+  
   this.list = function(req, res) {
     db.zone.all().success(function(zones){
       res.json(db.zone.parse(zones));

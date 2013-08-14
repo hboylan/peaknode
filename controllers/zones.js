@@ -1,22 +1,5 @@
 function ZoneAPI(db)
 {
-  var config = require('../config.json')
-
-  function syncZones(zones){
-    if(!zones.length) return;
-    db.zone.create({ name:zones.pop() }).success(function(){ syncZones(zones) })
-  }
-  function syncAudio(audio){
-    if(!audio.length) return;
-    var a = audio.pop();
-    db.audio.create({ name:a.name, zoneId:a.zone }).success(function(){ syncAudio(audio) })
-  }
-  function syncLights(lights){
-    if(!lights.length) return;
-    var l = lights.pop();
-    db.light.create({ name:l.name, unit:l.unit, zoneId:l.zone }).success(function(){ syncLights(lights) })
-  }
-
   this.list = function(req, res) {
     db.zone.all().success(function(zones){
       res.json(db.zone.parse(zones));

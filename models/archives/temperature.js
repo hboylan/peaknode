@@ -3,7 +3,9 @@ module.exports = function(sequelize, DataTypes) {
   
   return sequelize.define('temperature_archive', {
     fahrenheit: DataTypes.DECIMAL(3, 1),
-    celcius: DataTypes.DECIMAL(2, 1)
+    celcius: DataTypes.DECIMAL(2, 1),
+    humidity: DataTypes.DECIMAL(3, 1),
+    addr: DataTypes.STRING,
   }, {
     freezeTableName: true,
     instanceMethods: {

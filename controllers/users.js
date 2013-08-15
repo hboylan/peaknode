@@ -61,7 +61,7 @@ function UserAPI(db, fitbit)
   }
   
   this.logout = function(req, res){
-    req.session.destroy()
+    req.session = null;
     res.status(200).end()
   }
 }

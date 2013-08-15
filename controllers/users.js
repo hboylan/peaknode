@@ -60,8 +60,7 @@ function UserAPI(db, fitbit)
       })
   }
   
-  this.logout = function(req, res, sess){
-    sess.destroy()
+  this.logout = function(req, res){
     res.status(200).end()
   }
 }

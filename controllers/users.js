@@ -1,4 +1,4 @@
-function UserAPI(fitbit, db)
+function UserAPI(db, fitbit)
 {
   this.list = function(req, res){
     db.user.all().success(function(users) {

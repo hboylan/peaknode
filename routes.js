@@ -12,10 +12,9 @@ module.exports = function(app, db, omni_client, fit_client, xbmc_client) {
   function reqLogin(callback){
     return function(req, res){
       app.get('sessions').get(req.body.sessionID, function(err, sess){
-        console.log(sess)
-        // if(req.session.user == undefined) res.status(401).end()
-        // else 
-        callback(req, res, sess)
+        if(callback == user.login) callback(req, res, sess)
+        else if(sess == undefined) res.status(401).end()
+        else callback(req, res, sess)
       })
     }
   }

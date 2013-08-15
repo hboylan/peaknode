@@ -1,4 +1,4 @@
-module.exports = function(app, db, omni_client, fit_client, xbmc_client) {
+module.exports = function(app, sessions, db, omni_client, fit_client, xbmc_client) {
   var users   = require('./controllers/users')(db, fit_client)
     , zones   = require('./controllers/zones')(db)
     , audio   = require('./controllers/audio')(db, omni_client)
@@ -10,21 +10,21 @@ module.exports = function(app, db, omni_client, fit_client, xbmc_client) {
   /*** Authentication Wrappers ***/  
   //Require user authentication
   function reqLogin(callback){
-    var sessions = app.get('sessions')
     return function(req, res){
       var sessID;
-      if(req.method == 'POST')      sessID = req.body.sessID
-      else if(req.method == 'GET')  sessID = req.params.sessID
+      if(req.method == 'POST')      sessID = req.body.sessionID
+      else if(req.method == 'GET')  sessID = req.params.sessionID
       
       if(callback == users.login || callback == users.logout){
         if(sessID) sessions.destroy(sessID, function(err, sess){})
         callback(req, res)
       }
-      sessions.get(sessID, function(err, sess){
-        console.log(sess)
-        if(sess == undefined) res.status(401).end()
-        else callback(req, res)
-      })
+      else
+        sessions.get(sessID, function(err, sess){
+          console.log(sess)
+          if(sess == undefined) res.status(401).end()
+          else callback(req, res)
+        })
     }
   }
   
@@ -58,7 +58,7 @@ module.exports = function(app, db, omni_client, fit_client, xbmc_client) {
   /*** API ***/
   // users
   app.post('/auth', reqBody(function(req, res){
-    app.get('sessions').get(req.body.sessionID, function(err, sess){
+    sessions.get(req.body.sessionID, function(err, sess){
       res.json({ success:sess && sess.user? true:false })
     })
   }, ['sessionID']))

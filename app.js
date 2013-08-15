@@ -1,18 +1,18 @@
-var express = require('express')
-  , config  = require('./config.json')
-  , http    = require('http')
-  , cors    = require('cors')
-  , app     = express();
+var express   = require('express')
+  , memStore  = new express.session.MemoryStore()
+  , config    = require('./config.json')
+  , http      = require('http')
+  , cors      = require('cors')
+  , app       = express();
 
 //Configure our application environment
 app.configure(function() {
-  app.set('sessions', new express.session.MemoryStore())
   app.set('port', config.http_port)
   app.use(express.logger('dev'))
   app.use(express.bodyParser({ uploadDir:__dirname + '/tmp' }))
   app.use(express.cookieParser('wvu-peak-api'))
   app.use(express.session({
-    store:app.get('sessions'),
+    store:memStore,
     secret:'7]fo+>+yR-&}}|!Kh>kC6Vbl:Krb)TrG&Ibkcu~AcRV/t[$+H+:_xb#a4G20MK>a',
     cookie:{maxAge:365 * 24 * 60 * 60 * 1000}
   }))
@@ -32,7 +32,7 @@ var db    = require('./lib/database')
 
 //Configure API Handlers
 //Pass MySQL connection via SequelizeJS
-require('./routes')(app, db, omni, fit, xbmc)
+require('./routes')(app, memStore, db, omni, fit, xbmc)
 
 //Begin listening to port specified in 'config.http_port'
 http.createServer(app).listen(app.get('port'), function(){

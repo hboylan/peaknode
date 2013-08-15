@@ -11,16 +11,17 @@ module.exports = function(app, db, omni_client, fit_client, xbmc_client) {
   //Require user authentication
   function reqLogin(callback){
     return function(req, res){
-      // if(req.session.user == undefined) res.status(401).end()
-      // else 
-      callback(req, res)
+      app.get('sessions').get(req.body.sessionID, function(err, sess){
+        req.session = sess;
+        if(req.session.user == undefined) res.status(401).end()
+        else callback(req, res)
+      })
     }
   }
   
   //Require valid auth token
   function reqToken(callback){
     return function(req, res){
-      var auth = req.session.auth
       // if(auth == undefined) res.status(400).json({ error:'Requires admin token' })
       // else if(new Date() > new Date(auth.timeout)) res.status(400).json({ error:'Expired admin token' })
       // else 
@@ -55,7 +56,7 @@ module.exports = function(app, db, omni_client, fit_client, xbmc_client) {
   app.get('/users', users.list)
   app.post('/users', reqBody(users.create, ['username', 'password', 'realname', 'pinkey']))
   app.post('/login', reqBody(users.login, ['username', 'password']))
-  app.get('/logout', users.logout)
+  app.post('/logout', reqLogin(users.logout))
   app.get('/lock', users.lock)
   app.post('/unlock', reqBody(reqLogin(users.unlock), ['id', 'pinkey']))
   app.get('/users/:id', users.show)

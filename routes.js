@@ -49,7 +49,7 @@ module.exports = function(app, db, omni_client, fit_client, xbmc_client) {
   // users
   app.post('/auth', reqBody(function(req, res){
     app.get('sessions').get(req.body.sessionID, function(err, sess){
-      res.json(sess.user? true:false)
+      res.json(!err && sess.user? true:false)
     })
   }, ['sessionID']))
   app.get('/users', users.list)

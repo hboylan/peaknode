@@ -20,7 +20,7 @@ module.exports = function(app, mem, db, omni_client, fit_client, xbmc_client) {
         callback(req, res)
       }
       mem.get(sessID, function(err, sess){
-        else if(sess == undefined) res.status(401).end()
+        if(sess == undefined) res.status(401).end()
         else callback(req, res, sess)
       })
     }

@@ -47,11 +47,12 @@ module.exports = function(app, db, omni_client, fit_client, xbmc_client) {
 
   /*** API ***/
   // users
-  app.post('/auth', function(req, res){
+  app.post('/auth', reqBody(function(req, res){
+    req.send()
     app.get('sessions').get(req.body.sessionID, function(err, sess){
       res.json(sess.user? true:false)
     })
-  })
+  }, ['sessionID'])
   app.get('/users', users.list)
   app.post('/users', reqBody(users.create, ['username', 'password', 'realname', 'pinkey']))
   app.post('/login', reqBody(users.login, ['username', 'password']))
@@ -109,4 +110,5 @@ module.exports = function(app, db, omni_client, fit_client, xbmc_client) {
   
   //API catch-all
   app.get('*', function(req, res){ res.status(400).json({ error:'Invalid API call' }) })
+  app.post('*', function(req, res){ res.status(400).json({ error:'Invalid API call' }) })
 }

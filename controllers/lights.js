@@ -69,4 +69,4 @@ function LightAPI(db, omni)
   //   })
   // }
 }
-module.exports = function(d, c){ new LightAPI(d, c) }
+module.exports = function(d, c){ return new LightAPI(d, c) }

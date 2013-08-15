@@ -13,8 +13,9 @@ module.exports = function(app, db, omni_client, fit_client, xbmc_client) {
     return function(req, res){
       app.get('sessions').get(req.body.sessionID, function(err, sess){
         req.session = sess;
-        if(req.session.user == undefined) res.status(401).end()
-        else callback(req, res)
+        // if(req.session.user == undefined) res.status(401).end()
+        // else 
+        callback(req, res)
       })
     }
   }

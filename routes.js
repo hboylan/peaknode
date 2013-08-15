@@ -14,7 +14,7 @@ module.exports = function(app, sessions, db, omni_client, fit_client, xbmc_clien
       var sessID;
       if(req.method == 'POST')      sessID = req.body.sessionID
       else if(req.method == 'GET')  sessID = req.params.sessionID
-      
+      console.log(sessID)
       if(callback == users.login || callback == users.logout){
         if(sessID) sessions.destroy(sessID, function(err, sess){})
         callback(req, res)

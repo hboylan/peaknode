@@ -45,8 +45,7 @@ function UserAPI(db, fitbit)
     })
   }
 
-  this.login = function(req, res, sess) {
-    if(sess) sess.destroy()
+  this.login = function(req, res) {
     db.user.find({ where:{ username:req.body.username, password:db.user.encrypt(req.body.password) }}).
       success(function(u){
         if(u == undefined)  return res.status(401).end()

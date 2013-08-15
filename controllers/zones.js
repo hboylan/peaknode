@@ -33,4 +33,4 @@ function ZoneAPI(db)
     db.resync(res)
   }
 }
-exports.API = ZoneAPI
+module.exports = function(d){ return new ZoneAPI(d) }

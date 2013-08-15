@@ -1,4 +1,4 @@
-function API(omni, db)
+function API(db, omni)
 {
   this.status = function(req, res){
     var pinkey  = req.query.pinkey
@@ -32,4 +32,4 @@ function API(omni, db)
     })
   }
 }
-exports.API = API
+module.exports = function(d, c){ return new API(d, c) }

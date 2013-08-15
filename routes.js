@@ -1,17 +1,17 @@
 module.exports = function(app, db, omni_client, fit_client, xbmc_client) {
-  var users   = require('./controllers/users')
-    , zones   = require('./controllers/zones')
-    , audio   = require('./controllers/audio')
-    , sec     = require('./controllers/security')
-    , lights  = require('./controllers/lights')
-    , fitbit  = require('./controllers/fitbit')
-    , xbmc    = require('./controllers/xbmc')
+  var users   = require('./controllers/users')(db, fit_client)
+    , zones   = require('./controllers/zones')(db)
+    , audio   = require('./controllers/audio')(db, omni_client)
+    , sec     = require('./controllers/security')(db, omni_client)
+    , lights  = require('./controllers/lights')(db, omni_client)
+    , fitbit  = require('./controllers/fitbit')(db, fit_client)
+    , xbmc    = require('./controllers/xbmc')(xbmc_client)
 
   /*** Authentication Wrappers ***/  
   //Require user authentication
   function reqLogin(callback){
     return function(req, res){
-      // if(req.session.user == undefined) res.status(400).json({ error:'Requires user login' })
+      // if(req.session.user == undefined) res.status(401).end()
       // else 
       callback(req, res)
     }
@@ -31,7 +31,7 @@ module.exports = function(app, db, omni_client, fit_client, xbmc_client) {
   //Require persistant fitbit access token
   function reqFitbit(callback){
     return function(req, res){
-      if(req.session.fitbit == undefined) res.status(400).json({ error:'Requires fitbit access token'})
+      if(req.session.fitbit == undefined) res.status(401).json({ error:'Requires fitbit access token'})
       else callback(req, res)
     }
   }
@@ -47,10 +47,13 @@ module.exports = function(app, db, omni_client, fit_client, xbmc_client) {
 
   /*** API ***/
   // users
-  users = new users.API(fit_client, db)
+  app.post('/authenticated', function(req, res){
+    app.get('sessions').get(req.body.sessionID, function(err, sess){
+      res.json(sess.user? true:false)
+    })
+  })
   app.get('/users', users.list)
   app.post('/users', reqBody(users.create, ['username', 'password', 'realname', 'pinkey']))
-  app.get('/authenticated', users.authenticated)
   app.post('/login', reqBody(users.login, ['username', 'password']))
   app.get('/logout', users.logout)
   app.get('/lock', users.lock)
@@ -58,24 +61,20 @@ module.exports = function(app, db, omni_client, fit_client, xbmc_client) {
   app.get('/users/:id', users.show)
   
   // zones
-  zones = new zones.API(db)
   app.get('/zones', reqLogin(zones.list))
   app.get('/zones/resync', zones.resync)
   app.get('/zones/:id', zones.show)
   
   // audio
-  audio = new audio.API(omni_client, db)
   app.get('/audio', reqLogin(audio.list))
   app.post('/audio', reqLogin(audio.state))
   app.get('/audio/:id', reqLogin(audio.zone))
   
   //security
-  sec = new sec.API(omni_client, db)
   app.get('/security', reqLogin(sec.status))
   app.post('/security', reqLogin(sec.setStatus))
   
   //lighting
-  lights = new lights.API(omni_client, db);
   app.get('/lights', reqLogin(lights.list))
   // app.post('/lights', lights.create)
   app.get('/lights/:id', reqLogin(lights.show))
@@ -83,7 +82,6 @@ module.exports = function(app, db, omni_client, fit_client, xbmc_client) {
   // app.post('/lights/:id/:action', lights.timeout)
   
   //fitbit
-  fitbit = new fitbit.API(fit_client, db);
   app.get('/fitbit', reqLogin(fitbit.auth))
   app.get('/fitbit/access', reqLogin(fitbit.access))
   app.get('/fitbit/:action', reqFitbit(fitbit.userAction))
@@ -91,7 +89,6 @@ module.exports = function(app, db, omni_client, fit_client, xbmc_client) {
   app.get('/fitbit/:action/:sub/date/:start/:end', reqFitbit(fitbit.dateRange))
   
   //xbmc
-  xbmc = new xbmc.API(xbmc_client)
   app.get('/xbmc', xbmc.status)
   app.get('/xbmc/reconnect', xbmc.reconnect)
   app.post('/xbmc/dir', xbmc.dir)

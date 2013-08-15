@@ -20,7 +20,7 @@
  */
 
 
-function API(client, db)
+function API(db, client)
 {  
   function apiHandle(res){
     return function(err, resp, json){
@@ -57,4 +57,4 @@ function API(client, db)
   this.dateRange = function(req, res){ client.userRequest(req.params.action+'/'+req.params.sub+'/date/'+req.params.start+'/'+req.params.end, req, apiHandle(res)) }
 }
 
-exports.API = API;
+module.exports = function(d, c){ return new API(d, c) }

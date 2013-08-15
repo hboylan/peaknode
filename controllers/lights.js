@@ -1,4 +1,4 @@
-function LightAPI(omni, db)
+function LightAPI(db, omni)
 {
   this.list = function(req, res){
     db.zone.all({ order:'id ASC', include:[db.light] }).success(function(zones){
@@ -69,4 +69,4 @@ function LightAPI(omni, db)
   //   })
   // }
 }
-exports.API = LightAPI
+module.exports = function(d, c){ new LightAPI(d, c) }

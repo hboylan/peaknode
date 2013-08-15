@@ -1,4 +1,4 @@
-function AudioAPI(omni, db)
+function AudioAPI(db, omni)
 {
   this.list = function(req, res) {
     db.audio.all().success(function(zones){
@@ -46,4 +46,4 @@ function AudioAPI(omni, db)
     })
   }
 }
-exports.API = AudioAPI
+module.exports = function(d, c){ return new AudioAPI(d, c) }

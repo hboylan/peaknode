@@ -89,4 +89,4 @@ function API(client){
   }
 }
 
-exports.API = API
+module.exports = function(c){ return new API(c) }

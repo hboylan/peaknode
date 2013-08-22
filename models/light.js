@@ -8,7 +8,7 @@ module.exports = function(sequelize, DataTypes) {
   }, {
     instanceMethods:{
       parse:function(){
-        this.updatedAt = this.createdAt = undefined;
+        this.zoneId = this.updatedAt = this.createdAt = undefined;
         return this;
       },
       //TODO update this in omnilink client for bright/dimming

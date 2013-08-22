@@ -14,14 +14,13 @@ module.exports = function(app, sessions, db, omni_client, fit_client, xbmc_clien
       var sessID;
       if(req.method == 'POST')      sessID = req.body.sessionID
       else if(req.method == 'GET')  sessID = req.query.sessionID
-      console.log(sessID)
+
       if(callback == users.login || callback == users.logout){
         if(sessID) sessions.destroy(sessID, function(err, sess){})
         callback(req, res)
       }
       else
         sessions.get(sessID, function(err, sess){
-          console.log(sess)
           if(sess == undefined) res.status(401).end()
           else callback(req, res)
         })

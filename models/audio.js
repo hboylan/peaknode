@@ -9,7 +9,7 @@ module.exports = function(sequelize, DataTypes) {
     freezeTableName: true,
     instanceMethods:{
       parse:function(){
-        this.createdAt = this.updatedAt = undefined;
+        this.zoneId = this.createdAt = this.updatedAt = undefined;
         return this;
       }
     },

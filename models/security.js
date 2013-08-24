@@ -13,9 +13,8 @@ module.exports = function(sequelize, DataTypes) {
     classMethods: {
       
       entries:function(res){
-        this.all({ order:'createdAt DESC' }).success(function(entries){
-          entries.forEach(function(e){ e = e.parse() })
-          res.json({ latest:entries[0], history:entries })
+        this.find(1).success(function(entry){
+          res.json(entry.parse())
         })
       },
     }

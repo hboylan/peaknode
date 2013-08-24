@@ -19,7 +19,10 @@ function API(db, omni)
       //Send command thru TCP
       omni.security('control', {state:arm? 'arm':'disarm'})
       
-      res.send()
+      db.security.find(1).success(function(security){
+        security.updateAttributes({ armed:arm })
+        res.send()
+      })
     })
   }
 }

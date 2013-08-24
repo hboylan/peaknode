@@ -81,7 +81,7 @@ module.exports = function(app, sessions, db, omni_client, fit_client, xbmc_clien
   
   //security
   app.get('/security', sec.status)
-  app.post('/security', reqLogin(reqBody(sec.setStatus, ['id', 'pinkey', 'state'])))
+  app.post('/security', reqLogin(reqBody(sec.setStatus, ['id', 'pinkey', 'arm'])))
   
   //lighting
   app.get('/lights', reqLogin(lights.list))

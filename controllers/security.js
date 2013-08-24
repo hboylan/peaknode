@@ -8,7 +8,7 @@ function API(db, omni)
 
   this.setStatus = function(req, res){
     var id     = req.body.id
-      , state  = req.body.state
+      , arm    = req.body.arm
       , pinkey = req.body.pinkey
     
     //Ensure user has permission
@@ -20,7 +20,7 @@ function API(db, omni)
       omni.security('control', {state:state})
     
       //Log/return security state change
-      db.security.create({ state:state }).success(function(entry){
+      db.security.create({ armed:arm }).success(function(entry){
         res.json(entry.parse())
       })
     })

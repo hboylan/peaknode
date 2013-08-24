@@ -61,6 +61,13 @@ module.exports = function(app, sessions, db, omni_client, fit_client, xbmc_clien
       res.json({ success:sess && sess.user? true:false })
     })
   }, ['sessionID']))
+  app.get('/resync', function(req, res){
+    if(req.query.username != config.username || req.query.password != config.password)
+      return res.json({ error:'Invalid credentials' })
+
+    //Drop the table and resync with config file
+    db.resync(res)
+  })
   app.get('/users', users.list)
   app.post('/users', reqBody(users.create, ['username', 'password', 'realname', 'pinkey']))
   app.post('/login', reqBody(users.login, ['username', 'password']))

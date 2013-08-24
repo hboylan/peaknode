@@ -24,13 +24,5 @@ function ZoneAPI(db)
       })
     })
   }
-
-  this.resync = function(req, res) {
-    if(req.query.username != config.username || req.query.password != config.password)
-      return res.json({ error:'Invalid credentials' })
-
-    //Drop the table and resync with config file
-    db.resync(res)
-  }
 }
 module.exports = function(d){ return new ZoneAPI(d) }

@@ -15,12 +15,14 @@ function API(db, omni)
   }
 
   this.setStatus = function(req, res){
-    var state = req.body.state
+    var id     = req.body.id
+      , state  = req.body.state
+      , pinkey = req.body.pinkey
     
     //Ensure user has permission
-    db.user.find(req.body.id).success(function(u){
+    db.user.find(id).success(function(u){
       if(u == undefined) return res.status(400).json({ error:'Invalid user' })
-      else if(req.body.pinkey != u.pinkey) return res.status(400).json({ error:'Invalid pinkey' })
+      else if(pinkey != u.pinkey) return res.status(400).json({ error:'Invalid pinkey' })
     
       //Send command thru TCP
       omni.security('control', {state:state})

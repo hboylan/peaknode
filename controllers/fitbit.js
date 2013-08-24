@@ -50,10 +50,10 @@ function API(db, client)
       })
     })
   }
-  this.userAction = function(token, req, res){ client.userRequest(req.params.action, req, apiHandle(res)) }
-  this.userSubAction = function(token, req, res){ client.userRequest(req.params.action+'/'+req.params.sub, req, apiHandle(res)) }
+  this.userAction = function(token, req, res){ client.userRequest(req.params.action, token, apiHandle(res)) }
+  this.userSubAction = function(token, req, res){ client.userRequest(req.params.action+'/'+req.params.sub, token, apiHandle(res)) }
   
-  this.dateRange = function(token, req, res){ client.userRequest(req.params.action+'/'+req.params.sub+'/date/'+req.params.start+'/'+req.params.end, req, apiHandle(res)) }
+  this.dateRange = function(token, req, res){ client.userRequest(req.params.action+'/'+req.params.sub+'/date/'+req.params.start+'/'+req.params.end, token, apiHandle(res)) }
 }
 
 module.exports = function(d, c){ return new API(d, c) }

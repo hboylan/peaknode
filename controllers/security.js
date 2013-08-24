@@ -17,7 +17,7 @@ function API(db, omni)
       else if(pinkey != u.pinkey) return res.status(400).json({ error:'Invalid pinkey' })
     
       //Send command thru TCP
-      omni.security('control', {state:state})
+      omni.security('control', {state:arm? 'arm':'disarm'})
     
       //Log/return security state change
       db.security.create({ armed:arm }).success(function(entry){

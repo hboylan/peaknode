@@ -1,5 +1,5 @@
 module.exports = function(sequelize, DataTypes) {
-  var dt = require('../../lib/datetime')
+  var dt = require('../lib/datetime')
   
   return sequelize.define('security', {
     state: { type:DataTypes.ENUM, values:['off', 'day', 'night', 'vacation', 'day armed', 'disarming', 'arming'] },

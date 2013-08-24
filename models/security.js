@@ -8,7 +8,7 @@ module.exports = function(sequelize, DataTypes) {
     freezeTableName: true,
     instanceMethods: {
       parse:function(){
-        return { id:this.id, armed:this.armed, timestamp:dt.dateTimeFormat(this.updatedAt), armTimeout:this.armTimeout };
+        return { id:this.id, armed:this.armed, timestamp:this.updatedAt.toUTCString(), armTimeout:this.armTimeout };
       },
     }
   });

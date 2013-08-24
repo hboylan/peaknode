@@ -1,17 +1,7 @@
 function API(db, omni)
 {
-  this.status = function(req, res){
-    var pinkey  = req.body.pinkey
-      , uid     = req.body.id;
-    
-    //Ensure user has permission
-    db.user.find(id).success(function(u){
-      if(u == undefined || pinkey != u.pinkey)
-        res.json({ error:'Invalid user' });
-    
-      //Return security status
-      db.security.entries(res);
-    })
+  this.status = function(req, res){    
+    db.security.entries(res)
   }
 
   this.setStatus = function(req, res){

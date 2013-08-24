@@ -18,11 +18,6 @@ function API(db, omni)
     
       //Send command thru TCP
       omni.security('control', {state:arm? 'arm':'disarm'})
-    
-      //Log/return security state change
-      db.security.create({ armed:arm }).success(function(entry){
-        res.json(entry.parse())
-      })
     })
   }
 }

@@ -58,7 +58,7 @@ module.exports = function(app, sessions, db, omni_client, fit_client, xbmc_clien
   // users
   app.post('/auth', reqBody(function(req, res){
     sessions.get(req.body.sessionID, function(err, sess){
-      var authenticated = sess && sess.user;
+      var authenticated = (sess && sess.user);
       if(authenticated) res.send()
       else res.status(401).end()
       console.log(authenticated)

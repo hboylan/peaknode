@@ -65,7 +65,7 @@ module.exports = function(app, sessions, db, omni_client, fit_client, xbmc_clien
     if(req.query.username != config.username || req.query.password != config.password)
       return res.json({ error:'Invalid credentials' })
 
-    //Drop the table and resync with config file
+    //Drop data and resync with config file
     db.resync(res)
   })
   app.get('/users', users.list)
@@ -78,7 +78,6 @@ module.exports = function(app, sessions, db, omni_client, fit_client, xbmc_clien
   
   // zones
   app.get('/zones', reqLogin(zones.list))
-  app.get('/zones/resync', zones.resync)
   app.get('/zones/:id', zones.show)
   
   // audio

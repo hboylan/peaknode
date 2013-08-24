@@ -1,7 +1,9 @@
 function API(db, omni)
 {
   this.status = function(req, res){    
-    db.security.entries(res)
+    db.security.find(1).success(function(entry){
+      res.json(entry.parse())
+    })
   }
 
   this.setStatus = function(req, res){

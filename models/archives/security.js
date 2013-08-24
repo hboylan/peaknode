@@ -2,12 +2,12 @@ module.exports = function(sequelize, DataTypes) {
   var dt = require('../../lib/datetime')
   
   return sequelize.define('security_archive', {
-    state: DataTypes.STRING,
+    armed: DataTypes.BOOLEAN
   }, {
     freezeTableName: true,
     instanceMethods: {
       parse:function(){
-        return { id:this.id, state:this.state, timestamp:dt.dateTimeFormat(this.createdAt) };
+        return { id:this.id, armed:this.armed, timestamp:dt.dateTimeFormat(this.createdAt) };
       },
     },
     classMethods: {

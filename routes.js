@@ -80,7 +80,7 @@ module.exports = function(app, sessions, db, omni_client, fit_client, xbmc_clien
   app.get('/audio/:id', reqLogin(audio.zone))
   
   //security
-  app.get('/security', reqLogin(reqBody(sec.status, ['id', 'pinkey'])))
+  app.get('/security', sec.status)
   app.post('/security', reqLogin(reqBody(sec.setStatus, ['id', 'pinkey', 'state'])))
   
   //lighting

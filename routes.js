@@ -58,6 +58,7 @@ module.exports = function(app, sessions, db, omni_client, fit_client, xbmc_clien
   // users
   app.post('/auth', reqBody(function(req, res){
     sessions.get(req.body.sessionID, function(err, sess){
+      console.log({ success:sess && sess.user? true:false })
       res.json({ success:sess && sess.user? true:false })
     })
   }, ['sessionID']))

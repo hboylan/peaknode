@@ -1,8 +1,8 @@
 function API(db, omni)
 {
   this.status = function(req, res){
-    var pinkey  = req.query.pinkey
-      , uid     = req.query.id;
+    var pinkey  = req.body.pinkey
+      , uid     = req.body.id;
     
     //Ensure user has permission
     db.user.find(id).success(function(u){

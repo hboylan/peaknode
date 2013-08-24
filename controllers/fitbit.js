@@ -29,16 +29,15 @@ function API(db, client)
     }
   }
   
-  this.auth = function(req, res){
-      console.log(req.session.user)
-    if(req.session.user == undefined) return res.status(400).json({ error:'Invalid session' })
+  this.auth = function(token, req, res){
+    if(token == undefined) return res.status(400).json({ error:'Invalid session' })
     // Request token
     client.oauth.getOAuthRequestToken(function (error, token, secret, authorize_url, other) {
       if(error) return res.status(400).json({ error:'Failed to request token' })
       res.redirect('http://www.fitbit.com/oauth/authorize?oauth_token=' + token)
     })
   }
-  this.access = function(req, res){
+  this.access = function(token, req, res){
     var token = req.query.oauth_token, verifier = req.query.oauth_verifier;
     // Access token
     client.oauth.getOAuthAccessToken(token, '', verifier, function (error, token, secret, other){
@@ -51,10 +50,10 @@ function API(db, client)
       })
     })
   }
-  this.userAction = function(req, res){ client.userRequest(req.params.action, req, apiHandle(res)) }
-  this.userSubAction = function(req, res){ client.userRequest(req.params.action+'/'+req.params.sub, req, apiHandle(res)) }
+  this.userAction = function(token, req, res){ client.userRequest(req.params.action, req, apiHandle(res)) }
+  this.userSubAction = function(token, req, res){ client.userRequest(req.params.action+'/'+req.params.sub, req, apiHandle(res)) }
   
-  this.dateRange = function(req, res){ client.userRequest(req.params.action+'/'+req.params.sub+'/date/'+req.params.start+'/'+req.params.end, req, apiHandle(res)) }
+  this.dateRange = function(token, req, res){ client.userRequest(req.params.action+'/'+req.params.sub+'/date/'+req.params.start+'/'+req.params.end, req, apiHandle(res)) }
 }
 
 module.exports = function(d, c){ return new API(d, c) }

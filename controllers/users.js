@@ -49,7 +49,7 @@ function UserAPI(db, fitbit)
     db.user.find({ where:{ username:req.body.username }}).success(function(u){
         if(u == undefined)  return res.status(401).json({ error:'Invalid username' })
         
-        db.user.find({ where:{ password:db.user.encrypt(req.body.password) }}).success(function(u){
+        db.user.find({ where:{ username:req.body.username, password:db.user.encrypt(req.body.password) }}).success(function(u){
           if(u == undefined) return res.status(401).json({ error:'Invalid password' })
           
           fitbit.persist(req, fitbit.serializer.stringify({token:u.fitbit_token, secret:u.fitbit_secret}))

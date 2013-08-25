@@ -42,9 +42,9 @@ module.exports = function(app, sessions, db, omni_client, fit_client, xbmc_clien
     return function(req, res){
       var sessID = req.query.sessionID
       if(sessID == undefined) res.status(401).json({ error:'Invalid sessionID' })
+      console.log(sessID)
       sessions.get(sessID, function(err, sess){
-        console.log(sessID)
-        console.log(sess.user.id)
+        res.send()
         if(sess == undefined) res.status(401).json({ error:'Invalid sessionID' })
         else if(sess.fitbit != undefined) callback(sess.fitbit, req, res)
         else if(access) callback(sess.user.id, req, res)

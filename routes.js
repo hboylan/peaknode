@@ -99,7 +99,7 @@ module.exports = function(app, sessions, db, omni_client, fit_client, xbmc_clien
   
   //fitbit
   app.get('/fitbit', reqLogin(fitbit.auth))
-  app.get('/fitbit/hastoken', reqFitbit(fitbit.access, true))
+  app.get('/fitbit/hastoken', reqFitbit(fitbit.hasToken, true))
   app.get('/fitbit/access', reqFitbit(fitbit.access, true))
   app.get('/fitbit/:action', reqFitbit(fitbit.userAction))
   app.get('/fitbit/:action/:sub', reqFitbit(fitbit.userSubAction))

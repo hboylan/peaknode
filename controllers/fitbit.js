@@ -30,6 +30,7 @@ function API(db, client)
   }
   
   this.auth = function(token, req, res){
+    console.log(res)
     if(token == undefined) return res.status(400).json({ error:'Invalid session' })
     // Request token
     client.oauth.getOAuthRequestToken(function (error, token, secret, authorize_url, other) {

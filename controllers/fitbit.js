@@ -32,7 +32,7 @@ function API(db, client)
   this.auth = function(id, req, res){
     db.user.find(id).success(function(u){
       if(u && u.fitbit_token && u.fitbit_secret)
-        return res.redirect('http://157.182.194.137:8000/fitbit/access?hasAccess=1')
+        return res.send('access')
       else
         client.oauth.getOAuthRequestToken(function (error, token, secret, authorize_url, other) {
           if(error) return res.status(400).json({ error:'Failed to request token' })

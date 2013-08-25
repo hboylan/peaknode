@@ -36,13 +36,13 @@ function API(db, client)
       res.redirect('http://www.fitbit.com/oauth/authorize?oauth_token=' + token)
     })
   }
-  this.access = function(req, res){
+  this.access = function(sess, req, res){
     var token = req.query.oauth_token, verifier = req.query.oauth_verifier;
     // Access token
     client.oauth.getOAuthAccessToken(token, '', verifier, function (error, token, secret, other){
       if(error) return res.status(400).json(error)
       client.persist(req, client.serializer.stringify({token:token, secret:secret})) //persist in session
-      db.user.find(req.session.user.id).success(function(u){ //persist in db
+      db.user.find(sess.user.id).success(function(u){ //persist in db
         if(u != undefined) u.updateAttributes({fitbit_token:token, fitbit_secret:secret}).success(function(){
           res.status(200).end('ok')
         })

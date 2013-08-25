@@ -40,8 +40,11 @@ module.exports = function(app, sessions, db, omni_client, fit_client, xbmc_clien
   //Require persistant fitbit access token
   function reqFitbit(callback, access){
     return function(req, res){
-      sessions.get(req.query.sessionID, function(err, sess){
-        if(sess.fitbit != undefined) callback(sess.fitbit, req, res)
+      var sessID = req.query.sessionID
+      if(sessID == undefined) res.status(401).json({ error:'Invalid sessionID' })
+      sessions.get(sessID, function(err, sess){
+        if(sess == undefined) res.status(401).json({ error:'Invalid sessionID' })
+        else if(sess.fitbit != undefined) callback(sess.fitbit, req, res)
         else if(access) callback(sess, req, res)
         else res.status(401).json({ error:'Requires fitbit access token'})
       })

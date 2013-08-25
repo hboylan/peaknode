@@ -33,7 +33,7 @@ function API(db, client)
     // Request token
     client.oauth.getOAuthRequestToken(function (error, token, secret, authorize_url, other) {
       if(error) return res.status(400).json({ error:'Failed to request token' })
-      res.redirect('http://www.fitbit.com/oauth/authorize?oauth_token=' + token + '&sessionID=' + sessID)
+      res.redirect('http://www.fitbit.com/oauth/authorize?oauth_token=' + token)
     })
   }
   this.access = function(sess, req, res){

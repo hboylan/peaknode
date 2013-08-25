@@ -39,6 +39,7 @@ function API(db, client)
     })
   }
   this.access = function(id, req, res){
+    console.log(id)
     var token = req.query.oauth_token, verifier = req.query.oauth_verifier;
     // Access token
     client.oauth.getOAuthAccessToken(token, '', verifier, function (error, token, secret, other){
@@ -46,7 +47,7 @@ function API(db, client)
       client.persist(req, client.serializer.stringify({token:token, secret:secret})) //persist in session
       db.user.find(id).success(function(u){ //persist in db
         if(u != undefined) u.updateAttributes({fitbit_token:token, fitbit_secret:secret}).success(function(){
-          res.status(200).end('ok')
+          res.send()
         })
       })
     })

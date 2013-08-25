@@ -41,13 +41,12 @@ module.exports = function(app, sessions, db, omni_client, fit_client, xbmc_clien
   function reqFitbit(callback, access){
     return function(req, res){
       var sessID = req.query.sessionID
-      console.log(sessID)
       if(sessID == undefined) return res.status(401).json({ error:'Invalid sessionID' })
       sessions.get(sessID, function(err, sess){
         res.send()
         if(sess == undefined) res.status(401).json({ error:'Invalid sessionID' })
-        else if(sess.fitbit != undefined) callback(sess.fitbit, req, res)
         else if(access) callback(sess.user.id, req, res)
+        else if(sess.fitbit != undefined) callback(sess.fitbit, req, res)
         else res.status(401).json({ error:'Requires fitbit access token'})
       })
     }

@@ -38,11 +38,10 @@ module.exports = function(app, sessions, db, omni_client, fit_client, xbmc_clien
   }
   
   //Require persistant fitbit access token
-  function reqFitbit(callback, auth){
+  function reqFitbit(callback){
     return function(req, res){
       sessions.get(req.query.sessionID, function(err, sess){
         if(sess.fitbit != undefined) callback(sess.fitbit, req, res)
-        else if(auth) callback(sess.fitbit, req, res)
         else res.status(401).json({ error:'Requires fitbit access token'})
       })
     }
@@ -95,8 +94,8 @@ module.exports = function(app, sessions, db, omni_client, fit_client, xbmc_clien
   // app.post('/lights/:id/:action', lights.timeout)
   
   //fitbit
-  app.get('/fitbit', reqFitbit(fitbit.auth, true))
-  app.get('/fitbit/access', reqFitbit(fitbit.access))
+  app.get('/fitbit', reqLogin(fitbit.auth))
+  app.get('/fitbit/access', reqLogin(fitbit.access))
   app.get('/fitbit/:action', reqFitbit(fitbit.userAction))
   app.get('/fitbit/:action/:sub', reqFitbit(fitbit.userSubAction))
   app.get('/fitbit/:action/:sub/date/:start/:end', reqFitbit(fitbit.dateRange))

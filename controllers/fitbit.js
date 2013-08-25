@@ -29,8 +29,7 @@ function API(db, client)
     }
   }
   
-  this.auth = function(token, req, res){
-    console.log(res)
+  this.auth = function(req, res){
     if(token == undefined) return res.status(400).json({ error:'Invalid session' })
     // Request token
     client.oauth.getOAuthRequestToken(function (error, token, secret, authorize_url, other) {
@@ -38,7 +37,7 @@ function API(db, client)
       res.redirect('http://www.fitbit.com/oauth/authorize?oauth_token=' + token)
     })
   }
-  this.access = function(token, req, res){
+  this.access = function(req, res){
     var token = req.query.oauth_token, verifier = req.query.oauth_verifier;
     // Access token
     client.oauth.getOAuthAccessToken(token, '', verifier, function (error, token, secret, other){

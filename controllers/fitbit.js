@@ -29,17 +29,13 @@ function API(db, client)
     }
   }
   
-  this.auth = function(id, req, res){
-    db.user.find(id).success(function(u){
-      if(u && u.fitbit_token && u.fitbit_secret)
-        return res.send('access')
-      else
-        client.oauth.getOAuthRequestToken(function (error, token, secret, authorize_url, other) {
-          if(error) return res.status(400).json({ error:'Failed to request token' })
-          var mobile = req.query.mobile;
-          mobile = mobile == undefined? '':'&display=touch'
-          res.redirect('http://www.fitbit.com/oauth/authorize?oauth_token=' + token + mobile)
-        })
+  this.auth = function(req, res){
+    // Request token
+    client.oauth.getOAuthRequestToken(function (error, token, secret, authorize_url, other) {
+      if(error) return res.status(400).json({ error:'Failed to request token' })
+      var mobile = req.query.mobile;
+      mobile = mobile == undefined? '':'&display=touch'
+      res.redirect('http://www.fitbit.com/oauth/authorize?oauth_token=' + token + mobile)
     })
   }
   this.access = function(id, req, res){
@@ -56,6 +52,13 @@ function API(db, client)
       })
     })
   }
+  this.hasToken = function(id, req, res){
+    db.user.find(id).success(function(u){
+      if(u && u.fitbit_token && u.fitbit_secret) res.send()
+      else res.status(401).end()
+    })
+  }
+  
   this.userAction = function(token, req, res){ client.userRequest(req.params.action, token, apiHandle(res)) }
   this.userSubAction = function(token, req, res){ client.userRequest(req.params.action+'/'+req.params.sub, token, apiHandle(res)) }
   

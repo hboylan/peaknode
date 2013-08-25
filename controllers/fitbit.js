@@ -29,7 +29,7 @@ function API(db, client)
     }
   }
   
-  this.auth = function(sessID, req, res){
+  this.auth = function(req, res){
     // Request token
     client.oauth.getOAuthRequestToken(function (error, token, secret, authorize_url, other) {
       if(error) return res.status(400).json({ error:'Failed to request token' })

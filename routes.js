@@ -43,7 +43,6 @@ module.exports = function(app, sessions, db, omni_client, fit_client, xbmc_clien
       var sessID = req.query.sessionID
       if(sessID == undefined) return res.status(401).json({ error:'Invalid sessionID' })
       sessions.get(sessID, function(err, sess){
-        res.send()
         if(sess == undefined) res.status(401).json({ error:'Invalid sessionID' })
         else if(access) callback(sess.user.id, req, res)
         else if(sess.fitbit != undefined) callback(sess.fitbit, req, res)
@@ -99,7 +98,7 @@ module.exports = function(app, sessions, db, omni_client, fit_client, xbmc_clien
   // app.post('/lights/:id/:action', lights.timeout)
   
   //fitbit
-  app.get('/fitbit', reqLogin(fitbit.auth))
+  app.get('/fitbit', reqFitbit(fitbit.auth, true))
   app.get('/fitbit/access', reqFitbit(fitbit.access, true))
   app.get('/fitbit/:action', reqFitbit(fitbit.userAction))
   app.get('/fitbit/:action/:sub', reqFitbit(fitbit.userSubAction))

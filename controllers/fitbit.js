@@ -29,7 +29,10 @@ function API(db, client)
     }
   }
   
-  this.auth = function(req, res){
+  this.auth = function(id, req, res){
+    db.user.find(id).success(function(u){
+      if(u && u.fitbit_token && u.fitbit_secret) return res.redirect('http://157.182.194.137:8000/fitbit/access?hasAccess=1')
+    })
     // Request token
     client.oauth.getOAuthRequestToken(function (error, token, secret, authorize_url, other) {
       if(error) return res.status(400).json({ error:'Failed to request token' })
@@ -39,14 +42,14 @@ function API(db, client)
     })
   }
   this.access = function(id, req, res){
-    console.log(id)
     var token = req.query.oauth_token, verifier = req.query.oauth_verifier;
     // Access token
     client.oauth.getOAuthAccessToken(token, '', verifier, function (error, token, secret, other){
       if(error) return res.status(400).json(error)
       client.persist(req, client.serializer.stringify({token:token, secret:secret})) //persist in session
       db.user.find(id).success(function(u){ //persist in db
-        if(u != undefined) u.updateAttributes({fitbit_token:token, fitbit_secret:secret}).success(function(){
+        if(u == undefined) return res.status(401).end()
+        u.updateAttributes({fitbit_token:token, fitbit_secret:secret}).success(function(){
           res.send()
         })
       })

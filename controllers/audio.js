@@ -1,10 +1,17 @@
 function AudioAPI(db, omni)
 {
   this.list = function(req, res) {
-    db.audio.all().success(function(zones){
-      zones.forEach(function(a){ a = a.parse(); })
-      res.json(zones);
-    });
+    db.zone.all({ order:'id ASC', include:[db.audio] ).success(function(zones){
+      var audio = []
+      zones.forEach(function(z){
+        audio.push({
+          id:z.id,
+          name:z.name,
+          audio:(z.audio == undefined)? [] : db.audio.parse(z.audio)
+        })
+      })
+      res.json(audio)
+    })
   }
 
   this.zone = function(req, res) {

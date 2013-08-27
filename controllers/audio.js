@@ -1,7 +1,7 @@
 function AudioAPI(db, omni)
 {
   this.list = function(req, res) {
-    db.zone.all({ order:'id ASC', include:[db.audio] ).success(function(zones){
+    db.zone.all({ order:'id ASC', include:[db.audio] }).success(function(zones){
       var audio = []
       zones.forEach(function(z){
         audio.push({

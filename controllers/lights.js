@@ -37,7 +37,7 @@ function LightAPI(db, omni)
       if(toggle){
         omni.light('control', { unit:light.unit, state:light.on? 0:1 })
         light.on = !light.on
-        light.level = light.on? light.level:0
+        light.level = light.on? light.defaultLevel:0
       }else if(level >= 0  && level <= 100){
         omni.light('level', { unit:light.unit, level:parseInt(level, 10) })
         light.level = parseInt(level, 10)

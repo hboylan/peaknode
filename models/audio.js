@@ -5,6 +5,7 @@ module.exports = function(sequelize, DataTypes) {
     on: { type:DataTypes.BOOLEAN, defaultValue:false },
     mute: { type:DataTypes.BOOLEAN, defaultValue:false },
     volume: { type:DataTypes.INTEGER, validate:{ min:0, max:100 }, defaultValue:0 },
+    defaultVolume: { type:DataTypes.INTEGER, validate:{ min:0, max:100 }, defaultValue:20 },
   }, {
     freezeTableName: true,
     instanceMethods:{

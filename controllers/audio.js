@@ -27,12 +27,14 @@ function AudioAPI(db, omni)
       if(0 <= vol && vol <= 100){
         omni.audio('volume', { zone:a.id, volume:vol })
         a.volume = vol
+        a.on = vol? true:false
       }else if(1 <= source && source <= 12){
         omni.audio('source', { zone:a.id, source:source })
         a.source = source
       }else if(toggle == 'power'){
         omni.audio('control', { zone:a.id, state:a.on? 0:1 })
         a.on = !a.on
+        a.volume = a.defaultVolume
       }else if(toggle == 'mute'){
         omni.audio('control', { zone:a.id, state:a.mute? 2:3 })
         a.mute = !a.mute

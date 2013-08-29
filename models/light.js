@@ -3,6 +3,7 @@ module.exports = function(sequelize, DataTypes) {
     name: DataTypes.STRING,
     unit: { type:DataTypes.INTEGER, validate:{ min:1, max:511 }, allowNull:false },
     level: { type:DataTypes.INTEGER, validate:{ min:0, max:100 }, defaultValue:0 },
+    defaultLevel: { type:DataTypes.INTEGER, validate:{ min:0, max:100 }, defaultValue:40 },
     on: { type:DataTypes.BOOLEAN, defaultValue:false },
     active: { type:DataTypes.BOOLEAN, defaultValue:false }
   }, {

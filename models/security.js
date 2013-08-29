@@ -2,14 +2,17 @@ module.exports = function(sequelize, DataTypes) {
   var dt = require('../lib/datetime')
   
   return sequelize.define('security', {
-    armed: DataTypes.BOOLEAN,
-    armTimeout: DataTypes.INTEGER,
+    state: { type:DataTypes.ENUM, values:['armed', 'disarmed', 'arming'], defaultValue:'disarmed' },
+    armTimeout: { type:DataTypes.INTEGER, defaultValue:30 },
   }, {
     freezeTableName: true,
     instanceMethods: {
       parse:function(){
-        return { id:this.id, armed:this.armed, timestamp:this.updatedAt.toUTCString(), armTimeout:this.armTimeout };
+        return { id:this.id, state:this.state, timestamp:this.updatedAt.toUTCString(), armTimeout:this.armTimeout };
       },
+    },
+    classMethods: {
+      armTime:function(){ return 30 }
     }
   });
 };

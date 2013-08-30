@@ -2,7 +2,7 @@ module.exports = function(sequelize, DataTypes) {
   var dt = require('../../lib/datetime')
   
   return sequelize.define('security_archive', {
-    armed: DataTypes.BOOLEAN
+    state: { type:DataTypes.ENUM, values:['armed', 'disarmed', 'arming'], defaultValue:'disarmed' },
   }, {
     freezeTableName: true,
     instanceMethods: {

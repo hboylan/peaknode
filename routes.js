@@ -6,6 +6,7 @@ module.exports = function(app, sessions, db, omni_client, fit_client, xbmc_clien
     , lights  = require('./controllers/lights')(db, omni_client)
     , fitbit  = require('./controllers/fitbit')(db, fit_client)
     , xbmc    = require('./controllers/xbmc')(xbmc_client)
+    , http    = require('http')
 
   /*** Authentication Wrappers ***/  
   //Require user authentication
@@ -61,6 +62,20 @@ module.exports = function(app, sessions, db, omni_client, fit_client, xbmc_clien
   }
 
   /*** API ***/
+  //Vera API
+  app.get('/vera', function(req, res){
+    var id      = req.query.id
+      , action  = req.query.action
+      , url     = 'http://192.168.1.100:3480/data_request?output_format=json&id='+id;
+    if(action) url += '&action='+action
+    res.send(url)
+    // http.get(url, function(vera) {
+    //   res.send("Got response: " + vera.statusCode)
+    // }).on('error', function(e) {
+    //   res.send("Got error: " + e.message)
+    // })
+  })
+  
   // users
   app.post('/auth', reqBody(function(req, res){
     sessions.get(req.body.sessionID, function(err, sess){

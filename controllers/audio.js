@@ -28,7 +28,7 @@ function AudioAPI(db, omni)
         omni.audio('volume', { zone:a.id, volume:vol })
         a.volume = vol
         a.on = vol? true:false
-      }else if(1 <= source && source <= 12){
+      }else if(1 <= source && source <= 8){
         omni.audio('source', { zone:a.id, source:source })
         a.source = source
       }else if(toggle == 'power'){

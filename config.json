@@ -16,19 +16,39 @@
   "xbmc_host":"192.168.1.106",
   "xbmc_port":9090,
   
-  "models":["user", "zone", "audio", "security"],
-  "zones":[ "Living Room", "Kitchen", "Master Bedroom", "Bedroom", "Bathroom", "Utility", "Deck" ],
+  "models":["user", "zone", "audio", "light", "security", "lock", "appliance"],
+  "archives":["energy", "security", "light", "temperature", "lock"],
+  "zones":[
+    { "name":"Living Room" },
+    { "name":"Kitchen" },
+    { "name":"Master Bedroom" },
+    { "name":"Bedroom" },
+    { "name":"Bathroom" },
+    { "name":"Utility" },
+    { "name":"Deck" }
+  ],
   "audio":[
-    { "zone":1, "name":"Living Room Left" },
-    { "zone":1, "name":"Living Room Right" },
-    { "zone":2, "name":"Kitchen" },
-    { "zone":3, "name":"Master Bedroom" },
-    { "zone":4, "name":"Bedroom" },
-    { "zone":5, "name":"Bathroom" },
-    { "zone":7, "name":"Deck Front" },
-    { "zone":7, "name":"Deck Back" }
+    { "zoneId":1, "name":"Living Room Left" },
+    { "zoneId":1, "name":"Living Room Right" },
+    { "zoneId":2, "name":"Kitchen" },
+    { "zoneId":3, "name":"Master Bedroom" },
+    { "zoneId":4, "name":"Bedroom" },
+    { "zoneId":5, "name":"Bathroom" },
+    { "zoneId":7, "name":"Deck Front" },
+    { "zoneId":7, "name":"Deck Back" }
   ],
   "lights":[
-    { "zone":1, "unit":3, "name":"Test Dimmer" }
+    { "zoneId":1, "unit":3, "name":"Test Dimmer" }
+  ],
+  "locks":[
+    { "zoneId":1, "name":"Front Door", "nodeId":1 },
+    { "zoneId":3, "name":"Rear Door", "nodeId":2 }
+  ],
+  "appliances":[
+    { "zoneId":1, "left":22, "right":null, "power":null, "name":"Nexia Switch" },
+    { "zoneId":1, "left":24, "right":23,   "power":23,   "name":"Qolsys Monitor" }
+  ],
+  "cameras":[
+    { "name":"Cam1", "host":"192.168.1.150:8008" }
   ]
 }

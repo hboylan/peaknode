@@ -1,5 +1,31 @@
 function API(db, omni)
 {
+  this.cameras = function(req, res){
+    res.json(require('../config.json').cameras)
+  }
+  
+  this.locks = function(req, res){
+    db.lock.all().success(function(locks){
+      for(l in locks) locks[l] = locks[l].parse()
+      res.json(locks)
+    })
+  }
+  
+  this.lock = function(req, res){
+    //Ensure user has permission
+    db.user.find(req.body.id).success(function(u){
+      if(u == undefined) return res.status(400).json({ error:'Invalid user' })
+      else if(req.body.pinkey != u.pinkey) return res.status(400).json({ error:'Invalid pinkey' })
+      
+      db.lock.find(req.params.id).success(function(lock){
+        lock.locked = !lock.locked
+        lock.save().success(function(l){
+          res.json(l.parse())
+        })
+      })
+    })
+  }
+  
   this.status = function(req, res){    
     db.security.find(1).success(function(entry){ res.json(entry.parse()) })
   }

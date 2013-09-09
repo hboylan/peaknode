@@ -27,11 +27,6 @@ function UserAPI(db, fitbit)
     })
   }
   
-  this.lock = function(req, res){
-    req.session.auth = null
-    res.send()
-  }
-  
   this.unlock = function(req, res){
     db.user.find({ where:{id:req.body.id, pinkey:db.user.encrypt(req.body.pinkey)} }).success(function(user){
       if(user == undefined) return res.status(401).end()

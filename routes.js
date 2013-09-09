@@ -6,7 +6,8 @@ module.exports = function(app, sessions, db, omni_client, fit_client, xbmc_clien
     , lights  = require('./controllers/lights')(db, omni_client)
     , fitbit  = require('./controllers/fitbit')(db, fit_client)
     , xbmc    = require('./controllers/xbmc')(xbmc_client)
-    , http    = require('http')
+    , vera    = require('./controllers/vera')(db)
+    , appliances = require('./controllers/appliances')(db, vera)
 
   /*** Authentication Wrappers ***/  
   //Require user authentication
@@ -63,18 +64,10 @@ module.exports = function(app, sessions, db, omni_client, fit_client, xbmc_clien
 
   /*** API ***/
   //Vera API
-  app.get('/vera', function(req, res){
-    var id      = req.query.id
-      , action  = req.query.action
-      , url     = 'http://192.168.1.100:3480/data_request?output_format=json&id='+id;
-    if(action) url += '&action='+action
-    res.send(url)
-    // http.get(url, function(vera) {
-    //   res.send("Got response: " + vera.statusCode)
-    // }).on('error', function(e) {
-    //   res.send("Got error: " + e.message)
-    // })
-  })
+  app.get('/vera', vera.request)
+  app.get('/vera/nodes', vera.list)
+  app.get('/vera/nodes/:id', vera.show)
+  app.post('/vera/nodes/:id', vera.state)
   
   // users
   app.post('/auth', reqBody(function(req, res){
@@ -88,13 +81,17 @@ module.exports = function(app, sessions, db, omni_client, fit_client, xbmc_clien
   app.post('/users', reqBody(users.create, ['username', 'password', 'realname', 'pinkey']))
   app.post('/login', reqBody(users.login, ['username', 'password']))
   app.post('/logout', reqLogin(users.logout))
-  app.get('/lock', users.lock)
   app.post('/unlock', reqBody(reqLogin(users.unlock), ['id', 'pinkey']))
   app.get('/users/:id', users.show)
   
   // zones
-  app.get('/zones', reqLogin(zones.list))
+  app.get('/zones', zones.list)
   app.get('/zones/:id', zones.show)
+  
+  // appliances
+  app.get('/appliances', appliances.list)
+  app.get('/appliances/:id', appliances.show)
+  app.post('/appliances/:id', appliances.state)
   
   // audio
   app.get('/audio', reqLogin(audio.list))
@@ -102,8 +99,11 @@ module.exports = function(app, sessions, db, omni_client, fit_client, xbmc_clien
   app.get('/audio/:id', reqLogin(audio.zone))
   
   //security
+  app.get('/locks', sec.locks)
+  app.post('/locks/:id', reqBody(sec.lock, ['id', 'pinkey']))
   app.get('/security', sec.status)
-  app.post('/security', reqLogin(reqBody(sec.setStatus, ['id', 'pinkey', 'state'])))
+  app.post('/security', reqBody(sec.setStatus, ['id', 'pinkey', 'state']))
+  app.get('/cameras', sec.cameras)
   
   //lighting
   app.get('/lights', reqLogin(lights.list))

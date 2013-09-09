@@ -28,7 +28,7 @@ function ApplianceAPI(db, vera)
     })
   }
 
-  this.state = function(req, res) {
+  this.switch = function(req, res) {
     var state = req.body.state
       , node  = req.body.node
     db.appliance.find(req.params.id).success(function(a){

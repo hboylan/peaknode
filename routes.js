@@ -2,11 +2,11 @@ module.exports = function(app, sessions, db, omni_client, fit_client, xbmc_clien
   var users   = require('./controllers/users')(db, fit_client)
     , zones   = require('./controllers/zones')(db)
     , audio   = require('./controllers/audio')(db, omni_client)
-    , sec     = require('./controllers/security')(db, omni_client)
     , lights  = require('./controllers/lights')(db, omni_client)
     , fitbit  = require('./controllers/fitbit')(db, fit_client)
     , xbmc    = require('./controllers/xbmc')(xbmc_client)
     , vera    = require('./controllers/vera')(db)
+    , sec     = require('./controllers/security')(db, vera, omni_client)
     , appliances = require('./controllers/appliances')(db, vera)
 
   /*** Authentication Wrappers ***/  
@@ -67,7 +67,7 @@ module.exports = function(app, sessions, db, omni_client, fit_client, xbmc_clien
   app.get('/vera', vera.request)
   app.get('/vera/nodes', vera.list)
   app.get('/vera/nodes/:id', vera.show)
-  app.post('/vera/nodes/:id', vera.state)
+  app.post('/vera/nodes/:id', vera.switch)
   
   // users
   app.post('/auth', reqBody(function(req, res){
@@ -91,7 +91,7 @@ module.exports = function(app, sessions, db, omni_client, fit_client, xbmc_clien
   // appliances
   app.get('/appliances', appliances.list)
   app.get('/appliances/:id', appliances.show)
-  app.post('/appliances/:id', appliances.state)
+  app.post('/appliances/:id', appliances.switch)
   
   // audio
   app.get('/audio', reqLogin(audio.list))

@@ -1,4 +1,4 @@
-function API(db, omni)
+function API(db, vera, omni)
 {
   this.cameras = function(req, res){
     res.json(require('../config.json').cameras)
@@ -18,10 +18,9 @@ function API(db, omni)
       else if(req.body.pinkey != u.pinkey) return res.status(400).json({ error:'Invalid pinkey' })
       
       db.lock.find(req.params.id).success(function(lock){
+        vera.state(req, res)
         lock.locked = !lock.locked
-        lock.save().success(function(l){
-          res.json(l.parse())
-        })
+        lock.save()
       })
     })
   }
@@ -61,4 +60,4 @@ function API(db, omni)
     })
   }
 }
-module.exports = function(d, c){ return new API(d, c) }
+module.exports = function(d, v, c){ return new API(d, v, c) }

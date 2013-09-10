@@ -55,7 +55,7 @@ function API(db, client)
   this.hasToken = function(id, req, res){
     db.user.find(id).success(function(u){
       if(u && u.fitbit_token && u.fitbit_secret) res.send()
-      else res.status(401).end()
+      else res.status(401).json({ error:'User has no fitbit token/secret' })
     })
   }
   

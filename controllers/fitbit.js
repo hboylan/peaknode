@@ -35,7 +35,7 @@ function API(db, client)
       if(error) return res.status(400).json({ error:'Failed to request token' })
       var mobile = req.query.mobile;
       mobile = mobile == undefined? '':'&display=touch'
-      res.redirect('http://www.fitbit.com/oauth/authorize?oauth_token=' + token + mobile)
+      res.json('http://www.fitbit.com/oauth/authorize?oauth_token=', token, mobile)
     })
   }
   this.access = function(id, req, res){

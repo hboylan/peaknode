@@ -67,7 +67,7 @@ module.exports = function(app, sessions, db, omni_client, fit_client, xbmc_clien
   app.get('/vera', vera.request)
   app.get('/vera/nodes', vera.list)
   app.get('/vera/nodes/:id', vera.show)
-  app.post('/vera/nodes/:id', vera.switch)
+  app.post('/vera/nodes/:id', vera.state)
   
   // users
   app.post('/auth', reqBody(function(req, res){

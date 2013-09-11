@@ -3,13 +3,12 @@
 case "$1" in
 
 start)
-	echo "starting node: $NODE $SERVER_JS_FILE"
-	echo "activity log: $OUT"
+	echo "activity log: nodejs.log"
 	sudo -u hugh node app.js > nodejs.log 2> nodejs.log &
 	;;
 
 stop)
-	killall $NODE
+	killall node
 	;;
 
 *)

@@ -48,7 +48,7 @@
   ],
   "appliances":[
     { "zoneId":1, "left":26, "right":null, "name":"Nexia 2" },
-    { "zoneId":1, "left":24, "right":23,   "name":"Qolsys 1" }
+    { "zoneId":1, "left":24, "right":25,   "name":"Qolsys 1" }
   ],
   "cameras":[
     { "name":"Cam1", "host":"http://teqlabs.com:8001" }

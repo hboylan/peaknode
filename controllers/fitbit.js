@@ -53,9 +53,10 @@ function API(db, client)
     })
   }
   this.hasToken = function(id, req, res){
+    var register_user = this.auth
     db.user.find(id).success(function(u){
       if(u && u.fitbit_token && u.fitbit_secret) res.send()
-      else this.auth(req, res)
+      else register_user(req, res)
     })
   }
   

@@ -1,4 +1,4 @@
-function VeraAPI(db)
+function VeraAPI(db, host)
 {
   var http = require('http')
   
@@ -8,7 +8,7 @@ function VeraAPI(db)
     return str.join("&")
   }
   function reqVera(params, res, callback){
-    var url = 'http://192.168.81.1:3480/data_request?'+queryStr(params)
+    var url = 'http://'+host+'/data_request?'+queryStr(params)
     console.log('VERA -> ', url)
     var req = http.get(url, function(vera) {
       vera.setEncoding('utf8')

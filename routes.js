@@ -5,7 +5,7 @@ module.exports = function(app, sessions, db, omni_client, fit_client, xbmc_clien
     , lights  = require('./controllers/lights')(db, omni_client)
     , fitbit  = require('./controllers/fitbit')(db, fit_client)
     , xbmc    = require('./controllers/xbmc')(xbmc_client)
-    , vera    = require('./controllers/vera')(db)
+    , vera    = require('./controllers/vera')(db, require('config.json').vera_host)
     , sec     = require('./controllers/security')(db, vera, omni_client)
     , appliances = require('./controllers/appliances')(db, vera)
 

@@ -99,11 +99,9 @@ module.exports = function(app, sessions, db, omni_client, fit_client, xbmc_clien
   app.get('/audio/:id', reqLogin(audio.zone))
   
   //security
-  app.get('/locks', sec.locks)
-  app.post('/locks/:id', reqBody(sec.lock, ['id', 'pinkey']))
   app.get('/security', sec.status)
   app.post('/security', reqBody(sec.setStatus, ['id', 'pinkey', 'state']))
-  app.get('/cameras', sec.cameras)
+  app.post('/security/:lockId', reqBody(sec.setStatus, ['id', 'pinkey', 'state']))
   
   //lighting
   app.get('/lights', reqLogin(lights.list))

@@ -45,9 +45,9 @@
     { "zoneId":3, "name":"Rear Door", "nodeId":2 }
   ],
   "appliances":[
-    { "zoneId":1, "left":22, "right":null, "power":null, "name":"Nexia Switch 1" },
-    { "zoneId":1, "left":26, "right":null, "power":null, "name":"Nexia Switch 2" },
-    { "zoneId":1, "left":24, "right":23,   "power":23,   "name":"Qolsys Monitor" }
+    { "zoneId":1, "left":22, "right":null, "name":"Nexia 1" },
+    { "zoneId":1, "left":26, "right":null, "name":"Nexia 2" },
+    { "zoneId":1, "left":24, "right":23,   "name":"Qolsys 1" }
   ],
   "cameras":[
     { "name":"Cam1", "host":"192.168.1.150:8008" }

@@ -43,7 +43,6 @@ function API(db, client)
     // Access token
     client.oauth.getOAuthAccessToken(token, '', verifier, function (error, token, secret, other){
       if(error) return res.status(400).json(error)
-      client.persist(req, client.serializer.stringify({token:token, secret:secret})) //persist in session
       db.user.find(id).success(function(u){ //persist in db
         if(u == undefined) return res.status(401).end()
         u.updateAttributes({fitbit_token:token, fitbit_secret:secret}).success(function(){
@@ -53,10 +52,9 @@ function API(db, client)
     })
   }
   this.hasToken = function(id, req, res){
-    var register_user = this.auth
     db.user.find(id).success(function(u){
       if(u && u.fitbit_token && u.fitbit_secret) res.send()
-      else register_user(req, res)
+      else res.status(401).json({ error:'Invalid fitbit user' })
     })
   }
   

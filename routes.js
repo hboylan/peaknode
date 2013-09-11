@@ -113,7 +113,6 @@ module.exports = function(app, sessions, db, omni_client, fit_client, xbmc_clien
   // app.post('/lights/:id/:action', lights.timeout)
   
   //fitbit
-  app.get('/fitbit', fitbit.auth)
   app.get('/fitbit/hastoken', reqFitbit(fitbit.hasToken, true))
   app.get('/fitbit/access', reqFitbit(fitbit.access, true))
   app.get('/fitbit/:action', reqFitbit(fitbit.userAction))

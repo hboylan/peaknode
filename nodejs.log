@@ -1,12 +1,1 @@
-
-TypeError: undefined is not a function
-    at hasToken (/home/hugh/peaknode/controllers/fitbit.js:59:12)
-    at EventEmitter.emit (events.js:96:17)
-    at module.exports.QueryInterface.queryAndEmit (/home/hugh/peaknode/node_modules/sequelize/lib/query-interface.js:698:17)
-    at EventEmitter.emit (events.js:126:20)
-    at module.exports.Query.run (/home/hugh/peaknode/node_modules/sequelize/lib/dialects/mysql/query.js:32:14)
-    at Query.Sequence.end (/home/hugh/peaknode/node_modules/mysql/lib/protocol/sequences/Sequence.js:75:24)
-    at Query._handleFinalResultPacket (/home/hugh/peaknode/node_modules/mysql/lib/protocol/sequences/Query.js:143:8)
-    at Query.EofPacket (/home/hugh/peaknode/node_modules/mysql/lib/protocol/sequences/Query.js:127:8)
-    at Protocol._parsePacket (/home/hugh/peaknode/node_modules/mysql/lib/protocol/Protocol.js:172:24)
-    at Parser.write (/home/hugh/peaknode/node_modules/mysql/lib/protocol/Parser.js:62:12)
+sudo: unknown user: hugh

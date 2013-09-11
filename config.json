@@ -50,6 +50,6 @@
     { "zoneId":1, "left":24, "right":23,   "name":"Qolsys 1" }
   ],
   "cameras":[
-    { "name":"Cam1", "host":"http://teqlabs.com:8008" }
+    { "name":"Cam1", "host":"http://teqlabs.com:8001" }
   ]
 }

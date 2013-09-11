@@ -88,4 +88,4 @@ function VeraAPI(db, host)
     })
   }
 }
-module.exports = function(d){ return new VeraAPI(d) }
+module.exports = function(d, h){ return new VeraAPI(d, h) }

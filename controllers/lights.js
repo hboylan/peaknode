@@ -44,7 +44,7 @@ function LightAPI(db, omni)
         res.json({ error:'Expected parameters: state (on/off) or level (0-100)' })
     
       // db.light_archive.create({ state:light.on, level:light.level, lightId:light.id }).success(function(archive){
-        res.json(true)
+        res.send()
       // })
     })
   }

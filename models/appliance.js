@@ -1,7 +1,8 @@
 module.exports = function(sequelize, DataTypes) {
   var dt = require('../lib/datetime')
   return sequelize.define('appliance', {
-    on: { type:DataTypes.BOOLEAN, defaultValue:false },
+    leftOn: { type:DataTypes.BOOLEAN, defaultValue:false },
+    rightOn: { type:DataTypes.BOOLEAN, defaultValue:false },
     name: DataTypes.STRING,
     left: DataTypes.INTEGER,
     right: DataTypes.INTEGER,
@@ -12,7 +13,7 @@ module.exports = function(sequelize, DataTypes) {
     freezeTableName: true,
     instanceMethods:{
       parse:function(){
-        return { id:this.id, left:this.left, right:this.right, power:this.power, on:this.on, watts:this.watts, kwh:this.kwh, name:this.name, timestamp:dt.dateTimeFormat(this.updatedAt) }
+        return { id:this.id, left:this.left, right:this.right, leftOn:this.leftOn, rightOn:this.rightOn, power:this.power, watts:this.watts, kwh:this.kwh, name:this.name, timestamp:dt.dateTimeFormat(this.updatedAt) }
       }
     },
     classMethods:{

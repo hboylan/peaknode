@@ -45,7 +45,6 @@
     { "zoneId":3, "name":"Rear Door", "nodeId":2 }
   ],
   "appliances":[
-    { "zoneId":1, "left":22, "right":null, "name":"Nexia 1" },
     { "zoneId":1, "left":26, "right":null, "name":"Nexia 2" },
     { "zoneId":1, "left":24, "right":23,   "name":"Qolsys 1" }
   ],

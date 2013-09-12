@@ -22,7 +22,8 @@ function API(client){
       , isMove  = client.isMove(control)
       , isInput = client.isInput(control)
       , isSys   = client.isSystem(control)
-      , control = control.charAt(0).toUpperCase() + control.substring(1);
+      , control = control.charAt(0).toUpperCase() + control.substring(1)
+    console.log(control)
     if(isMove)
       client.player(control, res)
     else if(isInput)

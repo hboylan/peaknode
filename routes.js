@@ -132,9 +132,9 @@ module.exports = function(app, sessions, db, omni_client, fit_client, xbmc_clien
   app.get('/xbmc/albums', xbmc.albums)
   app.get('/xbmc/album', xbmc.album)
   app.post('/xbmc/control', xbmc.control)
-  app.get('/xbmc/song/:songid(0-9]+)', xbmc.playSong)
+  app.get('/xbmc/song/:songid([0-9]+)', xbmc.playSong)
   app.post('/xbmc/file', xbmc.playFile)
-  app.get('/xbmc/:playlist(0|1)/:id(0-9]+)', xbmc.playPlaylist)
+  app.get('/xbmc/:playlist(0|1)/:id([0-9]+)', xbmc.playPlaylist)
   
   //API catch-all
   app.get('*', function(req, res){ res.status(401).json({ error:'Invalid API call' }) })

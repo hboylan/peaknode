@@ -23,6 +23,8 @@ function API(db, vera, omni)
     
       if(lock) //Update lock state
         db.lock.find(lock).success(function(l){
+          req.params.id = l.nodeId
+          req.bdoy.type = 'lock'
           vera.state(req, res)
           l.locked = !l.locked
           l.save()

@@ -3,11 +3,11 @@ module.exports = function(sequelize, DataTypes) {
   return sequelize.define('lock', {
     locked: { type:DataTypes.BOOLEAN, defaultValue:false },
     nodeId: DataTypes.INTEGER,
-    name: DataTypes.STRING
+    name: DataTypes.STRING,
   }, {
     instanceMethods:{
       parse:function(){
-        return { id:this.id, name:this.name, locked:this.locked, timestamp:datetime.dateTimeFormat(this.updatedAt) }
+        return { id:this.id, name:this.name, locked:this.locked, node:this.nodeId, timestamp:datetime.dateTimeFormat(this.updatedAt) }
       },
     },
   })

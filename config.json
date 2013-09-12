@@ -43,8 +43,8 @@
     { "zoneId":1, "unit":3, "name":"Test Dimmer" }
   ],
   "locks":[
-    { "zoneId":1, "name":"Front Door", "nodeId":1 },
-    { "zoneId":3, "name":"Rear Door", "nodeId":2 }
+    { "zoneId":1, "nodeId":27, "name":"Front Door" },
+    { "zoneId":3, "nodeId":1, "name":"Rear Door" }
   ],
   "appliances":[
     { "zoneId":1, "left":26, "right":null, "name":"Nexia 2" },

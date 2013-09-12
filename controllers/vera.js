@@ -49,15 +49,6 @@ function VeraAPI(db, host)
     })
   }
   
-  this.lock = function(req, res){
-    var state = req.body.state
-    if(state == 'on' || state == 'off')
-      reqVera({
-        id:'variableset',
-        
-      })
-  }
-  
   this.state = function(req, res){
     var state   = req.body.state
       , service = req.body.service

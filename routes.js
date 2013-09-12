@@ -119,6 +119,7 @@ module.exports = function(app, sessions, db, omni_client, fit_client, xbmc_clien
   
   //xbmc
   app.get('/xbmc', xbmc.status)
+  app.post('/xbmc', xbmc.control)
   app.get('/xbmc/reconnect', xbmc.reconnect)
   app.post('/xbmc/dir', xbmc.dir)
   app.get('/xbmc/scan', xbmc.scan)
@@ -131,7 +132,6 @@ module.exports = function(app, sessions, db, omni_client, fit_client, xbmc_clien
   app.get('/xbmc/artist', xbmc.artist)
   app.get('/xbmc/albums', xbmc.albums)
   app.get('/xbmc/album', xbmc.album)
-  app.post('/xbmc/control', xbmc.control)
   app.get('/xbmc/song/:songid([0-9]+)', xbmc.playSong)
   app.post('/xbmc/file', xbmc.playFile)
   app.get('/xbmc/:playlist(0|1)/:id([0-9]+)', xbmc.playPlaylist)

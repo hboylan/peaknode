@@ -9,7 +9,7 @@ function API(client){
 
   this.movies   = function(req, res){ client.command('VideoLibrary.GetMovies', {properties:info.movie}, res) }
   this.movie    = function(req, res){ client.command('VideoLibrary.GetMovieDetails', {movieid:parseInt(req.params.id, 10), properties:info.song}, res) }
-  this.songs    = function(req, res){ client.command('AudioLibrary.GetSongs', {properties:info.song}, res) }
+  this.songs    = function(req, res){ client.command('AudioLibrary.GetSongs', {properties:info.song, end:50}, res) }
   this.artists  = function(req, res){ client.command('AudioLibrary.GetArtists', {}, res) }
   this.artist   = function(req, res){ client.command('AudioLibrary.GetArtistDetails', {artistid:parseInt(req.params.id, 10)}, res) }
   this.albums   = function(req, res){ client.command('AudioLibrary.GetAlbums', {}, res) }

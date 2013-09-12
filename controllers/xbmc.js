@@ -1,7 +1,7 @@
 function API(client){
   var info = {
     movie:['runtime', 'thumbnail', 'file', 'resume'],
-    song:['duration', 'artist', 'album', 'file']
+    song:['duration', 'artist', 'album', 'file', 'thumbnail']
   }
   
   this.status     = function(req, res){ client.command('Player.GetActivePlayers', {}, res) }

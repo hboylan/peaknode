@@ -4,7 +4,7 @@ function API(client){
     song:['duration', 'artist', 'album', 'file']
   }
   
-  this.status     = function(req, res){ client.chain('Player.GetActivePlayers', {}, function(){ client.command('Player.GetItem', {}, res) }) }
+  this.status     = function(req, res){ client.command('Player.GetActivePlayers', {}, res) }
   this.reconnect  = function(req, res){ client.reconnect(res) }
 
   this.movies   = function(req, res){ client.command('VideoLibrary.GetMovies', {properties:info.movie}, res) }

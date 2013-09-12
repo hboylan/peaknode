@@ -1,7 +1,8 @@
 function API(client){
   var info = {
     movie:['runtime', 'thumbnail', 'file', 'resume'],
-    song:['duration', 'artist', 'album', 'file', 'thumbnail']
+    song:['duration', 'artist', 'album', 'file', 'thumbnail'],
+    artist:['']
   }
   
   this.status     = function(req, res){ client.command('Player.GetActivePlayers', {}, res) }
@@ -17,7 +18,7 @@ function API(client){
   this.dir      = function(req, res){ client.command('Files.GetDirectory', {directory:req.body.dir}, res) }
   
   this.control = function(req, res){
-    var control = req.params.control
+    var control = req.body.control
       , isMove  = client.isMove(control)
       , isInput = client.isInput(control)
       , isSys   = client.isSystem(control)

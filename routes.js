@@ -32,8 +32,8 @@ module.exports = function(app, sessions, db, omni_client, fit_client, xbmc_clien
   //Require valid auth token
   function reqToken(callback){
     return function(req, res){
-      // if(auth == undefined) res.status(400).json({ error:'Requires admin token' })
-      // else if(new Date() > new Date(auth.timeout)) res.status(400).json({ error:'Expired admin token' })
+      // if(auth == undefined) res.status(401).json({ error:'Requires admin token' })
+      // else if(new Date() > new Date(auth.timeout)) res.status(401).json({ error:'Expired admin token' })
       // else 
       callback(req, res)
     }
@@ -58,7 +58,7 @@ module.exports = function(app, sessions, db, omni_client, fit_client, xbmc_clien
     return function(req, res){
       var err = false
       params.forEach(function(p){ if(req.body[p] == undefined) err = true })
-      return err? res.status(400).json({ error:'Requires POST params: '+params.join(', ') }) : callback(req, res)
+      return err? res.status(401).json({ error:'Requires POST params: '+params.join(', ') }) : callback(req, res)
     }
   }
 
@@ -137,6 +137,6 @@ module.exports = function(app, sessions, db, omni_client, fit_client, xbmc_clien
   app.get('/xbmc/:playlist(0|1)/:id(0-9]+)', xbmc.playPlaylist)
   
   //API catch-all
-  app.get('*', function(req, res){ res.status(400).json({ error:'Invalid API call' }) })
-  app.post('*', function(req, res){ res.status(400).json({ error:'Invalid API call' }) })
+  app.get('*', function(req, res){ res.status(401).json({ error:'Invalid API call' }) })
+  app.post('*', function(req, res){ res.status(401).json({ error:'Invalid API call' }) })
 }

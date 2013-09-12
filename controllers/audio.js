@@ -20,9 +20,9 @@ function AudioAPI(db, omni)
       , zone    = parseInt(req.body.id, 10)
       , toggle  = req.body.toggle
     
-    if(zone == NaN) return res.status(400).json({ error:'Invalid zone id' })
+    if(zone == NaN) return res.status(401).json({ error:'Invalid zone id' })
     db.audio.find(zone).success(function(a){
-      if(a == undefined) return res.status(400).json({ error:'Invalid zone' });
+      if(a == undefined) return res.status(401).json({ error:'Invalid zone' });
       //Update Audio Zone state
       if(0 <= vol && vol <= 100){
         omni.audio('volume', { zone:a.id, volume:vol })

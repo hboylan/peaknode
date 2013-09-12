@@ -17,14 +17,14 @@ function ApplianceAPI(db, vera)
   this.show = function(req, res) {
     var e = { error:'Invalid appliance' }, hist = [];
     db.appliance.find(req.params.id).success(function(a){
-      if(a == undefined) return res.status(400).json(e);
+      if(a == undefined) return res.status(401).json(e);
       // db.appliance_archive.findAll({ where:{appId:a.id}, limit:50, order:'id DESC' }).success(function(archives){
         // archives.forEach(function(a){ hist.push(a.parse()) })
         // res.json({ name:a.name, unit:a.unit, level:a.level, on:a.on, active:a.active, archives:hist })
         res.json(a.parse())
       // })
     }).error(function(err){
-      res.status(400).json(e)
+      res.status(401).json(e)
     })
   }
 
@@ -32,7 +32,7 @@ function ApplianceAPI(db, vera)
     var state = req.body.state
       , node  = req.body.node
     db.appliance.find(req.params.id).success(function(a){
-      if(a == undefined) return res.status(400).json({ error:'Invalid zone' });
+      if(a == undefined) return res.status(401).json({ error:'Invalid zone' });
       //Update Audio Zone state
       if(node == 'left')
         req.params.id = a.left
@@ -42,8 +42,15 @@ function ApplianceAPI(db, vera)
         req.params.id = a.power
         vera.power(req, res)
       }
-      else return res.status(400).json({ error:'Invalid nodeId' })
-      if(state == 'on' || state == 'off') vera.state(req, res)
+      else return res.status(401).json({ error:'Invalid nodeId' })
+      
+      //Switch node
+      if(state == 'on' || state == 'off'){
+        if(node == 'left')        a.leftOn  = state == 'on'? true:false
+        else if(node == 'right')  a.rightOn = state == 'on'? true:false
+        a.save()
+        vera.state(req, res)
+      }else res.status(401)
     })
   }
 }

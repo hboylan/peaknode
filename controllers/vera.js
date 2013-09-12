@@ -64,7 +64,7 @@ function VeraAPI(db, host)
       , type    = req.body.type
     if(type == 'switch') type = 'urn:upnp-org:serviceId:SwitchPower1'
     else if(type == 'lock') type = 'urn:micasaverde-com:serviceId:DoorLock1'
-    else return res.status(400).json({ error:'Invalid type' })
+    else return res.status(401).json({ error:'Invalid type' })
     
     if(state == 'on' || state == 'off')
       reqVera({
@@ -76,7 +76,7 @@ function VeraAPI(db, host)
       }, res, function(data){
         res.json(data)
       })
-    else res.status(400).json({ error:'Invalid state' })
+    else res.status(401).json({ error:'Invalid state' })
   }
   
   this.power = function(req, res){

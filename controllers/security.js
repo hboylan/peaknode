@@ -18,8 +18,8 @@ function API(db, vera, omni)
     
     //Ensure user has permission
     db.user.find(id).success(function(u){
-      if(u == undefined) return res.status(400).json({ error:'Invalid user' })
-      else if(pinkey != u.pinkey) return res.status(400).json({ error:'Invalid pinkey' })
+      if(u == undefined) return res.status(401).json({ error:'Invalid user' })
+      else if(pinkey != u.pinkey) return res.status(401).json({ error:'Invalid pinkey' })
     
       if(lock) //Update lock state
         db.lock.find(lock).success(function(l){

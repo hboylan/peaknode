@@ -14,11 +14,11 @@ function API(client){
       if(!players.result.length) res.json({ error:'No players detected' })
       else client.chain('Player.GetProperties', {properties:info.player, playerid:players.result[0].playerid}, function(player){
         var player = player.result, cHrs  = player.time.hours, cMins = player.time.minutes, cSecs = player.time.seconds, tHrs  = player.totaltime.hours, tMins = player.totaltime.minutes, tSecs = player.totaltime.seconds
-          , parse = function(t){ return t < 10? '0'+t:t };
+          , parse = function(t, n){ return n > 10 ? '0'+t:t };
         res.json({
           playlistid:player.playlistid,
           position:player.position,
-          currentHrs:parse(cHrs), currentMins:parse(cMins), currentSecs:parse(cSecs), totalHrs:parse(tHrs), totalMins:parse(tMins), totalSecs:parse(cSecs),
+          currentHrs:cHrs, currentMins:cMins, currentSecs:parse(cSecs), totalHrs:tHrs, totalMins:tMins, totalSecs:parse(cSecs),
         })
       })
     })

@@ -12,9 +12,9 @@ function API(client){
       client.chain('Playlist.GetItems', { playlistid:1 }, function(videos){
         var m = music.result, v = videos.result
         res.json({
-          musicPosition:m.limit.start,
+          musicPosition:m.limits.start,
           musicPlaylist:m.items,
-          videoPosition:v.limit.start,
+          videoPosition:v.limits.start,
           video:v.items
         })
       })

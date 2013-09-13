@@ -69,8 +69,8 @@ function API(client){
   
   //Open song a position within playlist
   this.playPlaylist = function(req, res){
-    var list  = parseInt(req.params.playlistid, 10)
-      , pos   = parseInt(req.params.position, 10)
+    var list  = parseInt(req.params.listId, 10)
+      , pos   = parseInt(req.params.pos, 10)
       , item  = { playlistid:list, position:pos };
     if(list == undefined) return res.status(401).json({ error:'Invalid listId' })
     if(pos == undefined)  return res.status(401).json({ error:'Invalid pos' })

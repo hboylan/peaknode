@@ -1,25 +1,22 @@
 function API(client){
   var info = {
+    player:['position', 'time', 'totaltime', 'playlistid'],
     movie:['runtime', 'thumbnail', 'file', 'resume'],
     song:['duration', 'artist', 'album', 'file', 'thumbnail'],
     artist:['thumbnail'],
     album:['thumbnail', 'year', 'title', 'albumlabel', 'artist']
   }
   
-  //List music, video playlists
-  this.status     = function(req, res){ 
-    client.chain('Playlist.GetItems', { playlistid:0 }, function(music){
-      client.chain('Playlist.GetItems', { playlistid:1 }, function(videos){
-        var m = music.result, v = videos.result
-        res.json({
-          musicPosition:m.limits.start,
-          musicPlaylist:m.items,
-          videoPosition:v.limits.start,
-          video:v.items
-        })
-      })
+  this.status     = function(req, res){
+    client.chain('Player.GetActivePlayers', {}, function(players){
+      if(!player.length) res.json({ error:'No players detected' })
+      else
+      {
+        var p = players.result[0]
+        client.command('Player.GetProperties', {properties:info.player, playerid:p.playerid }, res)
+      }
     })
-  }
+  )}
   this.reconnect  = function(req, res){ client.reconnect(res) }
   this.movies   = function(req, res){ client.command('VideoLibrary.GetMovies', {properties:info.movie}, res) }
   this.movie    = function(req, res){ client.command('VideoLibrary.GetMovieDetails', {movieid:parseInt(req.params.id, 10), properties:info.song}, res) }
@@ -57,6 +54,21 @@ function API(client){
   
   this.playFile = function(req, res){
     client.command('Player.Open', {item:{file:req.body.file}}, res)
+  }
+
+  //List music, video playlists
+  this.playlists = function(req, res){
+    client.chain('Playlist.GetItems', { playlistid:0 }, function(music){
+      client.chain('Playlist.GetItems', { playlistid:1 }, function(videos){
+        var m = music.result, v = videos.result
+        res.json({
+          musicPosition:m.limits.start,
+          musicPlaylist:m.items,
+          videoPosition:v.limits.start,
+          video:v.items
+        })
+      })
+    })
   }
   
   //Open song a position within playlist

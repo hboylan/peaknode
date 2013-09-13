@@ -90,13 +90,28 @@ function API(client){
     var list  = parseInt(req.params.listId, 10)
       , id    = parseInt(req.params.id, 10)
       , pos   = parseInt(req.params.pos, 10)
-      , item  = list? {movieid:id}:{songid:id}
-      , query = { playlistid:list, position:pos, item:item };
+      , item  = list? {movieid:id}:{songid:id};
     if(list == undefined) return res.status(401).json({ error:'Invalid listId' })
     if(id == undefined)   return res.status(401).json({ error:'Invalid id' })
     if(pos == undefined)  return res.status(401).json({ error:'Invalid pos' })
     
-    client.chain('Playlist.Insert', query, function(d){ res.json({ success:'added: '+id }) })
+    client.chain('Playlist.GetItems', { playlistid:list, properties:info.playlist }, function(playlist){
+      console.log(playlist)
+      playlist = playlist.result
+      res.send()
+      // client.chain('Playlist.Insert', { playlistid:list, position:pos, item:item }, function(d){ res.json({ success:'added: '+id }) })
+    })
+  }
+  
+  this.swap = function(req, res){
+    var list  = parseInt(req.params.listId, 10)
+      , id    = parseInt(req.params.id, 10)
+      , pos1   = parseInt(req.params.pos1, 10)
+      , pos2   = parseInt(req.params.pos2, 10);
+    if(list == undefined) return res.status(401).json({ error:'Invalid listId' })
+    if(id == undefined)   return res.status(401).json({ error:'Invalid id' })
+    if(pos1 == undefined)  return res.status(401).json({ error:'Invalid pos1' })
+    if(pos2 == undefined)  return res.status(401).json({ error:'Invalid pos2' })
   }
   
   this.remove = function(req, res){

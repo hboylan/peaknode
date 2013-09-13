@@ -1,8 +1,9 @@
 function API(client){
   var info = {
+    song:['duration', 'artist', 'album', 'thumbnail'],
     player:['position', 'time', 'totaltime', 'playlistid'],
     movie:['runtime', 'thumbnail', 'file', 'resume'],
-    song:['duration', 'artist', 'album', 'file', 'thumbnail'],
+    playlist:song,
     artist:['thumbnail'],
     album:['thumbnail', 'year', 'title', 'albumlabel', 'artist']
   }
@@ -16,11 +17,11 @@ function API(client){
           playlistid:player.playlistid,
           position:player.position,
           currentHrs:player.time.hours,
-          currentMins:player.time.mins,
-          currentSecs:player.time.secs,
+          currentMins:player.time.minutes,
+          currentSecs:player.time.seconds,
           totalHrs:player.totaltime.hours,
-          totalMins:player.totaltime.mins,
-          totalSecs:player.totaltime.secs,
+          totalMins:player.totaltime.minutes,
+          totalSecs:player.totaltime.seconds,
         })
       })
     })
@@ -66,7 +67,7 @@ function API(client){
 
   //List music, video playlists
   this.playlists = function(req, res){
-    client.chain('Playlist.GetItems', { playlistid:0 }, function(music){
+    client.chain('Playlist.GetItems', { playlistid:0, properties:info.playlist }, function(music){
       client.chain('Playlist.GetItems', { playlistid:1 }, function(videos){
         res.json({ music:music.result.items, videos:videos.result })
       })

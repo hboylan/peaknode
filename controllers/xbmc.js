@@ -11,6 +11,7 @@ function API(client){
     client.chain('Player.GetActivePlayers', {}, function(players){
       if(!players.result.length) res.json({ error:'No players detected' })
       else client.chain('Player.GetProperties', {properties:info.player, playerid:players.result[0].playerid}, function(player){
+        console.log(player)
         var p = {
           position:player.position,
           currentHrs:player.time.hours,

@@ -9,7 +9,7 @@ function API(client){
   
   this.status     = function(req, res){
     client.chain('Player.GetActivePlayers', {}, function(players){
-      if(!player.length) res.json({ error:'No players detected' })
+      if(!players.length) res.json({ error:'No players detected' })
       else
       {
         var p = players.result[0]

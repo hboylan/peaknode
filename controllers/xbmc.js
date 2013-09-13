@@ -74,6 +74,7 @@ function API(client){
       , item  = { playlistid:list, position:pos };
     if(list == undefined) return res.status(401).json({ error:'Invalid listId' })
     if(pos == undefined)  return res.status(401).json({ error:'Invalid pos' })
+    console.log(item)
     client.command('Player.Open', {item:item}, res)
   }
   

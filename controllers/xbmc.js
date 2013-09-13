@@ -73,7 +73,7 @@ function API(client){
       , pos   = parseInt(req.params.position, 10)
     if(list == undefined) return res.status(401).json({ error:'Invalid listId' })
     if(pos == undefined)  return res.status(401).json({ error:'Invalid pos' })
-    client.command('Player.Open', {item:{ playlistid:list, position:pos }}, res)
+    client.command('Player.Open', { playlistid:list, position:pos }, res)
   }
   
   //Re-Scan music, video libraries

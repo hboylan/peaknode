@@ -89,11 +89,12 @@ function API(client){
       , id    = req.params.id
       , item  = list? {movieid:id}:{songid:id}
       , pos   = req.params.pos
+      , query = { playlistid:list, position:pos, item:item }
     if(list == undefined) return res.status(401).json({ error:'Invalid listId' })
     if(id == undefined)   return res.status(401).json({ error:'Invalid id' })
     if(pos == undefined)  return res.status(401).json({ error:'Invalid pos' })
     
-    client.chain('Playlist.Insert', {playlistid:list, position:pos, item:item}, function(d){
+    client.chain('Playlist.Insert', query, function(d){
       if(d.result.length) res.json({ success:'added: '+id })
       else res.status(201).json({ error:'Failed to insert' })
     })

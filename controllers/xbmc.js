@@ -86,9 +86,9 @@ function API(client){
   
   this.insert = function(req, res){
     var list  = parseInt(req.params.listId, 10)
-      , id    = req.params.id
+      , id    = parseInt(req.params.id, 10)
+      , pos   = parseInt((req.params.pos, 10)
       , item  = list? {movieid:id}:{songid:id}
-      , pos   = req.params.pos
       , query = { playlistid:list, position:pos, item:item }
     if(list == undefined) return res.status(401).json({ error:'Invalid listId' })
     if(id == undefined)   return res.status(401).json({ error:'Invalid id' })
@@ -103,7 +103,7 @@ function API(client){
   
   this.remove = function(req, res){
     var list = parseInt(req.params.listId, 10)
-      , pos  = req.params.pos
+      , pos  = parseInt(req.params.pos, 10)
     if(list == undefined) return res.status(401).json({ error:'Invalid listId' })
     if(pos == undefined)  return res.status(401).json({ error:'Invalid pos' })
     

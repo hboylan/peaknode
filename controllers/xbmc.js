@@ -10,7 +10,18 @@ function API(client){
   this.status     = function(req, res){
     client.chain('Player.GetActivePlayers', {}, function(players){
       if(!players.result.length) res.json({ error:'No players detected' })
-      else client.command('Player.GetProperties', {properties:info.player, playerid:players.result[0].playerid}, res)
+      else client.chain('Player.GetProperties', {properties:info.player, playerid:players.result[0].playerid}, function(player){
+        var p = {
+          position:player.position,
+          currentHrs:player.time.hours,
+          currentMins:player.time.mins,
+          currentSecs:player.time.secs,
+          totalHrs:player.totaltime.hours,
+          totalMins:player.ttotaltimeime.mins,
+          totalSecs:player.totaltime.secs,
+        }
+        client.command('Player.GetItems', {playlistid:player.playlistid}, function(list){ player:p, playlist:list })
+      })
     })
   }
   this.reconnect  = function(req, res){ client.reconnect(res) }
@@ -56,13 +67,7 @@ function API(client){
   this.playlists = function(req, res){
     client.chain('Playlist.GetItems', { playlistid:0 }, function(music){
       client.chain('Playlist.GetItems', { playlistid:1 }, function(videos){
-        var m = music.result, v = videos.result
-        res.json({
-          musicPosition:m.limits.start,
-          musicPlaylist:m.items,
-          videoPosition:v.limits.start,
-          video:v.items
-        })
+        res.json({ music:music.result.items, videos:videos.result })
       })
     })
   }

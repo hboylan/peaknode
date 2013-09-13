@@ -74,7 +74,10 @@ function API(client){
       , item  = { playlistid:list, position:pos };
     if(list == undefined) return res.status(401).json({ error:'Invalid listId' })
     if(pos == undefined)  return res.status(401).json({ error:'Invalid pos' })
-    client.chain('Player.Open', {item:item}, function(d){ if(d == 'OK') res.json({}) else res.status(401).json({ error:'Failed to open' }) })
+    client.chain('Player.Open', {item:item}, function(d){
+      if(d == 'OK') res.json({})
+      else res.status(401).json({ error:'Failed to open' })
+    })
   }
   
   //Re-Scan music, video libraries

@@ -71,9 +71,10 @@ function API(client){
   this.playPlaylist = function(req, res){
     var list  = parseInt(req.params.playlistid, 10)
       , pos   = parseInt(req.params.position, 10)
+      , item  = { playlistid:list, position:pos };
     if(list == undefined) return res.status(401).json({ error:'Invalid listId' })
     if(pos == undefined)  return res.status(401).json({ error:'Invalid pos' })
-    client.command('Player.Open', { playlistid:list, position:pos }, res)
+    client.command('Player.Open', {item:item}, res)
   }
   
   //Re-Scan music, video libraries

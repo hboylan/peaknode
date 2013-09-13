@@ -10,11 +10,11 @@ function API(client){
   this.status     = function(req, res){ 
     client.chain('Playlist.GetItems', { playlistid:0 }, function(music){
       client.chain('Playlist.GetItems', { playlistid:1 }, function(videos){
-        var m = music.result, v = video.result
+        var m = music.result, v = videos.result
         res.json({
           musicPosition:m.limit.start,
           musicPlaylist:m.items,
-          videoPosition:m.limit.start,
+          videoPosition:v.limit.start,
           video:v.items
         })
       })

@@ -89,12 +89,11 @@ function API(client){
       , id    = parseInt(req.params.id, 10)
       , pos   = parseInt((req.params.pos, 10)
       , item  = list? {movieid:id}:{songid:id}
-      , query = { playlistid:list, position:pos, item:item }
+      , query = { playlistid:list, position:pos, item:item };
     if(list == undefined) return res.status(401).json({ error:'Invalid listId' })
     if(id == undefined)   return res.status(401).json({ error:'Invalid id' })
     if(pos == undefined)  return res.status(401).json({ error:'Invalid pos' })
     
-    console.log(query)
     client.chain('Playlist.Insert', query, function(d){
       if(d.result.length) res.json({ success:'added: '+id })
       else res.status(201).json({ error:'Failed to insert' })
@@ -105,7 +104,7 @@ function API(client){
     var list = parseInt(req.params.listId, 10)
       , pos  = parseInt(req.params.pos, 10)
     if(list == undefined) return res.status(401).json({ error:'Invalid listId' })
-    if(pos == undefined)  return res.status(401).json({ error:'Invalid pos' })
+    if(pos == undefined)  return res.status(401).json({ error:'Invalid pos' });
     
     client.chain('Playlist.Remove', {playlistid:list, position:pos, item:item}, function(d){
       if(d.result.length) res.json({ success:'removed: '+pos })

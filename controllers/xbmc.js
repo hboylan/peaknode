@@ -70,11 +70,19 @@ function API(client){
   //Open song a position within playlist
   this.playPlaylist = function(req, res){
     var list  = parseInt(req.params.listId, 10)
-      , pos   = parseInt(req.params.pos, 10)
+      , place = req.params.place
+      , pos   = place == 'next'? null:parseInt(place, 10)
       , item  = { playlistid:list, position:pos };
     if(list == undefined) return res.status(401).json({ error:'Invalid listId' })
     if(pos == undefined)  return res.status(401).json({ error:'Invalid pos' })
-    client.chain('Player.Open', {item:item}, function(d){ res.json({}) })
+    
+    if(place == 'next') 
+      client.chain('Player.GetItems', {playlistid:list, properties:info.playlist}, function(d){
+        if(!d.result.limit) return res.status(401).json({ error:'no playlist' })
+        item.position = d.result.limits.start+1
+        client.chain('Player.Open', {item:item}, function(d){ res.json({}) })
+      })
+    else client.chain('Player.Open', {item:item}, function(d){ res.json({}) })
   }
   
   //Re-Scan music, video libraries

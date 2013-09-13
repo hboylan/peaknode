@@ -78,7 +78,7 @@ function API(client){
     
     if(place == 'next') 
       client.chain('Playlist.GetItems', {playlistid:list, properties:info.playlist}, function(d){
-        if(!d.result.limit) return res.status(401).json({ error:'no playlist' })
+        if(!d.result.length) return res.status(401).json({ error:'no playlist' })
         item.position = d.result.limits.start+1
         client.chain('Player.Open', {item:item}, function(d){ res.json({}) })
       })

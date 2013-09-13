@@ -13,7 +13,7 @@ function API(client){
     client.chain('Player.GetActivePlayers', {}, function(players){
       if(!players.result.length) res.json({ error:'No players detected' })
       else client.chain('Player.GetProperties', {properties:info.player, playerid:players.result[0].playerid}, function(player){
-        var cHrs  = player.time.hours, cMins = player.time.minutes, cSecs = player.time.seconds, tHrs  = player.time.hours, tMins = player.time.minutes, tSecs = player.time.seconds
+        var cHrs  = player.time.hours, cMins = player.time.minutes, cSecs = player.time.seconds, tHrs  = player.totaltime.hours, tMins = player.totaltime.minutes, tSecs = player.totaltime.seconds
           , player = player.result
           , parse = function(t){ return t < 10? '0'+t:t };
         res.json({

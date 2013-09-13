@@ -17,7 +17,7 @@ function API(client){
           currentMins:player.time.mins,
           currentSecs:player.time.secs,
           totalHrs:player.totaltime.hours,
-          totalMins:player.ttotaltimeime.mins,
+          totalMins:player.totaltime.mins,
           totalSecs:player.totaltime.secs,
         }
         client.command('Player.GetItems', {playlistid:player.playlistid}, function(list){ player:p, playlist:list })

@@ -100,7 +100,7 @@ function API(client){
   }
   
   this.remove = function(req, res){
-    var list = req.params.listId, 10)
+    var list = parseInt(req.params.listId, 10)
       , pos  = req.params.pos
     if(list == undefined) return res.status(401).json({ error:'Invalid listId' })
     if(pos == undefined)  return res.status(401).json({ error:'Invalid pos' })

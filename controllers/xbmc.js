@@ -93,7 +93,7 @@ function API(client){
     if(id == undefined)   return res.status(401).json({ error:'Invalid id' })
     if(pos == undefined)  return res.status(401).json({ error:'Invalid pos' })
     
-    client.chain('Playlist.Insert', {playlistid:listId, position:pos, item:item}, function(d){
+    client.chain('Playlist.Insert', {playlistid:list, position:pos, item:item}, function(d){
       if(d.result.length) res.json({ success:'added: '+id })
       else res.status(201).json({ error:'Failed to insert' })
     })
@@ -105,7 +105,7 @@ function API(client){
     if(list == undefined) return res.status(401).json({ error:'Invalid listId' })
     if(pos == undefined)  return res.status(401).json({ error:'Invalid pos' })
     
-    client.chain('Playlist.Remove', {playlistid:listId, position:pos, item:item}, function(d){
+    client.chain('Playlist.Remove', {playlistid:list, position:pos, item:item}, function(d){
       if(d.result.length) res.json({ success:'removed: '+pos })
       else res.status(201).json({ error:'Failed to remove' })
     })

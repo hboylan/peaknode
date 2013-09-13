@@ -69,10 +69,11 @@ function API(client){
   
   //Open song a position within playlist
   this.playPlaylist = function(req, res){
-    var list  = req.params.playlistid
-      , pos   = req.params.position
-    if(false) res.json({ error:'Expected playlistid/position' })
-    client.command('Player.Open', {item:{ playlistid:parseInt(list, 10), position:parseInt(pos, 10) }}, res)
+    var list  = parseInt(req.params.playlistid, 10)
+      , pos   = parseInt(req.params.position, 10)
+    if(list == undefined) return res.status(401).json({ error:'Invalid listId' })
+    if(pos == undefined)  return res.status(401).json({ error:'Invalid pos' })
+    client.command('Player.Open', {item:{ playlistid:list, position:pos }}, res)
   }
   
   //Re-Scan music, video libraries
@@ -104,7 +105,7 @@ function API(client){
     var list = parseInt(req.params.listId, 10)
       , pos  = parseInt(req.params.pos, 10)
     if(list == undefined) return res.status(401).json({ error:'Invalid listId' })
-    if(pos == undefined)  return res.status(401).json({ error:'Invalid pos' });
+    if(pos == undefined)  return res.status(401).json({ error:'Invalid pos' })
     
     client.chain('Playlist.Remove', {playlistid:list, position:pos, item:item}, function(d){
       if(d.result.length) res.json({ success:'removed: '+pos })

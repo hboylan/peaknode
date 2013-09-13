@@ -96,10 +96,10 @@ function API(client){
     if(pos == undefined)  return res.status(401).json({ error:'Invalid pos' })
     
     client.chain('Playlist.GetItems', { playlistid:list, properties:info.playlist }, function(playlist){
-      console.log(playlist)
-      playlist = playlist.result
-      res.send()
-      // client.chain('Playlist.Insert', { playlistid:list, position:pos, item:item }, function(d){ res.json({ success:'added: '+id }) })
+      var results   = playlist.result
+        , playlist  = results.items
+        , pos       = req.params.place == 'next'? results.limits.start+1:playlist.length;
+      client.chain('Playlist.Insert', { playlistid:list, position:pos, item:item }, function(d){ res.json({ success:'added: '+id }) })
     })
   }
   

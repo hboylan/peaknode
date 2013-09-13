@@ -9,12 +9,8 @@ function API(client){
   
   this.status     = function(req, res){
     client.chain('Player.GetActivePlayers', {}, function(players){
-      if(!players.length) res.json({ error:'No players detected' })
-      else
-      {
-        var p = players.result[0]
-        client.command('Player.GetProperties', {properties:info.player, playerid:p.playerid}, res)
-      }
+      if(!players.result.length) res.json({ error:'No players detected' })
+      else client.command('Player.GetProperties', {properties:info.player, playerid:players.result[0].playerid}, res)
     })
   }
   this.reconnect  = function(req, res){ client.reconnect(res) }

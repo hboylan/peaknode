@@ -74,7 +74,7 @@ function API(client){
       , pos   = place == 'next'? null:parseInt(place, 10)
       , item  = { playlistid:list, position:pos };
     if(list == undefined) return res.status(401).json({ error:'Invalid listId' })
-    if(pos == undefined)  return res.status(401).json({ error:'Invalid pos' })
+    if(place == undefined)  return res.status(401).json({ error:'Invalid pos' })
     
     if(place == 'next') 
       client.chain('Player.GetItems', {playlistid:list, properties:info.playlist}, function(d){

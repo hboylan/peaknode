@@ -25,7 +25,7 @@ function API(client){
   this.song     = function(req, res){ client.chain('AudioLibrary.GetSongDetails', {songid:parseInt(req.params.id, 10), properties:info.song}, function(s){ res.json(s.songDetails) }) }
   this.artists  = function(req, res){ client.command('AudioLibrary.GetArtists', {}, res) }
   this.artist   = function(req, res){ client.command('AudioLibrary.GetArtistDetails', {artistid:parseInt(req.params.id, 10)}, res) }
-  this.albums   = function(req, res){ client.command('AudioLibrary.GetAlbums', {}, res) }
+  this.albums   = function(req, res){ client.command('AudioLibrary.GetAlbums', {properties:info.album}, res) }
   this.album    = function(req, res){ client.command('AudioLibrary.GetAlbumDetails', {albumid:parseInt(req.params.id, 10)}, res) }
   this.dir      = function(req, res){ client.command('Files.GetDirectory', {directory:req.body.dir}, res) }
   
@@ -84,21 +84,31 @@ function API(client){
     })
   }
   
-  //TODO
-  //Add list of songs, movies to a playlist
-  this.add = function(req, res){
-    var list  = parseInt(req.params.id, 10)
-      , items = req.body.items.split(', ')
-    console.log(items)
-    for(i in items){
-      var next = parseInt(items[i], 10), obj;
-      if(list == 0)
-        obj = {songid:next}
-      else if(list == 1)
-        obj = {movieid:next}
-      client.chain('Playlist.Add', {playlistid:list, item:obj}, function(){})
-    }
-    res.json('done')
+  this.insert = function(req, res){
+    var list  = parseInt(req.params.listId, 10)
+      , id    = req.params.id
+      , item  = list? {movieid:id}:{songid:id}
+      , pos   = req.params.pos
+    if(list == undefined) return res.status(401).json({ error:'Invalid listId' })
+    if(id == undefined)   return res.status(401).json({ error:'Invalid id' })
+    if(pos == undefined)  return res.status(401).json({ error:'Invalid pos' })
+    
+    client.chain('Playlist.Insert', {playlistid:listId, position:pos, item:item}, function(d){
+      if(d.result.length) res.json({ success:'added: '+id })
+      else res.status(201).json({ error:'Failed to insert' })
+    })
+  }
+  
+  this.remove = function(req, res){
+    var list = req.params.listId, 10)
+      , pos  = req.params.pos
+    if(list == undefined) return res.status(401).json({ error:'Invalid listId' })
+    if(pos == undefined)  return res.status(401).json({ error:'Invalid pos' })
+    
+    client.chain('Playlist.Remove', {playlistid:listId, position:pos, item:item}, function(d){
+      if(d.result.length) res.json({ success:'removed: '+pos })
+      else res.status(201).json({ error:'Failed to remove' })
+    })
   }
   
   this.clearPlaylist = function(req, res){

@@ -13,10 +13,10 @@ function API(client){
       else
       {
         var p = players.result[0]
-        client.command('Player.GetProperties', {properties:info.player, playerid:p.playerid }, res)
+        client.command('Player.GetProperties', {properties:info.player, playerid:p.playerid}, res)
       }
     })
-  )}
+  }
   this.reconnect  = function(req, res){ client.reconnect(res) }
   this.movies   = function(req, res){ client.command('VideoLibrary.GetMovies', {properties:info.movie}, res) }
   this.movie    = function(req, res){ client.command('VideoLibrary.GetMovieDetails', {movieid:parseInt(req.params.id, 10), properties:info.song}, res) }

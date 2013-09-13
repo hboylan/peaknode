@@ -2,7 +2,7 @@ function API(client){
   var songInf = ['duration', 'artist', 'album', 'thumbnail']
   var info = {
     song:songInf,
-    player:['position', 'time', 'totaltime', 'playlistid'],
+    player:['position', 'time', 'totaltime', 'playlistid', 'live'],
     movie:['runtime', 'thumbnail', 'file', 'resume'],
     playlist:songInf,
     artist:['thumbnail'],

@@ -77,7 +77,7 @@ function API(client){
     if(place == undefined)  return res.status(401).json({ error:'Invalid pos' })
     
     if(place == 'next') 
-      client.chain('Player.GetItems', {playlistid:list, properties:info.playlist}, function(d){
+      client.chain('Playlist.GetItems', {playlistid:list, properties:info.playlist}, function(d){
         if(!d.result.limit) return res.status(401).json({ error:'no playlist' })
         item.position = d.result.limits.start+1
         client.chain('Player.Open', {item:item}, function(d){ res.json({}) })

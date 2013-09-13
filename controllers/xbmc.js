@@ -47,7 +47,7 @@ function API(client){
   
   //Open individual song for playback
   this.playSong = function(req, res){
-    var song = parseInt(req.body.songid, 10)
+    var song = parseInt(req.params.songid, 10)
     client.chain('AudioLibrary.GetSongDetails', {properties:info.song}, function(data){
       if(!data.results.length) res.status(401).json({ error:'Invalid songid:'+song })
       else client.command('Player.Open', {item:{ songid:parseInt(song, 10) }}, res)

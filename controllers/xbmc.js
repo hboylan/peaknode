@@ -87,7 +87,7 @@ function API(client){
   this.insert = function(req, res){
     var list  = parseInt(req.params.listId, 10)
       , id    = parseInt(req.params.id, 10)
-      , pos   = parseInt((req.params.pos, 10)
+      , pos   = parseInt(req.params.pos, 10)
       , item  = list? {movieid:id}:{songid:id}
       , query = { playlistid:list, position:pos, item:item };
     if(list == undefined) return res.status(401).json({ error:'Invalid listId' })

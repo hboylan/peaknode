@@ -20,7 +20,7 @@ function API(client){
           totalMins:player.totaltime.mins,
           totalSecs:player.totaltime.secs,
         }
-        client.command('Player.GetItems', {playlistid:player.playlistid}, function(list){ player:p, playlist:list })
+        client.command('Player.GetItems', {playlistid:player.playlistid}, function(list){ res.json({player:p, playlist:list}) })
       })
     })
   }

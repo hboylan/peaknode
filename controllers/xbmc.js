@@ -78,7 +78,7 @@ function API(client){
     
     if(place == 'next') 
       client.chain('Playlist.GetItems', {playlistid:list, properties:info.playlist}, function(d){
-        item.position = d.result.limits.start+1
+        item.position = d.result.limits.start
         client.chain('Player.Open', {item:item}, function(d){ res.json({}) })
       })
     else client.chain('Player.Open', {item:item}, function(d){ res.json({}) })
@@ -93,6 +93,7 @@ function API(client){
     })
   }
   
+  //insert either next, last, or at position
   this.insert = function(req, res){
     var list  = parseInt(req.params.listId, 10)
       , id    = parseInt(req.params.id, 10)
@@ -110,6 +111,7 @@ function API(client){
     })
   }
   
+  //used to move a song within playlist
   this.swap = function(req, res){
     var list  = parseInt(req.params.listId, 10)
       , id    = parseInt(req.params.id, 10)
@@ -121,6 +123,7 @@ function API(client){
     if(pos2 == undefined)  return res.status(401).json({ error:'Invalid pos2' })
   }
   
+  //remove song from playlist
   this.remove = function(req, res){
     var list = parseInt(req.params.listId, 10)
       , pos  = parseInt(req.params.pos, 10);
@@ -133,6 +136,7 @@ function API(client){
     })
   }
   
+  //empty playlist
   this.clearPlaylist = function(req, res){
     client.command('Playlist.Clear', {}, apiHandle(res))
   }

@@ -105,11 +105,11 @@ function API(client){
   
   this.remove = function(req, res){
     var list = parseInt(req.params.listId, 10)
-      , pos  = parseInt(req.params.pos, 10)
+      , pos  = parseInt(req.params.pos, 10);
     if(list == undefined) return res.status(401).json({ error:'Invalid listId' })
     if(pos == undefined)  return res.status(401).json({ error:'Invalid pos' })
     
-    client.chain('Playlist.Remove', {playlistid:list, position:pos, item:item}, function(d){
+    client.chain('Playlist.Remove', { playlistid:list, position:pos }, function(d){
       if(d.result.length) res.json({ success:'removed: '+pos })
       else res.status(201).json({ error:'Failed to remove' })
     })

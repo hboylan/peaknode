@@ -2,12 +2,19 @@ function API(client){
   var info = {
     movie:['runtime', 'thumbnail', 'file', 'resume'],
     song:['duration', 'artist', 'album', 'file', 'thumbnail'],
-    artist:['']
+    artist:['thumbnail'],
+    album:['thumbnail', 'year', 'title', 'albumlabel', 'artist']
   }
   
-  this.status     = function(req, res){ client.command('Player.GetActivePlayers', {}, res) }
+  //List music, video playlists
+  this.status     = function(req, res){ 
+    client.chain('Playlist.GetItems', { playlistid:0 }, function(music){
+      client.chain('Playlist.GetItems', { playlistid:1 }, function(videos){
+        res.json({ music:music.result, video:videos.result })
+      })
+    })
+  }
   this.reconnect  = function(req, res){ client.reconnect(res) }
-
   this.movies   = function(req, res){ client.command('VideoLibrary.GetMovies', {properties:info.movie}, res) }
   this.movie    = function(req, res){ client.command('VideoLibrary.GetMovieDetails', {movieid:parseInt(req.params.id, 10), properties:info.song}, res) }
   this.songs    = function(req, res){ client.request('AudioLibrary.GetSongs', {properties:info.song, limits:{}}, function(data){ res.json(data.result.songs) }) }
@@ -50,15 +57,6 @@ function API(client){
     client.command('Player.Open', {item:{ playlistid:parseInt(list, 10), position:parseInt(pos, 10) }}, res)
   }
   
-  //List music, video playlists
-  this.playlists = function(req, res){
-    client.chain('Playlist.GetItems', { playlistid:0 }, function(music){
-      client.chain('Playlist.GetItems', { playlistid:1 }, function(videos){
-        res.json({ music:music.result, video:videos.result })
-      })
-    })
-  }
-  
   //Re-Scan music, video libraries
   this.scan = function(req, res){
     client.chain('AudioLibrary.Scan', {}, function(){
@@ -85,7 +83,7 @@ function API(client){
     res.json('done')
   }
   
-  this.clear = function(req, res){
+  this.clearPlaylist = function(req, res){
     client.command('Playlist.Clear', {}, apiHandle(res))
   }
 }

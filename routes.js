@@ -123,8 +123,6 @@ module.exports = function(app, sessions, db, omni_client, fit_client, xbmc_clien
   app.get('/xbmc/reconnect', xbmc.reconnect)
   app.post('/xbmc/dir', xbmc.dir)
   app.get('/xbmc/scan', xbmc.scan)
-  app.get('/xbmc/playlists', xbmc.playlists)
-  app.post('/xbmc/playlist/:id(0|1)', xbmc.add)
   app.get('/xbmc/songs', xbmc.songs)
   app.get('/xbmc/movies', xbmc.movies)
   app.get('/xbmc/movies/:id([0-9]+)', xbmc.movie)
@@ -132,9 +130,10 @@ module.exports = function(app, sessions, db, omni_client, fit_client, xbmc_clien
   app.get('/xbmc/artist', xbmc.artist)
   app.get('/xbmc/albums', xbmc.albums)
   app.get('/xbmc/album', xbmc.album)
-  app.get('/xbmc/song/:songid([0-9]+)', xbmc.playSong)
+  app.post('/xbmc/song/:songid([0-9]+)', xbmc.playSong)
   app.post('/xbmc/file', xbmc.playFile)
-  app.get('/xbmc/:playlist(0|1)/:id([0-9]+)', xbmc.playPlaylist)
+  app.post('/xbmc/:playlist(0|1)/:id([0-9]+)', xbmc.playPlaylist)
+  app.post('/xbmc/playlist/:id(0|1)', xbmc.add)
   
   //API catch-all
   app.get('*', function(req, res){ res.status(401).json({ error:'Invalid API call' }) })

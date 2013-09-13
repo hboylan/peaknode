@@ -10,7 +10,13 @@ function API(client){
   this.status     = function(req, res){ 
     client.chain('Playlist.GetItems', { playlistid:0 }, function(music){
       client.chain('Playlist.GetItems', { playlistid:1 }, function(videos){
-        res.json({ music:music.result, video:videos.result })
+        var m = music.result, v = video.result
+        res.json({
+          musicPosition:m.limit.start,
+          musicPlaylist:m.items,
+          videoPosition:m.limit.start,
+          video:v.items
+        })
       })
     })
   }
@@ -42,7 +48,11 @@ function API(client){
   
   //Open individual song for playback
   this.playSong = function(req, res){
-    client.command('Player.Open', {item:{ songid:parseInt(req.params.songid, 10) }}, res)
+    var song = parseInt(req.body.songid, 10)
+    client.chain('AudioLibrary.GetSongDetails', {properties:info.song}, function(data){
+      if(!data.results.length) res.status(401).json({ error:'Invalid songid:'+song })
+      else client.command('Player.Open', {item:{ songid:parseInt(song, 10) }}, res)
+    })
   }
   
   this.playFile = function(req, res){
@@ -51,8 +61,8 @@ function API(client){
   
   //Open song a position within playlist
   this.playPlaylist = function(req, res){
-    var list  = req.body.playlistid
-      , pos   = req.body.position
+    var list  = req.params.playlistid
+      , pos   = req.params.position
     if(false) res.json({ error:'Expected playlistid/position' })
     client.command('Player.Open', {item:{ playlistid:parseInt(list, 10), position:parseInt(pos, 10) }}, res)
   }

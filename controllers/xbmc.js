@@ -46,13 +46,13 @@ function API(client){
   }
   
   //Open individual song for playback
-  this.playSong = function(req, res){
-    var song = parseInt(req.params.id, 10)
-    client.chain('AudioLibrary.GetSongDetails', {songid:song, properties:info.song}, function(data){
-      if(data == undefined) res.status(401).json({ error:'Invalid songid:'+song })
-      else client.command('Player.Open', {item:{ songid:song }}, res)
-    })
-  }
+  // this.playSong = function(req, res){
+  //   var song = parseInt(req.params.id, 10)
+  //   client.chain('AudioLibrary.GetSongDetails', {songid:song, properties:info.song}, function(data){
+  //     if(data == undefined) res.status(401).json({ error:'Invalid songid:'+song })
+  //     else client.command('Player.Open', {item:{ songid:song }}, res)
+  //   })
+  // }
   
   this.playFile = function(req, res){
     client.command('Player.Open', {item:{file:req.body.file}}, res)
@@ -76,12 +76,12 @@ function API(client){
       , place = req.params.place
       , pos   = place == 'next'? null:parseInt(place, 10)
       , item  = { playlistid:list, position:pos };
-    if(list == undefined) return res.status(401).json({ error:'Invalid listId' })
+    if(list == undefined)   return res.status(401).json({ error:'Invalid listId' })
     if(place == undefined)  return res.status(401).json({ error:'Invalid pos' })
     
     if(place == 'next') 
       client.chain('Playlist.GetItems', {playlistid:list, properties:info.playlist}, function(d){
-        item.position = d.result.limits.start
+        item.position = d.result.limits.start+1
         client.chain('Player.Open', {item:item}, function(d){ res.json({}) })
       })
     else client.chain('Player.Open', {item:item}, function(d){ res.json({}) })

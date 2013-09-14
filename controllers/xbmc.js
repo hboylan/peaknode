@@ -100,8 +100,9 @@ function API(client){
   this.insert = function(req, res){
     var list  = parseInt(req.params.listId, 10)
       , id    = parseInt(req.params.id, 10)
-      , place = parseInt(req.params.place, 10)
-      , item  = { playlistid:list, position:place, item:list? {movieid:id}:{songid:id} };
+      , place = req.params.place
+      , pos   = parseInt(place, 10)
+      , item  = { playlistid:list, position:pos, item:list? {movieid:id}:{songid:id} };
     if(list == undefined) return res.status(401).json({ error:'Invalid listId' })
     if(id == undefined)   return res.status(401).json({ error:'Invalid id' })
     if(place == undefined) return res.status(401).json({ error:'Invalid pos' })

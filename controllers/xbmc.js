@@ -107,6 +107,7 @@ function API(client){
     if(id == undefined)   return res.status(401).json({ error:'Invalid id' })
     if(pos == undefined)  return res.status(401).json({ error:'Invalid pos' })
 
+    console.log(item)
     client.chain('Playlist.GetItems', {playlistid:list, properties:info.playlist}, function(d){
       if(d.result.limits.total) client.chain('Playlist.Insert', item, function(d){ res.json({ success:'added: '+id }) })
       else

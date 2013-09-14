@@ -53,7 +53,7 @@ function VeraAPI(db, host)
   this.state = function(req, res){
     var state   = req.body.state
       , type    = req.body.type
-    if(type == 'switch') type = 'urn:upnp-org:serviceId:SwitchPower1'
+    if(type == 'switch')    type = 'urn:upnp-org:serviceId:SwitchPower1'
     else if(type == 'lock') type = 'urn:micasaverde-com:serviceId:DoorLock1'
     else return res.status(401).json({ error:'Invalid type' })
     

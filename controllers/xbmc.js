@@ -14,7 +14,7 @@ function API(client){
       if(!players.result.length) res.json({ error:'No players detected' })
       else client.chain('Player.GetProperties', {properties:info.player, playerid:players.result[0].playerid}, function(player){
         var player = player.result
-        res.json({ playlistid:player.playlistid, position:player.position, progress:3600*parseInt(player.time.hours)+60*parseInt(player.time.minutes)+parseInt(player.time.seconds) })
+        res.json({ playlistid:player.playlistid, position:player.position, progress:3600*parseInt(player.time.hours, 10)+60*parseInt(player.time.minutes, 10)+parseInt(player.time.seconds, 10) })
       })
     })
   }

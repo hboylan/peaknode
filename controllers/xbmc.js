@@ -119,17 +119,12 @@ function API(client){
   
   //used to move a song within playlist
   this.swap = function(req, res){
-    var list  = parseInt(req.params.listId, 10)
-      , id    = parseInt(req.params.id, 10)
-      , pos1   = parseInt(req.params.pos1, 10)
-      , pos2   = parseInt(req.params.pos2, 10);
-    if(list == undefined) return res.status(401).json({ error:'Invalid listId' })
-    if(id == undefined)   return res.status(401).json({ error:'Invalid id' })
-    if(pos1 == undefined)  return res.status(401).json({ error:'Invalid pos1' })
-    if(pos2 == undefined)  return res.status(401).json({ error:'Invalid pos2' })
+    var query = { playlistid:parseInt(req.params.listId, 10), position1:parseInt(req.params.pos1, 10), position2:parseInt(req.params.pos2, 10) };
+    if(query.playlistid == undefined) return res.status(401).json({ error:'Invalid listId' })
+    if(query.position1 == undefined)  return res.status(401).json({ error:'Invalid pos1' })
+    if(query.position2 == undefined)  return res.status(401).json({ error:'Invalid pos2' })
     
-    client.chain('Playlist.Swap', { playlistid:list, position1:pos1, position2:pos2 }, function(d){
-      console.log(d)
+    client.chain('Playlist.Swap', query, function(d){
       res.json({ success:'swapped' })
     })
   }
@@ -139,12 +134,9 @@ function API(client){
     var query = { playlistid:parseInt(req.params.listId, 10), position:parseInt(req.params.pos, 10) };
     if(query.playlistid == undefined) return res.status(401).json({ error:'Invalid listId' })
     if(query.position == undefined)  return res.status(401).json({ error:'Invalid pos' })
-    console.log(query)
+
     client.chain('Playlist.Remove', query, function(d){
-      console.log(d)
-      res.json({ success:'removed: '+pos })
-      // if(d.result.length) res.json({ success:'removed: '+pos })
-      // else res.status(201).json({ error:'Failed to remove' })
+      res.json({ success:'removed: '+query.position })
     })
   }
   

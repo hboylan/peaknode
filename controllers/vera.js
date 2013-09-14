@@ -49,9 +49,9 @@ function VeraAPI(db, host)
     })
   }
   
+  //switch power, lock
   this.state = function(req, res){
     var state   = req.body.state
-      , service = req.body.service
       , type    = req.body.type
     if(type == 'switch') type = 'urn:upnp-org:serviceId:SwitchPower1'
     else if(type == 'lock') type = 'urn:micasaverde-com:serviceId:DoorLock1'
@@ -70,6 +70,7 @@ function VeraAPI(db, host)
     else res.status(401).json({ error:'Invalid state' })
   }
   
+  //read power
   this.power = function(req, res){
     reqVera({
       id:'variableget',

@@ -30,8 +30,8 @@ function ApplianceAPI(db, vera)
 
   this.switch = function(req, res) {
     var state = req.body.state
-      , node  = req.body.node
-    req.body.type = 'switch'
+      , node  = req.body.node;
+    req.body.type = 'switch';
     db.appliance.find(req.params.id).success(function(a){
       if(a == undefined) return res.status(401).json({ error:'Invalid zone' });
       //Update Audio Zone state

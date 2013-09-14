@@ -126,6 +126,11 @@ function API(client){
     if(id == undefined)   return res.status(401).json({ error:'Invalid id' })
     if(pos1 == undefined)  return res.status(401).json({ error:'Invalid pos1' })
     if(pos2 == undefined)  return res.status(401).json({ error:'Invalid pos2' })
+    
+    client.chain('Playlist.Swap', { playlistid:list, position1:pos1, position2:pos2 }, function(d){
+      console.log(d)
+      res.json({ success:'swapped' })
+    })
   }
   
   //remove song from playlist
@@ -136,8 +141,10 @@ function API(client){
     if(pos == undefined)  return res.status(401).json({ error:'Invalid pos' })
     
     client.chain('Playlist.Remove', { playlistid:list, position:pos }, function(d){
-      if(d.result.length) res.json({ success:'removed: '+pos })
-      else res.status(201).json({ error:'Failed to remove' })
+      console.log(d)
+      res.json({ success:'removed: '+pos })
+      // if(d.result.length) res.json({ success:'removed: '+pos })
+      // else res.status(201).json({ error:'Failed to remove' })
     })
   }
   

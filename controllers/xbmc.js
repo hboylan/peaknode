@@ -106,9 +106,10 @@ function API(client){
     if(list == undefined) return res.status(401).json({ error:'Invalid listId' })
     if(id == undefined)   return res.status(401).json({ error:'Invalid id' })
     if(place == undefined) return res.status(401).json({ error:'Invalid pos' })
-    console.log(place, pos)
+
     client.chain('Playlist.GetItems', { playlistid:list, properties:info.playlist }, function(playlist){
       var results   = playlist.result
+      console.log(results)
       if(place == 'next')      item.position = parseInt(results.limits.start, 10)+1
       else if(place == 'last') item.position = results.items.length
       console.log('POSITION: ', item.position)
@@ -135,12 +136,11 @@ function API(client){
   
   //remove song from playlist
   this.remove = function(req, res){
-    var list = parseInt(req.params.listId, 10)
-      , pos  = parseInt(req.params.pos, 10);
-    if(list == undefined) return res.status(401).json({ error:'Invalid listId' })
-    if(pos == undefined)  return res.status(401).json({ error:'Invalid pos' })
+    var query = { playlist:parseInt(req.params.listId, 10), position:parseInt(req.params.pos, 10) };
+    if(query.playlist == undefined) return res.status(401).json({ error:'Invalid listId' })
+    if(query.position == undefined)  return res.status(401).json({ error:'Invalid pos' })
     
-    client.chain('Playlist.Remove', { playlistid:list, position:pos }, function(d){
+    client.chain('Playlist.Remove', query, function(d){
       console.log(d)
       res.json({ success:'removed: '+pos })
       // if(d.result.length) res.json({ success:'removed: '+pos })

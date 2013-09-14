@@ -108,8 +108,7 @@ function API(client){
     
     client.chain('Playlist.GetItems', { playlistid:list, properties:info.playlist }, function(playlist){
       var results   = playlist.result
-        , items     = results.items
-        , pos       = req.params.place == 'next'? results.limits.start+1:items.length;
+        , pos       = req.params.place == 'next'? parseInt(results.limits.start, 10)+1:results.items.length;
         console.log(pos)
       client.chain('Playlist.Insert', { playlistid:list, position:pos, item:item }, function(d){ res.json({ success:'added: '+id }) })
     })

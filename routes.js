@@ -133,8 +133,8 @@ module.exports = function(app, sessions, db, omni_client, fit_client, xbmc_clien
   app.get('/xbmc/album', xbmc.album)
   app.post('/xbmc/file', reqLogin(xbmc.playFile))
   app.get('/xbmc/playlists', xbmc.playlists)
-  app.get('/xbmc/play/:place(next|[0-9]+)/:listId(0|1)', reqLogin(xbmc.playPlaylist))
-  app.get('/xbmc/insert/:place(next|last)/:listId(0|1)/:id([0-9]+)', reqLogin(xbmc.insert))
+  app.get('/xbmc/play/:listId(0|1)/:place(next|[0-9]+)', reqLogin(xbmc.playPlaylist))
+  app.get('/xbmc/insert/:listId(0|1)/:pos(next|last|[0-9]+)/:id([0-9]+)', reqLogin(xbmc.insert))
   app.get('/xbmc/swap/:listId(0|1)/:pos1([0-9]+)/:pos2([0-9]+)', reqLogin(xbmc.swap))
   app.get('/xbmc/remove/:listId(0|1)/:pos([0-9]+)', reqLogin(xbmc.remove))
   

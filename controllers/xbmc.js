@@ -101,11 +101,11 @@ function API(client){
   this.insert = function(req, res){
     var list  = parseInt(req.params.listId, 10)
       , id    = parseInt(req.params.id, 10)
-      , pos   = (place == 'next'||place == 'last')? 0:parseInt(place, 10)
+      , pos   = parseInt(req.params.pos, 10)
       , item  = { playlistid:list, position:pos, item:list? {movieid:id}:{songid:id} };
     if(list == undefined) return res.status(401).json({ error:'Invalid listId' })
     if(id == undefined)   return res.status(401).json({ error:'Invalid id' })
-    if(place == undefined) return res.status(401).json({ error:'Invalid pos' })
+    if(pos == undefined)  return res.status(401).json({ error:'Invalid pos' })
     
     client.chain('Playlist.Insert', item, function(d){ res.json({ success:'added: '+id }) })
   }

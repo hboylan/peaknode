@@ -38,14 +38,11 @@ function ApplianceAPI(db, vera)
         req.params.id = a.left
       else if(node == 'right')
         req.params.id = a.right
-      else if(node == 'power'){
-        req.params.id = a.power
-        vera.power(req, res)
-      }
       else return res.status(401).json({ error:'Invalid nodeId' })
       
       //Switch node
       if(state == 'on' || state == 'off'){
+        req.body.type = 'switch'
         if(node == 'left')        a.leftOn  = state == 'on'? true:false
         else if(node == 'right')  a.rightOn = state == 'on'? true:false
         a.save()

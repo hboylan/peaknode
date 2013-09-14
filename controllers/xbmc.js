@@ -139,7 +139,7 @@ function API(client){
     var query = { playlist:parseInt(req.params.listId, 10), position:parseInt(req.params.pos, 10) };
     if(query.playlist == undefined) return res.status(401).json({ error:'Invalid listId' })
     if(query.position == undefined)  return res.status(401).json({ error:'Invalid pos' })
-    
+    console.log(query)
     client.chain('Playlist.Remove', query, function(d){
       console.log(d)
       res.json({ success:'removed: '+pos })

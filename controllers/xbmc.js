@@ -104,7 +104,7 @@ function API(client){
       , item  = { playlistid:list, position:place, item:list? {movieid:id}:{songid:id} };
     if(list == undefined) return res.status(401).json({ error:'Invalid listId' })
     if(id == undefined)   return res.status(401).json({ error:'Invalid id' })
-    if(pos == undefined)  return res.status(401).json({ error:'Invalid pos' })
+    if(place == undefined) return res.status(401).json({ error:'Invalid pos' })
     
     client.chain('Playlist.GetItems', { playlistid:list, properties:info.playlist }, function(playlist){
       var results   = playlist.result

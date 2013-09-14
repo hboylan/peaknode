@@ -106,8 +106,11 @@ function API(client){
     if(list == undefined) return res.status(401).json({ error:'Invalid listId' })
     if(id == undefined)   return res.status(401).json({ error:'Invalid id' })
     if(pos == undefined)  return res.status(401).json({ error:'Invalid pos' })
-    
-    client.chain('Playlist.Insert', item, function(d){ res.json({ success:'added: '+id }) })
+
+    client.chain('Playlist.GetItems', {playlistid:list, properties:info.playlist}, function(d){
+      console.log(d)
+      client.chain('Playlist.Insert', item, function(d){ res.json({ success:'added: '+id }) })
+    })
   }
   
   //used to move a song within playlist

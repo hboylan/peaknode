@@ -136,8 +136,8 @@ function API(client){
   
   //remove song from playlist
   this.remove = function(req, res){
-    var query = { playlist:parseInt(req.params.listId, 10), position:parseInt(req.params.pos, 10) };
-    if(query.playlist == undefined) return res.status(401).json({ error:'Invalid listId' })
+    var query = { playlistid:parseInt(req.params.listId, 10), position:parseInt(req.params.pos, 10) };
+    if(query.playlistid == undefined) return res.status(401).json({ error:'Invalid listId' })
     if(query.position == undefined)  return res.status(401).json({ error:'Invalid pos' })
     console.log(query)
     client.chain('Playlist.Remove', query, function(d){

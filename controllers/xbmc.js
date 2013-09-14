@@ -101,7 +101,7 @@ function API(client){
     var list  = parseInt(req.params.listId, 10)
       , id    = parseInt(req.params.id, 10)
       , place = req.params.place
-      , pos   = parseInt(place, 10)
+      , pos   = (place == 'next'||place == 'last')? 0:parseInt(place, 10)
       , item  = { playlistid:list, position:pos, item:list? {movieid:id}:{songid:id} };
     if(list == undefined) return res.status(401).json({ error:'Invalid listId' })
     if(id == undefined)   return res.status(401).json({ error:'Invalid id' })
@@ -109,7 +109,8 @@ function API(client){
     console.log(place, pos)
     client.chain('Playlist.GetItems', { playlistid:list, properties:info.playlist }, function(playlist){
       var results   = playlist.result
-      item.position = req.params.place == 'next'? parseInt(results.limits.start, 10)+1:results.items.length;
+      if(place == 'next')      item.position = parseInt(results.limits.start, 10)+1
+      else if(place == 'last') item.position = results.items.length
       console.log('POSITION: ', item.position)
       client.chain('Playlist.Insert', item, function(d){ res.json({ success:'added: '+id }) })
     })

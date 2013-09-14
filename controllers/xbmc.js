@@ -108,8 +108,12 @@ function API(client){
     if(pos == undefined)  return res.status(401).json({ error:'Invalid pos' })
 
     client.chain('Playlist.GetItems', {playlistid:list, properties:info.playlist}, function(d){
-      console.log(d)
-      client.chain('Playlist.Insert', item, function(d){ res.json({ success:'added: '+id }) })
+      if(d.result.limits.total) client.chain('Playlist.Insert', item, function(d){ res.json({ success:'added: '+id }) })
+      else
+      {
+        item.position = null
+        client.chain('Playlist.Add', item, function(d){ res.json({ success:'added: '+id }) })
+      }
     })
   }
   

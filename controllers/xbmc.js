@@ -23,7 +23,7 @@ function API(client){
   this.movie    = function(req, res){ client.command('VideoLibrary.GetMovieDetails', {movieid:parseInt(req.params.id, 10), properties:info.song}, res) }
   this.songs    = function(req, res){ client.request('AudioLibrary.GetSongs', {properties:info.song, limits:{}}, function(data){ res.json(data.result.songs) }) }
   this.song     = function(req, res){ client.chain('AudioLibrary.GetSongDetails', {songid:parseInt(req.params.id, 10), properties:info.song}, function(s){ res.json(s.songDetails) }) }
-  this.artists  = function(req, res){ client.command('AudioLibrary.GetArtists', {properties:info.artist}, res) }
+  this.artists  = function(req, res){ client.command('AudioLibrary.GetArtists', {properties:info.artist, albumartistsonly:true}, res) }
   this.artist   = function(req, res){ client.command('AudioLibrary.GetArtistDetails', {properties:info.artist, artistid:parseInt(req.params.id, 10)}, res) }
   this.albums   = function(req, res){ client.command('AudioLibrary.GetAlbums', {properties:info.album}, res) }
   this.album    = function(req, res){ client.command('AudioLibrary.GetAlbumDetails', {albumid:parseInt(req.params.id, 10)}, res) }

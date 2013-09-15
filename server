@@ -1,17 +1,25 @@
 #!/bin/bash
+
+
+NODE=node
 OUT=nodejs.log
 
 case "$1" in
+  live)
+    echo "restart server live :8001"
+    sudo -u $USER $NODE restart.js > $OUT 2>$OUT &
+  ;;
   start)
     echo "activity log: $OUT"
-    sudo -u root node app.js > $OUT 2>$OUT &
+    sudo -u $USER $NODE app.js > $OUT 2>$OUT &
   ;;
   pi)
+    $NODE=/opt/node/bin/node
     echo "activity log: $OUT"
-    sudo -u pi /opt/node/bin/node app.js > $OUT 2>$OUT &
+    sudo -u $USER $NODE app.js > $OUT 2>$OUT &
   ;;
   stop)
-  	sudo -u root killall node
+  	sudo -u $USER killall $NODE
 	;;
   *)
   	echo "usage: $0 (start|pi|stop)"

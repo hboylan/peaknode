@@ -1,0 +1,21 @@
+#!/bin/bash
+OUT=nodejs.log
+
+case "$1" in
+  start)
+    echo "activity log: $OUT"
+    sudo -u root node app.js > $OUT 2>$OUT &
+  ;;
+  pi)
+    echo "activity log: $OUT"
+    sudo -u pi /opt/node/bin/node app.js > $OUT 2>$OUT &
+  ;;
+  stop)
+  	sudo -u root killall node
+	;;
+  *)
+  	echo "usage: $0 (start|pi|stop)"
+esac
+
+
+exit 0

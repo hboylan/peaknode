@@ -91,12 +91,12 @@ module.exports = function(app, sessions, db, omni_client, fit_client, xbmc_clien
   // appliances
   app.get('/appliances', appliances.list)
   app.get('/appliances/:id', appliances.show)
-  app.post('/appliances/:id', appliances.switch)
+  app.post('/appliances/:id', reqLogin(appliances.switch))
   
   // audio
-  app.get('/audio', reqLogin(audio.list))
+  app.get('/audio', audio.list)
   app.post('/audio', reqLogin(audio.state))
-  app.get('/audio/:id', reqLogin(audio.zone))
+  app.get('/audio/:id', audio.zone)
   
   //security
   app.get('/security', sec.status)
@@ -104,9 +104,9 @@ module.exports = function(app, sessions, db, omni_client, fit_client, xbmc_clien
   app.post('/security/:lockId', reqBody(sec.setStatus, ['id', 'pinkey', 'state']))
   
   //lighting
-  app.get('/lights', reqLogin(lights.list))
+  app.get('/lights', lights.list)
   // app.post('/lights', lights.create)
-  app.get('/lights/:id', reqLogin(lights.show))
+  app.get('/lights/:id', lights.show)
   app.post('/lights', reqLogin(lights.state))
   // app.post('/lights/:id/:action', lights.timeout)
   

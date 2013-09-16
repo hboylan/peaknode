@@ -5,7 +5,7 @@ function API(client){
     player:['position', 'time', 'totaltime', 'playlistid', 'live'],
     movie:['runtime', 'thumbnail', 'file', 'resume'],
     playlist:songInf,
-    artist:['thumbnail'],
+    artist:['thumbnail', 'fanart'],
     album:['thumbnail', 'year', 'title', 'albumlabel', 'artist']
   }
   

@@ -5,7 +5,8 @@ function API(client){
     player:['position', 'time', 'totaltime', 'playlistid', 'live'],
     movie:['runtime', 'thumbnail', 'file', 'resume'],
     playlist:songInf,
-    album:['thumbnail', 'year', 'title', 'albumlabel', 'artist']
+    album:['thumbnail', 'year', 'title', 'albumlabel', 'artist'],
+    show:['title', 'file', 'fanart', 'thumbnail', 'season', 'episode']
   }
   
   this.status     = function(req, res){
@@ -17,9 +18,17 @@ function API(client){
       })
     })
   }
+  this.videos   = function(req, res){
+    client.request('VideoLibrary.GetMovies', {properties:info.movie}, function(m){
+      client.request('VideoLibrary.GetTVShows', {}, function(t){
+        res.json({ movies:m.result.movies, shows:t.result.tvshows })
+      })
+    }) 
+  }
+  this.movies   = function(req, res){ client.request('VideoLibrary.GetMovies', {properties:info.movie}, function(m){ res.json({ movies:m.result.movies }) }) }
+  this.episodes = function(req, res){ client.request('VideoLibrary.GetEpisodes', {tvshowid:req.params.id, properties:info.shows}, function(e){ res.json({ episodes:e.result.episodes }) }) }
   this.reconnect  = function(req, res){ client.reconnect(res) }
-  this.movies   = function(req, res){ client.command('VideoLibrary.GetMovies', {properties:info.movie}, res) }
-  this.movie    = function(req, res){ client.command('VideoLibrary.GetMovieDetails', {movieid:parseInt(req.params.id, 10), properties:info.song}, res) }
+  this.video    = function(req, res){ client.command('VideoLibrary.GetMovieDetails', {movieid:parseInt(req.params.id, 10), properties:info.song}, res) }
   this.songs    = function(req, res){ client.request('AudioLibrary.GetSongs', {properties:info.song, limits:{}}, function(data){ res.json(data.result.songs) }) }
   this.song     = function(req, res){ client.chain('AudioLibrary.GetSongDetails', {songid:parseInt(req.params.id, 10), properties:info.song}, function(s){ res.json(s.songDetails) }) }
   this.artists  = function(req, res){ client.request('AudioLibrary.GetArtists', {}, function(a){ res.json(a.result.artists) }) }

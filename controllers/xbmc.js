@@ -27,7 +27,7 @@ function API(client){
   }
   this.movies   = function(req, res){ client.request('VideoLibrary.GetMovies', {properties:info.movie}, function(m){ res.json({ movies:m.result.movies }) }) }
   this.episodes = function(req, res){ client.request('VideoLibrary.GetEpisodes', {tvshowid:req.params.id, properties:info.shows}, function(e){ res.json({ episodes:e.result.episodes }) }) }
-  this.reconnect  = function(req, res){ client.reconnect(res) }
+  this.reconnect= function(req, res){ client.reconnect(res) }
   this.video    = function(req, res){ client.command('VideoLibrary.GetMovieDetails', {movieid:parseInt(req.params.id, 10), properties:info.song}, res) }
   this.songs    = function(req, res){ client.request('AudioLibrary.GetSongs', {properties:info.song, limits:{}}, function(data){ res.json(data.result.songs) }) }
   this.song     = function(req, res){ client.chain('AudioLibrary.GetSongDetails', {songid:parseInt(req.params.id, 10), properties:info.song}, function(s){ res.json(s.songDetails) }) }
@@ -42,14 +42,18 @@ function API(client){
       , isMove  = client.isMove(control);
     if(isMove)
       client.player(control, res)
-    else if(client.isControl(control))
-      client.command(client.getControl(control), {}, res)
+    else if(control in client.controls)
+      client.command(client.controls[control], {}, res)
     else
       res.status(401).json({ error:'Invalid control command' })
   }
   
   this.scan = function(req, res){
-    
+    client.chain('AudioLibrary.Scan', {}, function(){
+      client.chain('VideoLibrary.Scan', {}, function(){
+        res.json({ error:'sent scan command' })
+      })
+    })
   }
   
   this.playFile = function(req, res){

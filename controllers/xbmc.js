@@ -39,26 +39,17 @@ function API(client){
   
   this.control = function(req, res){
     var control = req.body.control
-      , isMove  = client.isMove(control)
-      , isInput = client.isInput(control)
-      , isSys   = client.isSystem(control)
-      , control = isInput || isSys? control:control.charAt(0).toUpperCase() + control.substring(1);
+      , isMove  = client.isMove(control);
     if(isMove)
       client.player(control, res)
-    else if(isInput)
-      client.command('Input.'+control, {}, res)
-    else if(isSys)
-      client.command('System.'+control, {}, res)
+    else if(client.isControl(control))
+      client.command(client.getControl(control), {}, res)
     else
       res.status(401).json({ error:'Invalid control command' })
   }
   
   this.scan = function(req, res){
-    client.chain('AudioLibrary.Scan', {}, function(){
-      client.chain('VideoLibrary.Scan', {}, function(v){
-        res.json({ message:'Sent scan command' })
-      })
-    })
+    
   }
   
   this.playFile = function(req, res){

@@ -42,25 +42,22 @@ function API(client){
       , isMove  = client.isMove(control)
       , isInput = client.isInput(control)
       , isSys   = client.isSystem(control)
-      , control = !isMove? control:control.charAt(0).toUpperCase() + control.substring(1);
+      , control = isInput || isSys? control:control.charAt(0).toUpperCase() + control.substring(1);
     if(isMove)
       client.player(control, res)
     else if(isInput)
       client.command('Input.'+control, {}, res)
     else if(isSys)
       client.command('System.'+control, {}, res)
+    else if(control == 'scan')
+      client.chain('AudioLibrary.Scan', {}, function(){
+        client.chain('VideoLibrary.Scan', {}, function(v){
+          res.json({ message:'Sent scan command' })
+        })
+      })
     else
-      res.status(304).json({ error:'Invalid control command' })
+      res.status(401).json({ error:'Invalid control command' })
   }
-  
-  //Open individual song for playback
-  // this.playSong = function(req, res){
-  //   var song = parseInt(req.params.id, 10)
-  //   client.chain('AudioLibrary.GetSongDetails', {songid:song, properties:info.song}, function(data){
-  //     if(data == undefined) res.status(401).json({ error:'Invalid songid:'+song })
-  //     else client.command('Player.Open', {item:{ songid:song }}, res)
-  //   })
-  // }
   
   this.playFile = function(req, res){
     client.command('Player.Open', {item:{file:req.body.file}}, res)
@@ -94,15 +91,6 @@ function API(client){
         client.chain('Player.Open', {item:item}, function(d){ res.json({}) })
       })
     else client.chain('Player.Open', {item:item}, function(d){ res.json({}) })
-  }
-  
-  //Re-Scan music, video libraries
-  this.scan = function(req, res){
-    client.chain('AudioLibrary.Scan', {}, function(){
-      client.chain('VideoLibrary.Scan', {}, function(v){
-        res.json({ message:'Sent scan command' })
-      })
-    })
   }
   
   //insert either next, last, or at position

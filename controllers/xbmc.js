@@ -41,7 +41,8 @@ function API(client){
     var control = req.body.control
       , isMove  = client.isMove(control)
       , isInput = client.isInput(control)
-      , isSys   = client.isSystem(control);
+      , isSys   = client.isSystem(control)
+      , control = !isMove? control:control.charAt(0).toUpperCase() + control.substring(1);
     if(isMove)
       client.player(control, res)
     else if(isInput)

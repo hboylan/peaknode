@@ -49,14 +49,16 @@ function API(client){
       client.command('Input.'+control, {}, res)
     else if(isSys)
       client.command('System.'+control, {}, res)
-    else if(control == 'scan')
-      client.chain('AudioLibrary.Scan', {}, function(){
-        client.chain('VideoLibrary.Scan', {}, function(v){
-          res.json({ message:'Sent scan command' })
-        })
-      })
     else
       res.status(401).json({ error:'Invalid control command' })
+  }
+  
+  this.scan = function(req, res){
+    client.chain('AudioLibrary.Scan', {}, function(){
+      client.chain('VideoLibrary.Scan', {}, function(v){
+        res.json({ message:'Sent scan command' })
+      })
+    })
   }
   
   this.playFile = function(req, res){

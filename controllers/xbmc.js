@@ -60,7 +60,7 @@ function API(client){
 
   //List music, video playlists
   this.playlist = function(req, res){
-    var list = req.params.playlist
+    var list = req.params.id
     client.chain('Playlist.GetItems', { playlistid:list, properties:list? info.movie:info.song }, function(r){
       console.log(r)
       var p = r.result.items

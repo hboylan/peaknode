@@ -61,12 +61,9 @@ function API(client){
   //List music, video playlists
   this.playlist = function(req, res){
     var list = parseInt(req.params.listId, 10)
-    // console.log({playlistid:list, properties:list? info.movie:info.song})
-    client.chain('Playlist.GetItems', {playlistid:list}, function(r){
-      console.log(r)
+    client.chain('Playlist.GetItems', {playlistid:list, properties:list? info.movie:info.song}, function(r){
       var p = r.result.items
-      p = p.length? p:[]
-      res.json({ playlist:p })
+      res.json(p.length? p:[])
     })
   }
   

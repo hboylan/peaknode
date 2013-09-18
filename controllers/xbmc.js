@@ -66,10 +66,10 @@ function API(client){
       client.chain('Playlist.GetItems', { playlistid:1 }, function(videos){
         console.log(videos)
         var m = music.result.items
-          , v = videos.result.items
+          // , v = videos.result.items
         m = m.length? music.result.items:[]
-        v = v.length? videos.result.items:[]
-        res.json({ music:m, videos:v })
+        // v = v.length? videos.result.items:[]
+        res.json({ music:m })
       })
     })
   }

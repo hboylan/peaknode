@@ -1,7 +1,7 @@
 function API(client){
   var info = {
     song:['duration', 'artist', 'album', 'thumbnail'],
-    player:['position', 'time', 'totaltime', 'playlistid', 'live'],
+    player:['position', 'time', 'totaltime', 'playlistid'],
     movie:['duration', 'thumbnail', 'file', 'resume'],
     album:['thumbnail', 'year', 'title', 'albumlabel', 'artist'],
     show:['title', 'file', 'fanart', 'thumbnail', 'season', 'episode']
@@ -12,8 +12,7 @@ function API(client){
       if(!players.result.length) res.json({ error:'No players detected' })
       else client.chain('Player.GetProperties', {properties:info.player, playerid:players.result[0].playerid}, function(player){
         var player = player.result
-        console.log(player)
-        res.json({ playlistid:player.playlistid, playing:player.live, position:player.position, progress:3600*parseInt(player.time.hours, 10)+60*parseInt(player.time.minutes, 10)+parseInt(player.time.seconds, 10) })
+        res.json({ playlistid:player.playlistid, position:player.position, progress:3600*parseInt(player.time.hours, 10)+60*parseInt(player.time.minutes, 10)+parseInt(player.time.seconds, 10) })
       })
     })
   }

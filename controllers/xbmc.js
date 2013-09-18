@@ -98,7 +98,7 @@ function API(client){
 
     if(pos == 'next')
       client.chain('Playlist.GetItems', {playlistid:list, properties:info.playlist}, function(p){
-        item.position = p.result.limits.start+1)
+        item.position = p.result.limits.start+1
         console.log(item.position)
         client.chain('Playlist.Insert', item, function(d){ res.json({ success:'added: '+id }) })
       })

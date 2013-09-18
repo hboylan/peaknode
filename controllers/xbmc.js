@@ -77,9 +77,9 @@ function API(client){
     if(place == undefined)  return res.status(401).json({ error:'Invalid pos' })
     
     if(place == 'next') 
-      client.chain('Playlist.GetItems', {playlistid:list, properties:info.playlist}, function(d){
-        console.log(d.result.limits)
-        item.position = d.result.limits.start+1
+      client.chain('Playlist.GetItems', {playlistid:list, properties:info.playlist}, function(p){
+        console.log(p.result.limits)
+        item.position = p.result.limits.start+1
         client.chain('Player.Open', {item:item}, function(d){ res.json({}) })
       })
     else client.chain('Player.Open', {item:item}, function(d){ res.json({}) })
@@ -89,13 +89,24 @@ function API(client){
   this.insert = function(req, res){
     var list  = parseInt(req.params.listId, 10)
       , id    = parseInt(req.params.id, 10)
-      , pos   = parseInt(req.params.pos, 10)
-      , item  = { playlistid:list, position:pos, item:list? {movieid:id}:{songid:id} };
+      , pos   = req.params.pos
+      , pos   = pos == 'next'? pos:parseInt(pos, 10)
+      , item  = { playlistid:list, item:list? {movieid:id}:{songid:id} };
     if(list == undefined) return res.status(401).json({ error:'Invalid listId' })
     if(id == undefined)   return res.status(401).json({ error:'Invalid id' })
     if(pos == undefined)  return res.status(401).json({ error:'Invalid pos' })
 
-    client.chain('Playlist.Insert', item, function(d){ res.json({ success:'added: '+id }) })
+    if(pos == 'next')
+      client.chain('Playlist.GetItems', {playlistid:list, properties:info.playlist}, function(p){
+        item.position = p.result.limits.start+1)
+        console.log(item.position)
+        client.chain('Playlist.Insert', item, function(d){ res.json({ success:'added: '+id }) })
+      })
+    else
+    {
+      item.position = pos
+      client.chain('Playlist.Insert', item, function(d){ res.json({ success:'added: '+id }) })
+    }
   }
   
   //used to move a song within playlist

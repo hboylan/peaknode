@@ -23,7 +23,8 @@ function API(client){
       })
     }) 
   }
-  this.movies   = function(req, res){ client.request('VideoLibrary.GetMovies', {properties:info.movie}, function(m){ res.json({ movies:m.result.movies }) }) }
+  this.shows    = function(req, res){ client.request('VideoLibrary.GetTVShows', {properties:info.show}, function(s){ res.json(s.result.tvshows) }) }
+  this.movies   = function(req, res){ client.request('VideoLibrary.GetMovies', {properties:info.movie}, function(m){ res.json(m.result.movies) }) }
   this.episodes = function(req, res){ client.request('VideoLibrary.GetEpisodes', {tvshowid:req.params.id, properties:info.shows}, function(e){ res.json({ episodes:e.result.episodes }) }) }
   this.reconnect= function(req, res){ client.reconnect(res) }
   this.video    = function(req, res){ client.command('VideoLibrary.GetMovieDetails', {movieid:parseInt(req.params.id, 10), properties:info.song}, res) }

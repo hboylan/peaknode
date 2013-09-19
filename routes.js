@@ -125,7 +125,7 @@ module.exports = function(app, sessions, db, omni_client, fit_client, xbmc_clien
   app.get('/xbmc/dir', xbmc.dir)
   app.get('/xbmc/songs', xbmc.songs)
   app.post('/xbmc/song/:id', reqLogin(xbmc.playSong))
-  app.get('/xbmc/videos', xbmc.videos)
+  app.get('/xbmc/shows', xbmc.shows)
   app.get('/xbmc/movies', xbmc.movies)
   app.get('/xbmc/episodes/:id([0-9]+)', xbmc.video)
   app.get('/xbmc/artists', xbmc.artists)

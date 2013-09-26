@@ -25,9 +25,9 @@ function API(db, vera, omni)
         db.lock.find(lock).success(function(l){
           req.params.id = l.nodeId
           req.body.type = 'lock'
-          vera.state(req, res)
           l.locked = !l.locked
           l.save()
+          vera.state(req, res)
         })
       else //Update security state
       {

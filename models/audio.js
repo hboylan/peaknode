@@ -18,7 +18,7 @@ module.exports = function(sequelize, DataTypes) {
       
       parse:function(audioZones){
         if(audioZones == undefined) audioZones = [];
-        else audioZones.forEach(function(a){ a = a.parse(); })
+        else audioZones.forEach(function(a){ a = a.parse() })
         return audioZones;
       }
     }

@@ -5,6 +5,7 @@ module.exports = function(app, sessions, db, omni_client, fit_client, xbmc_clien
     , lights  = require('./controllers/lights')(db, omni_client)
     , fitbit  = require('./controllers/fitbit')(db, fit_client)
     , xbmc    = require('./controllers/xbmc')(xbmc_client)
+    , hvac    = require('./controllers/hvac')(db, omni_client)
     , vera    = require('./controllers/vera')(db, require('./config.json').vera_host)
     , sec     = require('./controllers/security')(db, vera, omni_client)
     , appliances = require('./controllers/appliances')(db, vera)
@@ -61,7 +62,7 @@ module.exports = function(app, sessions, db, omni_client, fit_client, xbmc_clien
       return err? res.status(401).json({ error:'Requires POST params: '+params.join(', ') }) : callback(req, res)
     }
   }
-
+  
   /*** API ***/
   //Vera API
   app.get('/vera', vera.request)
@@ -87,6 +88,11 @@ module.exports = function(app, sessions, db, omni_client, fit_client, xbmc_clien
   // zones
   app.get('/zones', zones.list)
   app.get('/zones/:id', zones.show)
+  
+  // hvac
+  app.get('/hvac', hvac.list)
+  app.get('/hvac/:id', hvac.show)
+  app.post('/hvac/:id', hvac.control)
   
   // appliances
   app.get('/appliances', appliances.list)
@@ -122,9 +128,7 @@ module.exports = function(app, sessions, db, omni_client, fit_client, xbmc_clien
   app.post('/xbmc', reqLogin(xbmc.control))
   app.get('/xbmc/reconnect', xbmc.reconnect)
   app.get('/xbmc/scan', xbmc.scan)
-  app.get('/xbmc/dir', xbmc.dir)
   app.get('/xbmc/songs', xbmc.songs)
-  app.post('/xbmc/song/:id', reqLogin(xbmc.playSong))
   app.get('/xbmc/shows', xbmc.shows)
   app.get('/xbmc/movies', xbmc.movies)
   app.get('/xbmc/episodes/:id([0-9]+)', xbmc.video)
@@ -132,10 +136,11 @@ module.exports = function(app, sessions, db, omni_client, fit_client, xbmc_clien
   app.get('/xbmc/artists/:id([0-9]+)', xbmc.artist)
   app.get('/xbmc/albums', xbmc.albums)
   app.get('/xbmc/albums/:id[0-9]+', xbmc.album)
-  app.post('/xbmc/file', reqLogin(xbmc.playFile))
   app.get('/xbmc/playlist/:listId(0|1)', xbmc.playlist)
-  app.get('/xbmc/play/:listId(0|1)/:place(next|[0-9]+)', reqLogin(xbmc.playPlaylist))
-  app.get('/xbmc/insert/:listId(0|1)/:pos(next|[0-9]+)/:id([0-9]+)', reqLogin(xbmc.insert))
+  app.get('/xbmc/seek/:progress([0-9]+)', xbmc.seek)
+  app.get('/xbmc/playlist/:listId(0|1)/:pos([0-9]+)', reqLogin(xbmc.playPlaylist))
+  app.get('/xbmc/play/:listId(0|1)/:id([0-9]+)', reqLogin(xbmc.playSong))
+  app.get('/xbmc/insert/:listId(0|1)/:place(next|last)/:id([0-9]+)', reqLogin(xbmc.insert))
   app.get('/xbmc/swap/:listId(0|1)/:pos1([0-9]+)/:pos2([0-9]+)', reqLogin(xbmc.swap))
   app.get('/xbmc/remove/:listId(0|1)/:pos([0-9]+)', reqLogin(xbmc.remove))
   

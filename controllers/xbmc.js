@@ -1,7 +1,7 @@
 function API(client){
   var info = {
     song:['duration', 'artist', 'album', 'thumbnail'],
-    player:['position', 'time', 'totaltime', 'playlistid'],
+    player:['position', 'time', 'totaltime', 'playlistid', 'canseek'],
     movie:['duration', 'thumbnail', 'file', 'resume'],
     album:['thumbnail', 'year', 'title', 'albumlabel', 'artist'],
     show:['title', 'file', 'fanart', 'thumbnail', 'season', 'episode']
@@ -9,7 +9,7 @@ function API(client){
   
   this.status     = function(req, res){
     client.chain('Player.GetActivePlayers', {}, function(players){
-      if(!players.result.length) res.json({ error:'No players detected' })
+      if(!players.result.length) res.json({ message:'Inactive' })
       else client.chain('Player.GetProperties', {properties:info.player, playerid:players.result[0].playerid}, function(player){
         var player = player.result
         res.json({ playlistid:player.playlistid, position:player.position, progress:3600*parseInt(player.time.hours, 10)+60*parseInt(player.time.minutes, 10)+parseInt(player.time.seconds, 10) })
@@ -21,11 +21,11 @@ function API(client){
       client.request('VideoLibrary.GetTVShows', {}, function(t){
         res.json({ movies:m.result.movies, shows:t.result.tvshows })
       })
-    }) 
+    })
   }
-  this.shows    = function(req, res){ client.request('VideoLibrary.GetTVShows', {properties:info.show}, function(s){ res.json(s.result.tvshows) }) }
-  this.movies   = function(req, res){ client.request('VideoLibrary.GetMovies', {properties:info.movie}, function(m){ res.json(m.result.movies) }) }
-  this.episodes = function(req, res){ client.request('VideoLibrary.GetEpisodes', {tvshowid:req.params.id, properties:info.shows}, function(e){ res.json({ episodes:e.result.episodes }) }) }
+  this.shows    = function(req, res){ client.request('VideoLibrary.GetTVShows', {properties:info.show}, res, function(s){ res.json(s.result.tvshows) }) }
+  this.movies   = function(req, res){ client.request('VideoLibrary.GetMovies', {properties:info.movie}, res, function(m){ res.json(m.result.movies) }) }
+  this.episodes = function(req, res){ client.request('VideoLibrary.GetEpisodes', {tvshowid:req.params.id, properties:info.shows}, res, function(e){ res.json({ episodes:e.result.episodes }) }) }
   this.reconnect= function(req, res){ client.reconnect(res) }
   this.video    = function(req, res){ client.command('VideoLibrary.GetMovieDetails', {movieid:parseInt(req.params.id, 10), properties:info.song}, res) }
   this.songs    = function(req, res){ client.request('AudioLibrary.GetSongs', {properties:info.song, limits:{}}, function(data){ res.json(data.result.songs) }) }
@@ -55,87 +55,94 @@ function API(client){
     })
   }
   
-  this.playFile = function(req, res){
-    client.command('Player.Open', {item:{file:req.body.file}}, res)
-  }
-
   //List music, video playlists
   this.playlist = function(req, res){
     var list = parseInt(req.params.listId, 10)
     client.chain('Playlist.GetItems', {playlistid:list, properties:list? info.movie:info.song}, function(r){
-      var p = r.result.items
-      res.json(p.length? p:[])
+      res.json(r.result.limits.total? r.result.items:[])
     })
   }
   
   //Open song a position within playlist
   this.playPlaylist = function(req, res){
     var list  = parseInt(req.params.listId, 10)
-      , place = req.params.place
-      , pos   = place == 'next'? null:parseInt(place, 10)
-      , item  = { playlistid:list, position:pos };
-    if(list == undefined)   return res.status(401).json({ error:'Invalid listId' })
-    if(place == undefined)  return res.status(401).json({ error:'Invalid pos' })
-    
-    if(place == 'next') 
-      client.chain('Playlist.GetItems', {playlistid:list, properties:info.playlist}, function(p){
-        console.log(p.result.limits)
-        item.position = p.result.limits.start+1
-        client.chain('Player.Open', {item:item}, function(d){ res.json({}) })
-      })
-    else client.chain('Player.Open', {item:item}, function(d){ res.json({}) })
+      , pos   = parseInt(req.params.pos, 10)
+
+    client.chain('Player.Open', { item:{playlistid:list, position:pos} }, function(d){ res.send() })
   }
   
-  //insert either next, last, or at position
+  this.playSong = function(req, res){
+    var list  = parseInt(req.params.listId, 10)
+      , id    = parseInt(req.params.id, 10)
+    function inPlay(position){
+      client.chain('Playlist.Insert', { playlistid:list, item:list? {movieid:id}:{songid:id}, position:position }, function(d){
+        client.chain('Player.Open', { item:{playlistid:list, position:position} }, function(d){ res.send() })
+      })
+    }
+    
+    client.chain('Player.GetActivePlayers', {}, function(players){ //Check is there's a playlist
+      if(players.result.length) //insert next
+        client.chain('Player.GetProperties', {properties:info.player, playerid:list}, function(player){
+          inPlay(player.result.position+1)
+        })
+      else inPlay(0) //insert first
+    })
+  }
+  
+  //insert either next, last
   this.insert = function(req, res){
     var list  = parseInt(req.params.listId, 10)
       , id    = parseInt(req.params.id, 10)
-      , pos   = req.params.pos
-      , pos   = pos == 'next'? pos:parseInt(pos, 10)
-      , item  = { playlistid:list, item:list? {movieid:id}:{songid:id} };
-    if(list == undefined) return res.status(401).json({ error:'Invalid listId' })
-    if(id == undefined)   return res.status(401).json({ error:'Invalid id' })
-    if(pos == undefined)  return res.status(401).json({ error:'Invalid pos' })
-
-    if(pos == 'next')
-      client.chain('Playlist.GetItems', {playlistid:list, properties:info.playlist}, function(p){
-        item.position = p.result.limits.start+1
-        console.log(item.position)
-        client.chain('Playlist.Insert', item, function(d){ res.json({ success:'added: '+id }) })
-      })
-    else
-    {
-      item.position = pos
-      client.chain('Playlist.Insert', item, function(d){ res.json({ success:'added: '+id }) })
-    }
+      , place = req.params.place
+      , item  = { playlistid:list, item:list? {movieid:id}:{songid:id}, position:0 }
+    
+    client.chain('Player.GetActivePlayers', {}, function(players){ //Check is there's a playlist
+    
+      if(players.result.length)
+        client.chain('Player.GetProperties', {properties:info.player, playerid:list}, function(player){
+          
+          if(place == 'next') //insert next
+          {
+            item.position = player.result.position+1
+            client.chain('Playlist.Insert', item, function(d){ res.json({ success:'added: '+id }) })
+          }
+          else //insert last
+            client.chain('Playlist.GetItems', {playlistid:list, properties:list? info.movie:info.song}, function(p){
+              item.position = p.result.limits.end
+              client.chain('Playlist.Insert', item, function(d){ res.json({ success:'added: '+id }) })
+            })
+        })
+      else client.chain('Playlist.Insert', item, function(d){ res.json({ success:'added: '+id }) }) //Nothing playing, insert
+    })
   }
   
   //used to move a song within playlist
-  this.swap = function(req, res){
-    var query = { playlistid:parseInt(req.params.listId, 10), position1:parseInt(req.params.pos1, 10), position2:parseInt(req.params.pos2, 10) };
-    if(query.playlistid == undefined) return res.status(401).json({ error:'Invalid listId' })
-    if(query.position1 == undefined)  return res.status(401).json({ error:'Invalid pos1' })
-    if(query.position2 == undefined)  return res.status(401).json({ error:'Invalid pos2' })
-    
-    client.chain('Playlist.Swap', query, function(d){
-      res.json({ success:'swapped' })
-    })
+  this.swap = function(req, res){    
+    client.chain('Playlist.Swap', {
+      playlistid:parseInt(req.params.listId, 10),
+      position1:parseInt(req.params.pos1, 10),
+      position2:parseInt(req.params.pos2, 10)
+    }, function(d){ res.json({ success:true }) })
   }
   
   //remove song from playlist
   this.remove = function(req, res){
-    var query = { playlistid:parseInt(req.params.listId, 10), position:parseInt(req.params.pos, 10) };
-    if(query.playlistid == undefined) return res.status(401).json({ error:'Invalid listId' })
-    if(query.position == undefined)  return res.status(401).json({ error:'Invalid pos' })
+    var query = { playlistid:parseInt(req.params.listId, 10), position:parseInt(req.params.pos, 10) }
 
     client.chain('Playlist.Remove', query, function(d){
       res.json({ success:'removed: '+query.position })
     })
   }
   
-  //empty playlist
-  this.clearPlaylist = function(req, res){
-    client.command('Playlist.Clear', {}, apiHandle(res))
+  this.seek = function(req, res){
+    var progress = parseInt(req.params.progress, 10)
+
+    client.chain('Player.GetActivePlayers', {}, function(players){
+      if(!players.result.length) res.json({ message:'Inactive' })
+      else client.chain('Player.GetProperties', {properties:info.player, playerid:players.result[0].playerid}, function(player){
+        
+      })
+    })
   }
 }
 

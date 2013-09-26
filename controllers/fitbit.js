@@ -51,7 +51,7 @@ function API(db, client)
   }
   this.hasToken = function(id, req, res){
     db.user.find(id).success(function(u){
-      if(u && u.fitbit_token && u.fitbit_secret) res.send()
+      if(u && u.fitbit_token && u.fitbit_secret) res.json({ success:true })
       else res.json({ success:false })
     })
   }

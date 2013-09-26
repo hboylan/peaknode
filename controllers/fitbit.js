@@ -33,9 +33,7 @@ function API(db, client)
     // Request token
     client.oauth.getOAuthRequestToken(function (error, token, secret, authorize_url, other) {
       if(error) return res.status(401).json({ error:'Failed to request token' })
-      var mobile = req.query.mobile;
-      mobile = mobile == undefined? '':'&display=touch'
-      res.status(401).json({ register:'http://www.fitbit.com/oauth/authorize?oauth_token=' + token + mobile })
+      res.status(401).json({ register:'http://www.fitbit.com/oauth/authorize?display=touch&oauth_token=' + token })
     })
   }
   this.access = function(id, req, res){
@@ -54,7 +52,7 @@ function API(db, client)
   this.hasToken = function(id, req, res){
     db.user.find(id).success(function(u){
       if(u && u.fitbit_token && u.fitbit_secret) res.send()
-      else res.status(401).json({ error:'Invalid fitbit user' })
+      else res.json({ error:'Requires Fitbit access' })
     })
   }
   

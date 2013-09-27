@@ -34,9 +34,9 @@ function UserAPI(db, fitbit)
         db.user.find({ where:{ username:req.body.username, password:db.user.encrypt(req.body.password) }}).success(function(u){
           if(u == undefined) return res.status(401).json({ error:'Invalid password' })
           
+          if(u.fitbit_token != undefined) req.session.fitbit = u.fitbit_token
           u = u.parse(req.sessionID)
           req.session.user = u
-          if(u.fitbit_token != undefined) req.session.fitbit = u.fitbit_token
           res.json(u)
         })
       })

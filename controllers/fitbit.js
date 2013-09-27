@@ -35,7 +35,7 @@ function API(db, client)
       res.redirect('http://www.fitbit.com/oauth/authorize?oauth_token=' + token)
     })
   }
-  this.access = function(id, req, res){
+  this.access = function(req, res){
     var token = req.query.oauth_token, verifier = req.query.oauth_verifier;
     // Access token
     client.oauth.getOAuthAccessToken(token, '', verifier, function (error, token, secret, other){

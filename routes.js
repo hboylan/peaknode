@@ -30,23 +30,13 @@ module.exports = function(app, sessions, db, omni_client, fit_client, xbmc_clien
     }
   }
   
-  //Require valid auth token
-  function reqToken(callback){
-    return function(req, res){
-      // if(auth == undefined) res.status(401).json({ error:'Requires admin token' })
-      // else if(new Date() > new Date(auth.timeout)) res.status(401).json({ error:'Expired admin token' })
-      // else 
-      callback(req, res)
-    }
-  }
-  
   //Require persistant fitbit access token
   function reqFitbit(callback, access){
     return function(req, res){
       sessions.get(req.query.sessionID, function(err, sess){
         if(sess == undefined) res.status(401).json({ error:'Invalid sessionID' })
-        else if(sess.user.fitbit_secret != undefined) callback(sess.fitbit, req, res)
-        else res.json({ error:'Requires fitbit access token'})
+        else if(sess.fitbit != undefined) callback(sess.fitbit, req, res)
+        else res.json({ error:'Requires fitbit access token' })
       })
     }
   }

@@ -36,6 +36,7 @@ function UserAPI(db, fitbit)
           
           u = u.parse(req.sessionID)
           req.session.user = u
+          if(u.fitbit_token != undefined) req.session.fitbit = u.fitbit_token
           res.json(u)
         })
       })

@@ -37,10 +37,9 @@ function API(db, client)
   }
   this.access = function(req, res){
     var token = req.query.oauth_token, verifier = req.query.oauth_verifier;
-    console.log(token, verifier)
     // Access token
     client.oauth.getOAuthAccessToken(token, '', verifier, function (error, token, secret, other){
-      if(error) return res.status(401).json({ error:'failed to getOAuthAccessToken' })
+      if(error) return res.status(401).json({ error:'failed to getOAuthAccessToken', msg:error })
       db.user.find({ where:{username:req.query.username} }).success(function(u){ //persist in db
         u.updateAttributes({ fitbit_token:token, fitbit_secret:secret }).success(function(){ res.send('success') })
       })

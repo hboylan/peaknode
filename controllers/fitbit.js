@@ -30,11 +30,9 @@ function API(db, client)
   }
   
   this.auth = function(req, res){
-    var username = req.query.username
-    if(username == undefined) return res.status(401).json({ error:'requires username' })
     // Request token
     client.oauth.getOAuthRequestToken(function (error, token, secret, authorize_url, other) {
-      res.redirect('http://www.fitbit.com/oauth/authorize?oauth_token=' + token + '&username=' + username)
+      res.redirect('http://www.fitbit.com/oauth/authorize?oauth_token=' + token)
     })
   }
   this.access = function(req, res){

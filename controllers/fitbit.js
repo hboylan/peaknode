@@ -38,15 +38,12 @@ function API(db, client)
   this.access = function(req, res){
     var token = req.query.oauth_token, verifier = req.query.oauth_verifier;
     // Access token
-    client.oauth.getOAuthAccessToken(token, '', verifier, function (error, token, secret, other){
-      if(error) return res.status(401).json(error)
+    // client.oauth.getOAuthAccessToken(token, '', verifier, function (error, token, secret, other){
+    //   if(error) return res.status(401).json({ error:'failed to getOAuthAccessToken' })
       db.user.find({ where:{username:req.query.username} }).success(function(u){ //persist in db
-        if(u == undefined) return res.status(401).end()
-        u.updateAttributes({ fitbit_token:token, fitbit_secret:secret }).success(function(){
-          res.send()
-        })
+        u.updateAttributes({ fitbit_token:token, fitbit_secret:secret }).success(function(){ res.send('success') })
       })
-    })
+    // })
   }
   this.hasToken = function(id, req, res){
     db.user.find(id).success(function(u){

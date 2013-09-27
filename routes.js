@@ -118,8 +118,8 @@ module.exports = function(app, sessions, db, omni_client, fit_client, xbmc_clien
   
   //fitbit
   app.get('/fitbit/auth', fitbit.auth)
-  app.get('/fitbit/hastoken', reqFitbit(fitbit.hasToken, true))
   app.get('/fitbit/access', fitbit.access)
+  app.get('/fitbit/hastoken', reqFitbit(fitbit.hasToken, true))
   app.get('/fitbit/:action', reqFitbit(fitbit.userAction))
   app.get('/fitbit/:action/:sub', reqFitbit(fitbit.userSubAction))
   app.get('/fitbit/:action/:sub/date/:start/:end', reqFitbit(fitbit.dateRange))

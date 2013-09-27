@@ -32,8 +32,7 @@ function API(db, client)
   this.auth = function(req, res){
     // Request token
     client.oauth.getOAuthRequestToken(function (error, token, secret, authorize_url, other) {
-      if(error) return res.status(401).json({ error:'Failed to request token' })
-      res.json({ register:'http://www.fitbit.com/oauth/authorize?display=touch&oauth_token=' + token })
+      res.redirect('http://www.fitbit.com/oauth/authorize?oauth_token=' + token)
     })
   }
   this.access = function(id, req, res){

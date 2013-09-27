@@ -40,7 +40,7 @@ function API(db, client)
     // Access token
     client.oauth.getOAuthAccessToken(token, '', verifier, function (error, token, secret, other){
       if(error) return res.status(401).json(error)
-      db.user.find(id).success(function(u){ //persist in db
+      db.user.find({ where:{username:req.query.username} }).success(function(u){ //persist in db
         if(u == undefined) return res.status(401).end()
         u.updateAttributes({ fitbit_token:token, fitbit_secret:secret }).success(function(){
           res.send()

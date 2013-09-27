@@ -30,16 +30,17 @@ function API(db, client)
   }
   
   this.auth = function(req, res){
+    var username = req.query.username
+    if(username == undefined) return res.status(401).json({ error:'requires username' })
     // Request token
     client.oauth.getOAuthRequestToken(function (error, token, secret, authorize_url, other) {
-      res.redirect('http://www.fitbit.com/oauth/authorize?oauth_token=' + token)
+      res.redirect('http://www.fitbit.com/oauth/authorize?oauth_token=' + token + '&username=' + username)
     })
   }
   this.access = function(req, res){
     var token = req.query.oauth_token, verifier = req.query.oauth_verifier;
     // Access token
     client.oauth.getOAuthAccessToken(token, '', verifier, function (error, token, secret, other){
-      console.log(token, secret)
       if(error) return res.status(401).json({ error:'failed to getOAuthAccessToken', msg:error })
       db.user.find({ where:{username:req.query.username} }).success(function(u){ //persist in db
         u.updateAttributes({ fitbit_token:token, fitbit_secret:secret }).success(function(){ res.send('success') })

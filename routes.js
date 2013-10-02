@@ -108,8 +108,9 @@ module.exports = function(app, sessions, db, omni_client, fit_client, xbmc_clien
   app.get('/fitbit/access', fitbit.access)
   app.get('/fitbit/hastoken', reqFitbit(fitbit.hasToken, true))
   app.get('/fitbit/:action', reqFitbit(fitbit.userAction))
-  app.get('/fitbit/:action/:sub', reqFitbit(fitbit.userSubAction))
-  app.get('/fitbit/:action/:sub/date/:start/:end', reqFitbit(fitbit.dateRange))
+  // app.get('/fitbit/:action/:sub', reqFitbit(fitbit.userSubAction))
+  // app.get('/fitbit/:action/:sub/date/:start/:end', reqFitbit(fitbit.dateRange))
+  app.get('/fitbit/:action(distance|sleep|weight)/:page([0-9]+)', reqFitbit(fitbit.graphReq))
   
   //xbmc
   app.get('/xbmc', xbmc.status)

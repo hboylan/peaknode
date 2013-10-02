@@ -23,7 +23,6 @@
 function API(db, client)
 {
   var dt   = require('../lib/datetime')
-    , time = require('time')
     , http = require('http')
     
   function apiHandle(res){

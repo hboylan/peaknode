@@ -14,8 +14,7 @@
     "mysql":"*",
     "xbmc":"*",
     "oauth": ">= 0.8.2",
-    "serializer": ">=0.0.2 <0.1.0",
-    "time":"*"
+    "serializer": ">=0.0.2 <0.1.0"
   },
   "repository":{
     "type":"git",

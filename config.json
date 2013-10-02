@@ -40,7 +40,7 @@
     { "zoneId":7, "name":"Deck Back" }
   ],
   "lights":[
-    { "zoneId":1, "unit":3, "name":"Test Dimmer" }
+    { "zoneId":1, "unit":2, "name":"Main Light" }
   ],
   "locks":[
     { "zoneId":1, "nodeId":27, "name":"Front Door" },

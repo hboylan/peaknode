@@ -23,11 +23,11 @@
   "zones":[
     { "name":"Living Room" },
     { "name":"Kitchen" },
+    { "name":"Dining Room" },
+    { "name":"Hallway" },
     { "name":"Master Bedroom" },
     { "name":"Bedroom" },
-    { "name":"Bathroom" },
-    { "name":"Utility" },
-    { "name":"Deck" }
+    { "name":"Bathroom" }
   ],
   "audio":[
     { "zoneId":1, "name":"Living Room Left" },
@@ -40,7 +40,11 @@
     { "zoneId":7, "name":"Deck Back" }
   ],
   "lights":[
-    { "zoneId":1, "unit":2, "name":"Main Light" }
+    { "zoneId":1, "unit":2, "name":"Main Light" },
+    { "zoneId":2, "unit":6, "name":"Track Light" },
+    { "zoneId":2, "unit":7, "name":"Sink Light" },
+    { "zoneId":3, "unit":10, "name":"Hallway" },
+    { "zoneId":, "unit":13, "name":"Table Light" }
   ],
   "locks":[
     { "zoneId":1, "nodeId":27, "name":"Front Door" },

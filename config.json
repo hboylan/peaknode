@@ -13,7 +13,7 @@
   "fitbit_key":"7f4c494ce2864ef5888744b05708e058",
   "fitbit_secret":"667a1f5d36d3493a870f858be99734ba",
   
-  "xbmc_host":"192.168.1.116",
+  "xbmc_host":"192.168.1.117",
   "xbmc_port":9090,
   
   "vera_host":"192.168.1.111:3480",
@@ -51,7 +51,9 @@
     { "zoneId":1, "left":24, "right":25,   "name":"Qolsys 1" }
   ],
   "cameras":[
-    { "name":"Cam1", "host":"http://teqlabs.com:8001" }
+    { "name":"Kitchen/Dining Rm", "host":"http://:8001" },
+    { "name":"Living Room", "host":"http://:8001" },
+    { "name":"Hallway", "host":"http://:8001" }
   ],
   "hvac":[
     { "zoneId":1 },

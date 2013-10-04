@@ -49,8 +49,8 @@
     { "zoneId":3, "unit":14, "name":"Table Light" }
   ],
   "locks":[
-    { "zoneId":1, "nodeId":27, "name":"Front Door" },
-    { "zoneId":3, "nodeId":1, "name":"Rear Door" }
+    { "zoneId":1, "nodeId":22, "name":"Front Door" },
+    { "zoneId":5, "nodeId":23, "name":"Master Bed Door" }
   ],
   "appliances":[
     { "zoneId":1, "left":26, "right":null, "name":"Nexia 2" },

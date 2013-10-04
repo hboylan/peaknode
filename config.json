@@ -18,7 +18,7 @@
   
   "vera_host":"192.168.1.111:3480",
   
-  "models":["user", "zone", "audio", "light", "security", "lock", "appliance", "hvac"],
+  "models":["user", "zone", "audio", "light", "security", "lock", "appliance"],
   "archives":["energy", "security", "light", "temperature", "lock"],
   "zones":[
     { "name":"Living Room" },

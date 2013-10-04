@@ -46,7 +46,8 @@
     { "zoneId":2, "unit":6, "name":"Track Light" },
     { "zoneId":2, "unit":7, "name":"Sink Light" },
     { "zoneId":4, "unit":10, "name":"Hallway" },
-    { "zoneId":3, "unit":14, "name":"Table Light" }
+    { "zoneId":3, "unit":14, "name":"Table Light" },
+    { "zoneId":7, "unit":15, "name":"Outdoor 2" }
   ],
   "locks":[
     { "zoneId":1, "nodeId":22, "name":"Front Door" },

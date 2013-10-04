@@ -1,11 +1,9 @@
 module.exports = function(app, sessions, db, omni_client, fit_client, xbmc_client) {
   var users   = require('./controllers/users')(db, fit_client)
-    , zones   = require('./controllers/zones')(db)
     , audio   = require('./controllers/audio')(db, omni_client)
     , lights  = require('./controllers/lights')(db, omni_client)
     , fitbit  = require('./controllers/fitbit')(db, fit_client)
     , xbmc    = require('./controllers/xbmc')(xbmc_client)
-    , hvac    = require('./controllers/hvac')(db, omni_client)
     , vera    = require('./controllers/vera')(db, require('./config.json').vera_host)
     , sec     = require('./controllers/security')(db, vera, omni_client)
     , appliances = require('./controllers/appliances')(db, vera)
@@ -71,15 +69,6 @@ module.exports = function(app, sessions, db, omni_client, fit_client, xbmc_clien
   app.post('/logout', reqLogin(users.logout))
   app.post('/unlock', reqBody(reqLogin(users.unlock), ['id', 'pinkey']))
   app.get('/users/:id', users.show)
-  
-  // zones
-  app.get('/zones', zones.list)
-  app.get('/zones/:id', zones.show)
-  
-  // hvac
-  app.get('/hvac', hvac.list)
-  app.get('/hvac/:id', hvac.show)
-  app.post('/hvac/:id', hvac.control)
   
   // appliances
   app.get('/appliances', appliances.list)

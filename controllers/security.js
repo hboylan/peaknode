@@ -32,7 +32,7 @@ function API(db, vera, omni)
       else //Update security state
       {
         //Send command thru TCP
-        omni.security('control', { state:state })
+        omni.security('control', { state:state == 'arm'? 'day':'off' })
       
         db.security.find(1).success(function(security){
           if(state == 'arm'){

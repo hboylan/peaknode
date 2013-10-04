@@ -26,7 +26,8 @@
     { "name":"Dining Room" },
     { "name":"Hallway" },
     { "name":"Master Bedroom" },
-    { "name":"Bedroom" },
+    { "name":"Guest Bedroom" },
+    { "name":"Deck" },
     { "name":"Bathroom" }
   ],
   "audio":[
@@ -41,10 +42,11 @@
   ],
   "lights":[
     { "zoneId":1, "unit":2, "name":"Main Light" },
+    { "zoneId":7, "unit":4, "name":"Outdoor 1" },
     { "zoneId":2, "unit":6, "name":"Track Light" },
     { "zoneId":2, "unit":7, "name":"Sink Light" },
     { "zoneId":4, "unit":10, "name":"Hallway" },
-    { "zoneId":3, "unit":13, "name":"Table Light" }
+    { "zoneId":3, "unit":14, "name":"Table Light" }
   ],
   "locks":[
     { "zoneId":1, "nodeId":27, "name":"Front Door" },

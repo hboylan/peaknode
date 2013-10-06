@@ -87,10 +87,7 @@ module.exports = function(app, sessions, db, omni_client, fit_client, xbmc_clien
   
   //lighting
   app.get('/lights', lights.list)
-  // app.post('/lights', lights.create)
-  app.get('/lights/:id', lights.show)
   app.post('/lights', reqLogin(lights.state))
-  // app.post('/lights/:id/:action', lights.timeout)
   
   //fitbit
   app.get('/fitbit/auth', fitbit.auth)

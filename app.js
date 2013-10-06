@@ -3,7 +3,7 @@ var express   = require('express')
   , config    = require('./config.json')
   , http      = require('http')
   , cors      = require('cors')
-  , app       = express();
+  , app       = express()
 
 //Configure our application environment
 app.configure(function() {

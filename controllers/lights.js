@@ -13,20 +13,7 @@ function LightAPI(db, omni)
       res.json(lights)
     })
   }
-
-  this.show = function(req, res){
-    var e = { error:'Invalid light' }, hist = [];
-    db.light.find(req.params.id).success(function(light){
-      if(light == undefined) return res.status(401).json(e);
-      db.light_archive.findAll({ where:{lightId:light.id}, limit:50, order:'id DESC' }).success(function(archives){
-        archives.forEach(function(a){ hist.push(a.parse()) })
-        res.json({ name:light.name, unit:light.unit, level:light.level, on:light.on, active:light.active, archives:hist })
-      })
-    }).error(function(err){
-      res.status(401).json(e)
-    })
-  }
-
+  
   this.state = function(req, res){
     var toggle  = req.body.toggle
       , level   = req.body.level
@@ -52,22 +39,5 @@ function LightAPI(db, omni)
       // })
     })
   }
-  //TODO implement this for bright/dimming functions
-  // this.timeout = function(req, res){
-  //   var level   = req.body.level
-  //     , time    = req.body.time
-  //     , id      = req.params.id
-  //     , action  = req.params.action;
-  // 
-  //   db.light.update(id, res, function(light){
-  //     if(level >= 0  && level <= 100 && time >= 2 && time <= 99)
-  //       if(action == 'dim' || action == 'brighten')
-  //         light.step(client, action, level, time);
-  //       else
-  //         res.status(401).json({ error:'Expected API call: /api/lights/:id/(dim/brighten)' })
-  //     else
-  //       res.status(401).json({ error:'Expected parameters: time (2-99) and level (0-100)' })
-  //   })
-  // }
 }
 module.exports = function(d, c){ return new LightAPI(d, c) }

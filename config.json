@@ -54,13 +54,11 @@
     { "zoneId":5, "nodeId":23, "name":"Master Bed Door" }
   ],
   "appliances":[
-    { "zoneId":1, "left":26, "right":null, "name":"Nexia 2" },
-    { "zoneId":1, "left":24, "right":25,   "name":"Qolsys 1" }
+    { "left":31, "right":32, "name":"Guest Bed" },
+    { "left":27, "right":29, "name":"Master Bed" }
   ],
   "cameras":[
-    { "name":"Kitchen/Dining Rm", "host":"http://:8001" },
-    { "name":"Living Room", "host":"http://:8001" },
-    { "name":"Hallway", "host":"http://:8001" }
+    { "name":"Kitchen/Dining Rm", "host":"192.168.1.240:8008" }
   ],
   "hvac":[
     { "zoneId":1 },

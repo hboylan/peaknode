@@ -55,7 +55,7 @@
   ],
   "appliances":[
     { "zoneId":6, "left":31, "right":32, "name":"Guest Bed" },
-    { "zoneId":7, "left":27, "right":29, "name":"Master Bed" }
+    { "zoneId":7, "left":27, "right":29, "name":"Kitchen" }
   ],
   "cameras":[
     { "name":"Kitchen/Dining Rm", "host":"192.168.1.240:8008" }

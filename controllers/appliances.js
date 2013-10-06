@@ -1,8 +1,16 @@
 function ApplianceAPI(db, vera)
 {
   this.list = function(req, res) {
-    db.appliance.all({ order:'id ASC' }).success(function(apps){
-      res.json(apps.parse())
+    db.zone.all({ order:'id ASC', include:[db.appliance] }).success(function(zones){
+      var apps = []
+      zones.forEach(function(z){
+        apps.push({
+          id:z.id,
+          name:z.name,
+          appliances:(z.appliance == undefined)? [] : db.appliance.parse(z.appliance)
+        })
+      })
+      res.json(apps)
     })
   }
 

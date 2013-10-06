@@ -1,30 +1,8 @@
 function ApplianceAPI(db, vera)
 {
   this.list = function(req, res) {
-    db.zone.all({ order:'id ASC', include:[db.appliance] }).success(function(zones){
-      var apps = []
-      zones.forEach(function(z){
-        apps.push({
-          id:z.id,
-          name:z.name,
-          appliances:(z.appliance == undefined)? [] : db.appliance.parse(z.appliance)
-        })
-      })
-      res.json(apps)
-    })
-  }
-
-  this.show = function(req, res) {
-    var e = { error:'Invalid appliance' }, hist = [];
-    db.appliance.find(req.params.id).success(function(a){
-      if(a == undefined) return res.status(401).json(e);
-      // db.appliance_archive.findAll({ where:{appId:a.id}, limit:50, order:'id DESC' }).success(function(archives){
-        // archives.forEach(function(a){ hist.push(a.parse()) })
-        // res.json({ name:a.name, unit:a.unit, level:a.level, on:a.on, active:a.active, archives:hist })
-        res.json(a.parse())
-      // })
-    }).error(function(err){
-      res.status(401).json(e)
+    db.appliance.all({ order:'id ASC' }).success(function(apps){
+      res.json(db.appliance.parse(apps))
     })
   }
 

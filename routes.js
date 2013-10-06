@@ -72,7 +72,6 @@ module.exports = function(app, sessions, db, omni_client, fit_client, xbmc_clien
   
   // appliances
   app.get('/appliances', appliances.list)
-  app.get('/appliances/:id', appliances.show)
   app.post('/appliances/:id', reqLogin(appliances.switch))
   
   // audio

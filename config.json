@@ -54,8 +54,8 @@
     { "zoneId":5, "nodeId":23, "name":"Master Bed Door" }
   ],
   "appliances":[
-    { "zoneId":6, "left":31, "right":32, "name":"Guest Bed" },
-    { "zoneId":2, "left":27, "right":29, "name":"Kitchen" }
+    { "left":31, "right":32, "name":"Guest Bed" },
+    { "left":27, "right":29, "name":"Kitchen" }
   ],
   "cameras":[
     { "name":"Kitchen/Dining Rm", "host":"http://192.168.1.240:8008" }

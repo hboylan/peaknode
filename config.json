@@ -57,7 +57,8 @@
     { "left":27, "right":29, "name":"Kitchen" }
   ],
   "cameras":[
-    { "name":"Kitchen/Dining Rm", "host":"http://192.168.1.240:8008" }
+    { "name":"Kitchen/Dining Rm", "host":"http://192.168.1.240:8008" },
+    { "name":"Living Room/Hallway", "host":"http://192.168.1.241:8008" }
   ],
   "hvac":[
     { "zoneId":1 },

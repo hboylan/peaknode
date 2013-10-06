@@ -31,14 +31,13 @@
     { "name":"Bathroom" }
   ],
   "audio":[
-    { "zoneId":1, "name":"Living Room Left" },
-    { "zoneId":1, "name":"Living Room Right" },
+    { "zoneId":1, "name":"Living Room" },
     { "zoneId":2, "name":"Kitchen" },
     { "zoneId":3, "name":"Master Bedroom" },
-    { "zoneId":4, "name":"Bedroom" },
+    { "zoneId":4, "name":"Guest Bedroom" },
     { "zoneId":5, "name":"Bathroom" },
-    { "zoneId":7, "name":"Deck Front" },
-    { "zoneId":7, "name":"Deck Back" }
+    { "zoneId":7, "name":"Deck Left" },
+    { "zoneId":7, "name":"Deck Right" }
   ],
   "lights":[
     { "zoneId":1, "unit":2, "name":"Main Light" },

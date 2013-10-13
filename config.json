@@ -13,7 +13,7 @@
   "fitbit_key":"7f4c494ce2864ef5888744b05708e058",
   "fitbit_secret":"667a1f5d36d3493a870f858be99734ba",
   
-  "xbmc_host":"192.168.1.117",
+  "xbmc_host":"192.168.1.118",
   "xbmc_port":9090,
   
   "vera_host":"192.168.1.111:3480",

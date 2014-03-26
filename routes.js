@@ -49,6 +49,8 @@ module.exports = function(app, sessions, db, omni_client, fit_client, xbmc_clien
   }
   
   /*** API ***/
+  app.get('/resync', db.resync)
+  
   //Vera API
   app.get('/vera', vera.request)
   app.get('/vera/nodes', vera.list)
@@ -56,28 +58,26 @@ module.exports = function(app, sessions, db, omni_client, fit_client, xbmc_clien
   app.post('/vera/nodes/:id', vera.state)
   
   // users
+  app.post('/user', reqBody(users.create, ['username', 'password', 'realname', 'pinkey']))
+  app.post('/login', reqBody(users.login, ['username', 'password']))
+  app.post('/logout', reqLogin(users.logout))
   app.post('/auth', reqBody(function(req, res){
     sessions.get(req.body.sessionID, function(err, sess){
       if(sess != undefined) res.send()
       else res.status(401).end()
     })
   }, ['sessionID']))
-  app.get('/resync', db.resync)
   app.get('/users', users.list)
-  app.post('/users', reqBody(users.create, ['username', 'password', 'realname', 'pinkey']))
-  app.post('/login', reqBody(users.login, ['username', 'password']))
-  app.post('/logout', reqLogin(users.logout))
-  app.post('/unlock', reqBody(reqLogin(users.unlock), ['id', 'pinkey']))
-  app.get('/users/:id', users.show)
+  app.get('/user/:id', users.show)
   
   // appliances
   app.get('/appliances', appliances.list)
-  app.post('/appliances/:id', reqLogin(appliances.switch))
+  app.post('/appliance/:id', reqLogin(appliances.switch))
   
   // audio
   app.get('/audio', audio.list)
-  app.post('/audio', reqLogin(audio.state))
   app.get('/audio/:id', audio.zone)
+  app.post('/audio/:id', reqLogin(audio.state))
   
   //security
   app.get('/security', sec.status)
@@ -86,7 +86,7 @@ module.exports = function(app, sessions, db, omni_client, fit_client, xbmc_clien
   
   //lighting
   app.get('/lights', lights.list)
-  app.post('/lights', reqLogin(lights.state))
+  app.post('/light', lights.state)
   
   //fitbit
   app.get('/fitbit/auth', fitbit.auth)

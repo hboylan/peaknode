@@ -12,6 +12,7 @@
     "sequelize": "*",
     "crypto":"*",
     "mysql":"*",
+    "pg":"*",
     "xbmc":"*",
     "oauth": ">= 0.8.2",
     "serializer": ">=0.0.2 <0.1.0"

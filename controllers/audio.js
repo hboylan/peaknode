@@ -17,7 +17,7 @@ function AudioAPI(db, omni)
   this.state = function(req, res) {
     var vol     = parseInt(req.body.volume, 10)
       , source  = parseInt(req.body.source, 10)
-      , zone    = parseInt(req.body.id, 10)
+      , zone    = parseInt(req.params.id, 10)
       , toggle  = req.body.toggle
     
     if(zone == NaN) return res.status(401).json({ error:'Invalid zone id' })

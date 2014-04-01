@@ -2,7 +2,7 @@
 
 ## Dependencies
 
-* [NodeJS](https://nodejs.org/downloads)
+* [NodeJS](https://nodejs.org/download)
 
 * [NPM](https://npmjs.org)
 

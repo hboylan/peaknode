@@ -1,4 +1,19 @@
-# Peak Home Automation API
+# Peak Home Automation
+
+## Dependencies
+
+* [NodeJS](https://nodejs.org/downloads)
+
+* [NPM](https://npmjs.org)
+
+* MySQL, PostgreSQL, or SQLite
+  * Create admin with password
+  
+  * Create database peaknode
+  
+  * Grant user priviledges
+
+* [Omnilink](https://github.com/Bryan-Turek/Peak-Server.git)
 
 
 - - - 
